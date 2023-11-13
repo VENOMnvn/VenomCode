@@ -1,0 +1,6 @@
+body ::-webkit-scrollbar{
+    display: none;
+}
+body{
+    background-color: #f4f2ee;
+}

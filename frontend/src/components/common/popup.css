@@ -1,0 +1,53 @@
+.popup-container{
+    width: 100vw;
+    height: 100Vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.636);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup{
+    width: 80vw;
+    height: 90vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgb(188, 185, 185) inset;
+    z-index: 9;
+    border: 1px solid rgba(203, 203, 203, 0.734);
+    animation-name: popUp;
+    animation-duration: 0.5s;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: scroll;
+    animation-iteration-count: 1;
+}
+.popup-header{
+ width: 100%;
+ padding: 4px 8px;
+ display: flex;
+ justify-content: flex-end;
+}
+@keyframes popUp{
+    0%{
+        transform: scale(0.1);
+    }
+    100%{
+        transform: scale(1)
+    }   
+}
+.cancel{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.cancel:hover{
+    transform: scale(1.4);
+}
+.popup-body{
+    width: 100%;
+}
+

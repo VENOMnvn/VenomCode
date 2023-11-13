@@ -89,8 +89,9 @@ const Register = ()=>{
             </select>
             <span className="select-btn">
               <i className="zmdi zmdi-chevron-down" />
-            </span>
+            </span>            
           </div>
+          
         </div>
       </div>
       <div className="form-right">
@@ -114,29 +115,10 @@ const Register = ()=>{
             placeholder="Additional Information"
             required=""
           />
+          
         </div>
         <div className="form-group">
-          <div className="form-row form-row-1">
-            <input
-              type="text"
-              name="zip"
-              className="zip"
-              id="zip"
-              placeholder="Zip Code"
-              required=""
-            />
-          </div>
-          <div className="form-row form-row-2">
-            <select name="place">
-              <option value="place">Place</option>
-              <option value="Street">Street</option>
-              <option value="District">District</option>
-              <option value="City">City</option>
-            </select>
-            <span className="select-btn">
-              <i className="zmdi zmdi-chevron-down" />
-            </span>
-          </div>
+          
         </div>
         <div className="form-row">
           <select name="country">
@@ -186,7 +168,7 @@ const Register = ()=>{
           <label className="container">
             <p>
               I do accept the{" "}
-              <a href="#" className="text">
+              <a className="text">
                 Terms and Conditions
               </a>{" "}
               of your site.
@@ -195,6 +177,17 @@ const Register = ()=>{
             <span className="checkmark" />
           </label>
         </div>
+        <label className="container">
+            <p>
+              Have a account ?   {"    "}
+              <a className="">
+                Signin 
+              </a>{" "}
+              {" "}
+              instead
+            </p>
+            <span className="checkmark" />
+          </label>
         <div className="form-row-last">
           <input
             type="submit"

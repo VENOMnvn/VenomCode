@@ -1,0 +1,75 @@
+.create-post-popup{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.create-header{
+    padding: 8px 16px;
+    display: flex;
+}
+.create-header-left{
+    display: flex;
+    gap: 12px;
+   
+    padding: 8px;
+    border-radius: 10px;
+    padding-right: 16px;
+}
+.create-header-left:hover{
+    background-color: #f4f2ee;
+}
+.create-header-left > div > p{
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+.create-header-left>div>span{
+    position: relative;
+    top: -5px;
+}
+.create-post-form{
+    padding: 26px 32px;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.create-post-form > span{
+    color: gray;
+}
+.fullWidth{
+    width: 100%;
+}
+#standard-multiline-flexible::-webkit-scrollbar{
+    display: block;
+    width: 7px;
+}
+#standard-multiline-flexible::-webkit-scrollbar-thumb{
+    display: block;
+    background-color: #1C8765;
+    width: 2px;
+    size: 2px;
+    border-radius: 10px;
+}
+#standard-multiline-flexible::-webkit-scrollbar-track{
+    background-color: rgba(186, 186, 186, 0.564);
+    border-radius: 10px;
+}
+.labels-form-create-post{
+    padding: 0px 32px;
+    display: flex;
+    align-items: center;
+}
+.labels-form-create-post-left{
+    border: 1px solid rgb(227, 226, 226);
+    box-shadow: inset -2px 0px 8px rgb(162, 162, 162);
+    display: flex;
+    padding: 6px;
+    border-radius: 10px;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+    width: 80%;
+}
+.submit-post{
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 8px 32px;
+}

@@ -4,7 +4,7 @@ body {
 .page-content {
 	width: 100%;
 	margin:  0 auto;
-	background: #75e2e9;
+	background: #ffffff;
 	display: flex;
 	display: -webkit-flex;
 	justify-content: center;
@@ -34,7 +34,6 @@ body {
 	-ms-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
 	-moz-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
 	-webkit-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
-	margin: 95px 0;
 	position: relative;
 	font-family: 'Montserrat', sans-serif;
 }
@@ -60,12 +59,13 @@ body {
 }
 .form-v10-content .form-detail .form-right {
 	width: 100%;
-	background: #4835d4;
+	background: #51A88B;
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
 .form-v10-content .form-detail .form-right h2 {
 	color: #fff;
+	color: #000000;
 }
 .form-v10-content .form-detail .form-group {
 	display: flex;
@@ -135,7 +135,7 @@ body {
 	color: #666;
 }
 .form-v10-content .form-detail .form-right select {
-	color: #f2f2f2;
+	color: #000000;
 }
 .form-v10-content .form-detail .select-btn {
 	z-index: 0;
@@ -148,7 +148,7 @@ body {
     color: #666;
 }
 .form-v10-content .form-detail .form-right .select-btn {
-    color: #f2f2f2;
+    color: #000000;
 }
 .form-v10-content .form-detail .form-group .form-row.form-row-4 .select-btn {
 	top: 20%;
@@ -162,11 +162,11 @@ body {
 	color: #000;
 }
 .form-v10-content .form-detail .form-right input {
-	color: #fff;
+	color: #000000;
 }
 .form-v10-content .form-detail .form-left input,
 .form-v10-content .form-detail .form-left select {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #000000;
 }
 .form-v10-content .form-detail .form-left input:focus,
 .form-v10-content .form-detail .form-left select:focus {
@@ -175,14 +175,14 @@ body {
 .form-v10-content .form-detail .form-right input,
 .form-v10-content .form-detail .form-right select {
 	border-bottom: 1px solid;
-	border-bottom-color: rgba(255, 255, 255, 0.3);
+	border-bottom-color: rgba(0, 0, 0, 0.3);
 }
 .form-v10-content .form-detail .form-right input:focus,
 .form-v10-content .form-detail .form-right select:focus {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #000000;
 }
 .form-v10-content .form-detail .form-right select option {
-	background: #4835d4;
+	background: #000000;
 }
 .form-v10-content .form-detail .form-checkbox {
 	margin-top: 37px;
@@ -199,7 +199,7 @@ body {
     left: 60px;
     height: 15px;
     width: 15px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #000000;
     cursor: pointer;
 }
 .form-v10-content .form-detail .form-checkbox .checkmark::after {
@@ -209,7 +209,7 @@ body {
    	top: 1px;
     width: 3px;
     height: 8px;
-    border: 1px solid #fff;
+    border: 1px solid #000000;
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
