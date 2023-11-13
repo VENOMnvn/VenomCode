@@ -184,8 +184,34 @@ body::-webkit-scrollbar{
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
+    background-color: white;
     height: 80px;
 }
 .profile-card-top>div>div{
-    width: ;
+    width:97%;
+    height: 97%;
+}
+.profile-card-details{
+    margin-top: 40px; 
+    padding: 12px;
+}
+.profile-card-details p{
+    font-weight: 600;
+}
+.profile-card-details span{
+    color: gray;
+    font-size: 14px;
+}
+.profile-card-followers{
+    padding: 12px;
+    border-top: 1px solid darkgray;
+    border-bottom: 1px solid darkgray;
+}
+.profile-card-followers p{
+    display: flex;
+    justify-content: space-between;
+}
+.profile-card-bottom{
+    padding: 12px;
 }

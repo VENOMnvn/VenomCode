@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 
 const Filter = () => {
+  
     const handleDelete=(e)=>{
         console.log(e.target.innerHTML);
         const result = labelArray.filter((ele)=>ele != e.target.innerHTML);

@@ -8,9 +8,12 @@ import Chip from '@mui/material/Chip';
 import { Button } from "@mui/material";
 
 const CreatePost = () => {
-    const handleDelete =()=>{
 
-    };
+  const handleDelete=(e)=>{
+    console.log(e);
+    const result = label.filter((ele)=>ele != e.target.innerHTML);
+    setLabelArray(result);
+}
 
     const [label,setLabelArray] = useState(["Leetcode"]);
     
@@ -70,7 +73,7 @@ const CreatePost = () => {
         onKeyDown={handleSubmitLabel}
       />
       <div className="labels-form-create-post-left">
-      {!label?"":label.map((ele)=><Chip label={ele} variant="outlined" onDelete={handleDelete}/>)}
+      {!label?"":label.map((ele)=><Chip label={ele} variant="outlined" onClick={handleDelete}/>)}
       </div>
       </div>
 

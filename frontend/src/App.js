@@ -5,6 +5,7 @@ import {Routes,Route, useLocation} from 'react-router-dom';
 import Homepage from './components/homepage/homepage';
 import { useEffect, useState } from 'react';
 import PopUp from './components/common/popup';
+import Messenger from './components/chat/Messengers';
 
 function App() {
   const [nav,isNav] = useState(true);

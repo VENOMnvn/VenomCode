@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import './Navbar.css';
+import Tooltip from '@mui/material/Tooltip';
+import PopUp from "./popup";
+import Messenger from "../chat/Messengers";
+import Badge from '@mui/material/Badge';
 
 
 const Navbar = () => {
@@ -16,6 +20,11 @@ const Navbar = () => {
   const user = useSelector(state=>state.user.user);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [showChat,setChat] = useState(false);
+
+  const cancel = ()=>{
+    setChat(false);
+  }
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -105,7 +114,7 @@ const Navbar = () => {
           </li>
         </ul>
 
-
+        {showChat?<PopUp element={<Messenger></Messenger>} cancel={cancel}></PopUp>:""}
         <div style={{ flex: 1 }}></div>
         <div
           component="form"
@@ -118,6 +127,7 @@ const Navbar = () => {
             width: 400,
           }}
         >
+
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
             <SearchIcon color="info" />
           </IconButton>
@@ -136,10 +146,15 @@ const Navbar = () => {
               <NotificationsNoneRoundedIcon sx={{ color: "#1C8765",fontSize:"28px" }} />
             </IconButton>
           </li>
-          <li>
+
+          <li onClick={()=>setChat(true)}>
+            <Tooltip title="Message">
             <IconButton aria-label="delete" className="chat-icon">
+            <Badge badgeContaent={4} color="primary">
               <ChatBubbleOutlineRoundedIcon sx={{ color: "#1C8765" ,fontSize:"25px"}} />
+             </Badge>
             </IconButton>
+            </Tooltip>
           </li>
           <li></li>
         </ul>

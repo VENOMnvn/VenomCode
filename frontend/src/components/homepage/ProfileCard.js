@@ -1,5 +1,6 @@
 import { Avatar } from '@mui/material'
 import React from 'react'
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 const ProfileCard = () => {
   return (
@@ -18,6 +19,7 @@ const ProfileCard = () => {
             <p>People who followed by you <span>69</span></p>
         </div>
         <div className='profile-card-bottom'>
+            <BookmarkIcon sx={{color:"gray"}}></BookmarkIcon>{"  "}
             My items
         </div>
     </div>
