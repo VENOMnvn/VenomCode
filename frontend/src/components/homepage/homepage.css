@@ -76,6 +76,8 @@ body::-webkit-scrollbar{
     box-sizing: border-box;
     text-overflow: ellipsis;
     padding: 8px;
+    background-color: #282a35;
+    color: white;
     overflow: scroll;
 }
 .post-body::-webkit-scrollbar{
@@ -101,7 +103,7 @@ body::-webkit-scrollbar{
 }
 .post-lower-group{
     display: flex;
-    border-top: 1px solid rgba(180, 180, 180, 0.625);
+    /* border-top: 1px solid rgba(180, 180, 180, 0.625); */
     flex-direction: row;
     justify-content: space-around;
     box-sizing: border-box;

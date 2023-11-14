@@ -6,6 +6,7 @@ import Homepage from './components/homepage/homepage';
 import { useEffect, useState } from 'react';
 import PopUp from './components/common/popup';
 import Messenger from './components/chat/Messengers';
+import Profilepage from './components/profile/profilepage';
 
 function App() {
   const [nav,isNav] = useState(true);
@@ -26,7 +27,8 @@ function App() {
     {nav? <Navbar></Navbar>:""}
       <Routes>
         <Route path="/register" element={<Register></Register>}></Route>
-        <Route path='/' index element={<Homepage></Homepage>}></Route>
+        <Route path='/home'  element={<Homepage></Homepage>}></Route>
+        <Route path='/' index element={<Profilepage></Profilepage>}></Route>
       </Routes>
       
     </div>

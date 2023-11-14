@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./messenger.css";
 import { Avatar } from "@mui/material";
 import profilepic from "./../../static/profile.jpeg";
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
+import Paper from '@mui/material/Paper';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -34,7 +35,14 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
   }));
 
+
+
+
 const Messenger = () => {
+
+
+  const [chats,setChats] = useState(["Venom","Naveen","Aegon","Sonu","Karan","Prabeen","Yash","KIttu"]);
+
   return (
     <div className="messenger">
       <div className="messenger-top">
@@ -54,8 +62,31 @@ const Messenger = () => {
           variant="dot"
         ></Avatar>
         </StyledBadge>
-        
         <span>Messenger</span>
+      </div>
+      <div className="messenger-body">
+      <div className="chats">
+          {
+            chats.map((ele)=>{
+              return (
+                <Paper>
+                  
+                <div className="chat-thumbnail">
+                    <Avatar src={profilepic}></Avatar>
+                    <div>
+                      <p>{ele}</p>
+                      <span>How are you</span>
+                    </div>
+                </div>
+                </Paper>
+              );
+            })
+          }
+          </div>
+
+          <div className="chat">
+            
+          </div>
       </div>
     </div>
   );

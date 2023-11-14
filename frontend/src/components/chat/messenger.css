@@ -1,5 +1,7 @@
 .messenger{
-
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .messenger-top{
     display: flex;
@@ -13,4 +15,37 @@
 .messenger-top span{
     font-size: 18px;
     font-weight: 500;
+}
+.messenger-body{
+    display: grid;
+    width: 100%;
+    flex: 1 1 auto;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+}
+.chat-thumbnail{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid rgb(145, 145, 145);
+    border-top: 1px solid transparent;
+    padding: 0px 12px;
+}
+.chat-thumbnail div{
+    display: flex;
+    flex-direction: column;
+}
+.chat-thumbnail p{
+    font-size: 18px;
+    font-weight: 500;
+}
+.chat-thumbnail span{
+    font-size: 12px;
+}
+.chats{
+    box-sizing: border-box;
+    overflow-y: scroll;
 }
