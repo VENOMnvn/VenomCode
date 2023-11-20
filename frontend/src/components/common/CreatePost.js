@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./CreatePostpopup.css";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
@@ -8,6 +8,9 @@ import Chip from '@mui/material/Chip';
 import { Button } from "@mui/material";
 
 const CreatePost = () => {
+
+  const [title,setTitle] = useState("");
+  const [code,setCode] = useState("");
 
   const handleDelete=(e)=>{
     console.log(e);
@@ -23,6 +26,10 @@ const CreatePost = () => {
         e.target.value="";
       }
     }
+
+    const handleSubmit = async ()=>{
+        
+    };
 
   return (
     <div className="create-post-popup">
@@ -41,6 +48,7 @@ const CreatePost = () => {
         <TextField
           id="standard-basic"
           fullWidth
+          onChange={(e)=>setTitle(e.target.value)}
           label="Problem Statement"
           variant="standard"
           className="fullwidth"
@@ -51,6 +59,7 @@ const CreatePost = () => {
           id="standard-multiline-flexible"
           label="Code "
           multiline
+          onChange={(e)=>setCode(e.target.value)}
           maxRows={12}
           variant="standard"
           placeholder="example : #include <stdio.h>"
@@ -78,7 +87,7 @@ const CreatePost = () => {
       </div>
 
       <div className="submit-post">
-        <Button variant="outlined">Upload</Button>
+        <Button variant="outlined" onClick={handleSubmit}>Upload</Button>
       </div>
     </div>
   );

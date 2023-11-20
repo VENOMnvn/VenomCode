@@ -3,6 +3,7 @@ import HomeFeed from './homefeed';
 import CreatePost from './CreatePost';
 import Filter from './FilterComp';
 import ProfileCard from './ProfileCard';
+import DeveloperCard from './DeveloperCard';
 
 
 const HomePage = ()=>{
@@ -11,6 +12,8 @@ const HomePage = ()=>{
     return <div className="Homepage">
     <div className="left-homepage">
     <ProfileCard></ProfileCard>
+    {/* <DeveloperCard></DeveloperCard> */}
+
     </div>
     <div className="center-homepage"><HomeFeed></HomeFeed></div>
     <div className="right-homepage">

@@ -14,7 +14,8 @@ const { upload } = require("../middleware/multerConfig");
 const express = require("express");
 const router = express.Router();
 
-router.post("/register", userRegisteration);
+
+router.post("/register", userRegisteration); //check
 router.post("/login", userLogin);
 router.post("/send-otp", SendOtp);
 router.get("/logout", userLogout);

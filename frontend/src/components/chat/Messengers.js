@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./messenger.css";
 import { Avatar } from "@mui/material";
 import profilepic from "./../../static/profile.jpeg";
+import sonu from './../../static/chat.jpg';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Paper from '@mui/material/Paper';
+import Chat from './Chat';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -40,11 +42,23 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Messenger = () => {
 
+  const [mobile,setMobile] = useState(false);
+  useEffect(()=>{
 
-  const [chats,setChats] = useState(["Venom","Naveen","Aegon","Sonu","Karan","Prabeen","Yash","KIttu"]);
+    if(window.screen.width < 500){
+       setMobile(true);
+    }else{
+      setMobile(false);
+    }
+
+  });
+
+  const [ActiveChat,setActiveChat] = useState("");
+  const [chats,setChats] = useState(["Venom","Naveen","Aegon","Sonu","Kittu","Praveen","Karan","Rohit","Bh","Ragnar","Lucifer","samael"]);
 
   return (
     <div className="messenger">
+
       <div className="messenger-top">
         <StyledBadge
           overlap="circular"
@@ -64,15 +78,33 @@ const Messenger = () => {
         </StyledBadge>
         <span>Messenger</span>
       </div>
-      <div className="messenger-body">
-      <div className="chats">
+      {
+        mobile ?  <div className="chats Mobile-Chats">
+        <div> Back </div>
           {
             chats.map((ele)=>{
               return (
-                <Paper>
-                  
-                <div className="chat-thumbnail">
-                    <Avatar src={profilepic}></Avatar>
+                <Paper onClick={()=>setActiveChat(ele)}>
+                <div className={ele == ActiveChat ? "chat-thumbnail Active-chat-thumbnail":"chat-thumbnail"}>
+                    <Avatar src={sonu}></Avatar>
+                    <div>
+                      <p>{ele}</p>
+                      <span>How are you</span>
+                    </div>
+                </div>
+                </Paper>
+              );
+            })
+          }
+          </div> 
+          : 
+       <div className="chats">
+          {
+            chats.map((ele)=>{
+              return (
+                <Paper onClick={()=>setActiveChat(ele)}>
+                <div className={ele == ActiveChat ? "chat-thumbnail Active-chat-thumbnail":"chat-thumbnail"}>
+                    <Avatar src={sonu}></Avatar>
                     <div>
                       <p>{ele}</p>
                       <span>How are you</span>
@@ -83,11 +115,10 @@ const Messenger = () => {
             })
           }
           </div>
-
+      }
           <div className="chat">
-            
+              <Chat></Chat>
           </div>
-      </div>
     </div>
   );
 };

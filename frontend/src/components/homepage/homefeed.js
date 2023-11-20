@@ -7,7 +7,6 @@ const HomeFeed = ()=>{
         {arr.map((ele)=>{
             return (<Post></Post>);
         })}
-
         
     </div>;
 }

@@ -1,6 +1,7 @@
 const { model, Schema } = require("mongoose");
 const mongoose = require('mongoose');
 
+
 const OTP = new Schema({
     otp : Number,
     email : String,

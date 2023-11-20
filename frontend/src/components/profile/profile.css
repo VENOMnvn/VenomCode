@@ -1,6 +1,7 @@
 .profilepage{
     margin-top: 50px;
     width: 100vw;
+    background-color: white;
 }
 .cover-image{
     background-color: rgb(23, 23, 65);
@@ -29,6 +30,7 @@
     height: 100px;
     padding-left: 190px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     border-bottom:1px solid gray ;
     justify-content: space-between;
@@ -46,4 +48,129 @@
 .cover-image-coverup button{
     height: fit-content;
     margin: 0px 15px;
+}
+.profile-page-body{
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 12px 60px;
+}
+.profile-page-body .left span{
+    color: blueviolet;
+    font-weight: 600;
+    padding: 6px;
+    margin-bottom: 6px;
+    border-bottom: 2px solid blueviolet;
+}
+.profile-page-body .about{
+    margin-top: 12px;
+    min-width: 300px;
+    width: 40vw;
+}
+.profile-page-body >.left> p{
+    font-weight: 600;
+    width: max-content;
+    margin:30px 0px;
+}
+.profile-page-body .background{
+    border: 2px solid rgba(211, 211, 211, 0.738);
+    border-radius: 12px;
+    width: 40vw;
+    padding: 8px 0px;
+    display: flex;
+    flex-direction: column;
+}
+.background-row{
+    width: 100%;
+    height: 30px;
+    display: grid;
+    color: gray;
+    grid-template-columns: 2fr 3fr;
+}
+.background-left{
+    border-right: 2px solid rgba(211, 211, 211, 0.638);
+    padding-left: 8px;
+}
+.background-right{
+    color: black;
+    padding-left: 8px;
+}
+.background-right p{
+    background-color: rgb(199, 176, 222);
+    padding: 2px 8px;
+    font-weight: 300;
+    width: max-content;
+    border-radius: 8px;
+}
+@media (width<600px){
+    .cover-image-coverup{
+        height: 150px;
+        justify-content: flex-start;
+    }
+    .cover-image-coverup > button{
+        margin: 0px;
+        justify-self: flex-end;
+    }
+
+    .profile-page-body{
+        padding: 12px;
+    }
+    .profile-page-body .background{
+        width: 95vw;
+        min-width: 100px;
+    }
+    
+
+}
+.profile-page-body > .right{
+    border: 2px solid rgba(211, 211, 211, 0.750);
+    min-width: 250px;
+    width: 400px;
+    height: 250px;
+    border-radius: 10px;
+    margin-top: 50px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 16px;
+    min-height:100px;
+}
+.profile-page-body > .right > :nth-child(1){
+    color: rgb(18, 13, 34);
+    font-weight: 500;
+}
+.profile-page-body > .right > :nth-child(2){
+    margin-top: 6px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.profile-page-body > .right > :nth-child(2) > span{
+   color: white;
+   background-color: teal;
+    border-radius: 6px;
+    padding: 2px 6px;
+}
+.profile-page-post{
+    display: flex;
+    width: 90%;
+    margin: auto;
+    justify-content: center;
+}
+
+.profile-page-post-title{
+    font-size: 32px;
+    font-weight: 600;
+    color: rgb(23, 23, 65);
+    margin:32px auto;
+    background-color: teal;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    align-items: center;
+    padding: 5px 10px;
+    width: 50vw;
 }

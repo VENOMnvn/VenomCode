@@ -26,8 +26,17 @@
     overflow: scroll;
     animation-iteration-count: 1;
 }
+
+@media (width < 750px){
+    .popup{
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
 .popup-header{
  width: 100%;
+ top: 0px;
  padding: 4px 8px;
  display: flex;
  justify-content: flex-end;
@@ -51,4 +60,7 @@
     width: 100%;
     flex: 1 1 auto;
 }
-
+.full-width-popup{
+    width: 100vw;
+    height: 100vh;
+}

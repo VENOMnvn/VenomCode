@@ -33,6 +33,7 @@ body::-webkit-scrollbar{
     flex-direction: column;
     width: 90%;
     gap: 12px;
+    padding: 8px;
     align-items: flex-start;
     justify-content: center;
     height: 100%;
@@ -40,6 +41,7 @@ body::-webkit-scrollbar{
 }
 .post{
  box-sizing: border-box;
+ box-shadow: 2px 0px 8px gray;
  border: 1px solid rgba(216, 216, 216, 0.74);
  border-radius: 10px;
  background-color: white;
@@ -99,13 +101,14 @@ body::-webkit-scrollbar{
     color: gray;
 }
 .post-lower{
-    padding: 8px;
+    padding: 8px 0px;
 }
 .post-lower-group{
     display: flex;
     /* border-top: 1px solid rgba(180, 180, 180, 0.625); */
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
     box-sizing: border-box;
     height: 48px;
 }
@@ -216,4 +219,46 @@ body::-webkit-scrollbar{
 }
 .profile-card-bottom{
     padding: 12px;
+}
+.developerAbout{
+    padding: 12px;
+}
+.post-lower-count{
+    display: flex;
+    gap: 6px;
+    justify-content: space-between;
+    padding: 0px 8px;
+    border-bottom: 1px solid lightgray;
+}
+.comment-edit{
+    display: flex;
+    border-top: 1px solid lightgray;
+    padding: 8px 4px;
+    padding-left: 12px;
+    align-items: center;
+    gap: 12px;
+    background-color: rgba(237, 235, 235, 0.805);
+    flex-wrap: wrap;
+    animation-name: drop;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+    transition: all;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 2px rgba(128, 128, 128, 0.525) inset;
+}
+.comment-edit span{
+    font-weight: 600;
+}
+.comment-edit input{
+    border: 1px solid lightgray;
+    padding: 4px 6px;
+    border-radius: 12px;
+    width: 60%;
+    color:rgb(11, 34, 11);
+    background-color: rgba(237, 235, 235, 0.805);
+    min-width: 80px;
+
+}
+.comment-edit input:active{
+    border: 2px solid teal;
 }

@@ -1,4 +1,4 @@
-import Avatar from '@mui/material/Avatar';
+
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
@@ -7,7 +7,9 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Button from '@mui/material/Button';
 import Badge from '@mui/material/Badge';
+import profile from './../../static/profile.jpeg';
 import ShareIcon from '@mui/icons-material/Share';
+import { Avatar, TextField } from '@mui/material';
 
 
 let s = `// C++ program to implement iterative Binary Search
@@ -58,7 +60,7 @@ const Post = ()=>{
    
     return <div className="post">
     <div className="post-head">
-        <Avatar className="post-head-avatar">N</Avatar>
+        <Avatar src={profile}></Avatar>
         <div className="post-head-details">
             <p>Naveen Chaudhary</p>
             <span>Web Developer</span>
@@ -73,9 +75,15 @@ const Post = ()=>{
         <div>{code.map((ele)=><p>{ele}</p>)}</div>
     </div>
     <div className="post-lower">
-     <div className='post-lower-group'>
+
+
+    <div className='post-lower-count'>
+        <p>234 k <span>Likes</span></p>
+        <p>24 k <span>Comment</span></p>
+    </div>
+
+     <div className='post-lower-group'> 
      <div>
-   
     <Button variant="text" startIcon={<FavoriteBorderIcon></FavoriteBorderIcon>}>Like</Button>
      </div>
      <div>
@@ -87,6 +95,11 @@ const Post = ()=>{
      <div>
     <Button variant="text" startIcon={<ShareIcon></ShareIcon>}>Share</Button>
      </div>
+     </div>
+    
+     <div className='comment-edit'>
+        <span>Comment</span>
+        <input type='text' placeholder='Type here'></input>
      </div>
     </div>
 </div>

@@ -2,53 +2,65 @@ const { model, Schema } = require("mongoose");
 const mongoose = require('mongoose');
 
 const USER = new Schema ({
-    username : String,
-    name: {
-        type: String
+    
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
+    organisation:String,
+    designation:String,
+    email: {
+        type: String,
+        default: null
+    },
+    phone: {
+        type: String,
+        default: null
+    },
+    username: {
+        type: String,
+        required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
-    email :{
-        type: String
+    gender: {
+        type: String,
+        required: true
     },
-    number : {
-        type : Number
+    birthdate: {
+        type: Date,
+        required: true
     },
-    dob : {
-        type : String
+    profilePicture: {
+        type: String,
+        default: null
     },
-    IsServiceProvider : {
-        type : Boolean,
-        default : false
+    skills: {
+        type: [String]
     },
-    profession : {
-        type :String
+    likedPost: {
+        type: [String]
     },
-    isProfileComplete : {
-        type:Boolean
+    following: {
+        type: Array,
     },
-    professionDetails : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "proffesions"
+    followers: {
+        type: [String],
     },
-    location: {
-        type: String
+    country: {
+        type: String,
     },
-    language : {
-        type : Array
-    },
-    rating : {
-        type : Number
-    },
-    rank: {
-        type: Number
-
-    },
-    char : {
-        type :Array
+    city: {
+        type: String,
     }
-});
+
+},{timestamps:true});
 
 const User = mongoose.model("User",USER);
 module.exports = User;

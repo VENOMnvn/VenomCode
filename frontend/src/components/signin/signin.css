@@ -1,0 +1,110 @@
+.login{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    flex-direction: row;
+}
+.login>*{
+    width: 50%;
+    height: 100%;
+    
+}
+.login-box{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.login-box>*{
+    width: 70%;
+}
+.login-box-field{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.login-box-field>input{
+     width: 80%;
+     border: 1px solid lightgray;
+     border-radius: 6px;
+     font-size: 18px;
+     padding: 4px 8px;
+}
+.login-box-title{
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.login-box a{
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.login-box button{
+    height: 50px;
+}
+.login-box-error{
+    color: red;
+    height: 30px;
+}
+
+/* Sigin */
+.signin{
+    background-color: white;
+    width: 100vw;
+    height: (100vh - 65px);
+    margin-top: 50px;
+}
+.stepper{
+    padding:10px 20px;
+}
+.signin-button{
+    display: flex;
+    width: 50vw;
+    justify-content: space-between;
+    gap: 150px;
+    padding: 4px 12px;
+}
+.signin-body{
+    height: 60vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.signin-body>*{
+    width: 50%;
+}
+
+@media (width<850px){
+    .login-side-display{
+        display: none;
+    }
+    .login>*{
+        width: 95%;
+    }
+    .signin-body>*{
+        width: 95%;
+    }
+    .signin-button{
+        width: 75vw;
+    }
+}
+@media (width<500px){
+    .login-box-field{
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 14px;
+        width: 90%;
+    }
+    .login-box-field input{
+        width: 100%;
+    }
+    .signin-button{
+        width: 100vw;
+    }
+}

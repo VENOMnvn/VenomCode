@@ -108,13 +108,13 @@ const Navbar = () => {
         }
 
         <ul className="nav-button">
-          <li className="cursor-pointer">{"Home"}</li>
+          <li className="cursor-pointer" onClick={()=>navigate('/home')}>{"Home"}</li>
           <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
               Problem
           </li>
         </ul>
 
-        {showChat?<PopUp element={<Messenger></Messenger>} cancel={cancel}></PopUp>:""}
+        {showChat?<PopUp element={<Messenger></Messenger>} cancel={cancel} isFull={true}></PopUp>:""}
         <div style={{ flex: 1 }}></div>
         <div
           component="form"
@@ -162,7 +162,7 @@ const Navbar = () => {
 
         {useSelector((state) => state?.user?.user === false) ? (
           <Button>
-            <Link to="/register">{"Signin"}</Link>
+            <Link to="/Login">{"Signin"}</Link>
           </Button>
         ) : (
           <div className="flex gap-x-4">

@@ -1,7 +1,7 @@
 import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
-
+import { Tooltip } from '@mui/material';
 const Filter = () => {
   
     const handleDelete=(e)=>{
@@ -27,7 +27,7 @@ const Filter = () => {
       <TextField label="Labels" color="primary" focused className='filter-input' onKeyDown={handlesubmit} onFilled={handlesubmit} placeholder='i.e. LeetCode'/>
       <div className="filter-bottom">
       {
-        labelArray.map((ele)=><span  onClick={handleDelete}><Chip label={ele} variant="outlined" onDelete={""}></Chip></span>)
+        labelArray.map((ele)=><span  onClick={handleDelete}><Tooltip title={"Delete"}><Chip label={ele} variant="outlined" onDelete={""}></Chip></Tooltip></span>)
       }
       </div>
     </div>
