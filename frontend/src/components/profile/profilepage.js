@@ -6,8 +6,12 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HomeFeed from "../homepage/homefeed";
 import Paper from '@mui/material/Paper';
 import ReplayIcon from '@mui/icons-material/Replay';
+import {useSelector} from 'react-redux';
 
 const Profilepage = () => {
+
+  const user = useSelector(state=>state.user.user);
+
   const [backgroundDetails, setBackgroundDetails] = useState({
     occupation: "Student",
     experience: "3",
@@ -54,7 +58,7 @@ const Profilepage = () => {
             <div className="background-row">
               <div className="background-left">Occupation</div>
               <div className="background-right">
-                <p>{backgroundDetails.occupation}</p>
+                <p>{user?.designation}</p>
               </div>
             </div>
 
@@ -82,14 +86,14 @@ const Profilepage = () => {
             <div className="background-row">
               <div className="background-left">College</div>
               <div className="background-right">
-                <p>{backgroundDetails.college}</p>
+                <p>{user?.organisation}</p>
               </div>
             </div>
 
             <div className="background-row">
               <div className="background-left">Location</div>
               <div className="background-right">
-                <p>{backgroundDetails.location}</p>
+                <p>{user?.city}</p>
               </div>
             </div>
 
@@ -99,7 +103,7 @@ const Profilepage = () => {
             <div>Skills and Languages</div>
             <div>
 
-            {skills.map((ele)=><span>{ele}</span>)}
+            {user?.skills.map((ele)=><span>{ele}</span>)}
 
             </div>
         </div>

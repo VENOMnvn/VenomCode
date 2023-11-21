@@ -58,6 +58,13 @@ const USER = new Schema ({
     },
     city: {
         type: String,
+    },
+    bio:{
+        type:String,
+        default:"I am a Web Developer and I know HTML CSS JS react and many other front end framework and I also study in JSS college"
+    },
+    exp:{
+        type:Number
     }
 
 },{timestamps:true});

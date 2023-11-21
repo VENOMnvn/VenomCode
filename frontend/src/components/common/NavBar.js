@@ -152,30 +152,18 @@ const Navbar = () => {
           <li></li>
         </ul>
 
-        <Button>
-            <Link to="/Login">{"Signin"}</Link>
-          </Button>
+        
 
-        {/* {user === false ? (
+         {user.user === false ? (
           <Button>
             <Link to="/Login">{"Signin"}</Link>
           </Button>
         ) : (
           <div className="flex gap-x-4">
-            <Avatar onClick={() => navigate("/profile")} className="cursor-pointer">{user?.name[0]?.toUpperCase()}</Avatar>
-            <button
-              style={{
-                color: "black",
-                background: "rgb(227 232 240)",
-                borderRadius: "0.6rem",
-                padding: "0 1rem",
-                minWidth: "8rem",
-              }}
-            >
-              Match
-            </button>
+          {console.log(user)}
+            <Avatar sx={{height:"30px","width":"30px"}} onClick={() => navigate("/profile")} className="cursor-pointer">{user?.user?.firstname[0]?.toUpperCase()}</Avatar>
           </div>
-        )} */}
+        )} 
 
       </div>
     </nav>

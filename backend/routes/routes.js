@@ -17,9 +17,9 @@ const router = express.Router();
 
 router.post("/register", userRegisteration); //check
 router.post('/signin',userSignin);
-
 router.post("/login", userLogin);
-// router.post("/send-otp", SendOtp);
+
+
 router.get("/logout", userLogout);
 router.post("/filter", filterFunction);
 
