@@ -2,11 +2,12 @@ const { model, Schema } = require("mongoose");
 const mongoose = require('mongoose');
 
 
-const OTP = new Schema({
+const OTPSchema = new Schema({
     otp : Number,
-    email : String,
-    user: String
+    email : String
+},{
+    timestamps:true
 });
 
-const otp = mongoose.model("otp",OTP);
-module.exports = otp;
+const OTP = mongoose.model("otp",OTPSchema);
+module.exports = OTP;

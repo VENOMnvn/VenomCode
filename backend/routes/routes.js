@@ -1,4 +1,4 @@
-const { userRegisteration } = require("../Controllers/userRegisteration");
+const { userRegisteration,userSignin} = require("../Controllers/userRegisteration");
 const userLogin = require("../Controllers/userLogin");
 const SendOtp = require("../Controllers/SendOtp");
 const userLogout = require("../Controllers/userLogout");
@@ -16,8 +16,10 @@ const router = express.Router();
 
 
 router.post("/register", userRegisteration); //check
+router.post('/signin',userSignin);
+
 router.post("/login", userLogin);
-router.post("/send-otp", SendOtp);
+// router.post("/send-otp", SendOtp);
 router.get("/logout", userLogout);
 router.post("/filter", filterFunction);
 

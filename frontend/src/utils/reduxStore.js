@@ -19,7 +19,4 @@ const appStore = configureStore({
     reducer: persistedReducer
 });
 
-
-
-
 export default appStore;

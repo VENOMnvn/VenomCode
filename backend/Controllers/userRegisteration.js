@@ -2,6 +2,8 @@ const User = require("../MongoDB/UserSchema.js");
 const ProfessionModel = require("../MongoDB/professionSchema.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const OtpService = require('./SendOtp.js');
+const OTP = require('./../MongoDB/OTPschema.js');
 
 const cloudinary = require("cloudinary");
 const { getDataUri } = require("../utils/DataUri.js");
@@ -14,45 +16,111 @@ cloudinary.config({
 const maxAge = 3 * 24 * 60 * 60; // 3 days
 
 
+
 const userRegisteration = async (req,res)=>{
   console.log(req.body);
-
   const {
-    firstname,
-    lastname,
-    organisation,
-    designation,
-    email,
-    phone,
-    username,
-    password,
-    birthdate,
-    skills,
-    country,
-    city
+    email
   }=req.body;
 
   try{
-    const checkuser = User.findOne({email:email});
+    const checkuser = await User.findOne({email:email});
+    
     if(checkuser){
+      console.log("CheckUser:",checkuser,'\n');
       res.send({
         success:false,
-        error:"Email Already Exists"
-      });
-    }else{
-
+        msg:"Email Already Exists"
+      })
+      return;
     }
+
+    const otp = await OtpService.generateOtp();
+    await OtpService.sendByEmail(email,otp);
+    await OTP.deleteMany({email});
+    const otpResponse = await OTP.create({otp,email});
+    console.log(otpResponse);
+
+    res.send({
+      success:true,
+      msg:"OTP successfull"
+    })
+
+    return;
+
   }catch(err){
       res.send({
         success:false,
-        error:err
+        error:err,
+        msg:"Some Error Occured"
       })
   }
-
-  res.send("OK Got it");
 };
 
 
+const userSignin = async (req,res)=>{
+    console.log("=====",req.body);
+    const {
+      email,
+      otp,
+      username,
+      password,
+      firstname,
+      lastname,
+      dob,
+      designation,
+      skills,
+      gender,
+      city,
+      organisation,
+    } = req.body;
+
+    try{ 
+
+        const otpresponse = await OTP.findOne({email});
+        console.log(otpresponse);
+        if(!otpresponse){
+          return;
+        }
+
+
+        if(otpresponse.otp == otp){
+
+          const salt = await bcrypt.genSalt(10);
+          const hashPassword = await bcrypt.hash(password, salt);
+          
+            let user = await User.create({
+              email,
+              username,
+              password:hashPassword,
+              firstname,
+              lastname,
+              dob,
+              gender,
+              designation,
+              skills,
+              city,
+              organisation,
+            });
+            user.password = "Hidden";
+            res.send({
+              success:true,
+              msg:user
+            })
+        }else{
+            res.send({
+              success:false,
+              msg:"OTP invalid"
+            });
+        }
+    }catch(err){
+      console.log(err);
+      res.send({
+        success:false,
+        msg:err
+      })
+    }
+}
 
 // const userRegisteration = async (req, res) => {
 //   console.log("Data Start Here -> ", req.body, "<- Data End Here");
@@ -288,4 +356,5 @@ module.exports = {
   addDetails,
   uploadDocs,
   addExperience,
+  userSignin
 };

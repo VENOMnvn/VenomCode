@@ -1,20 +1,109 @@
-const transporter = require('../config/emailConfig.js');
+const nodemailer = require('nodemailer');
+const { profileComplete } = require('./userRegisteration');
+// method for generating otp and sending it
+// through email or phone number
+const htmlToSend = ``;
 
-const SendOtp = async (req, res) => {
-    const { email } = req.body
-    if (email) {
-        //send Email
-        let info = await transporter.sendMail({
-            from: process.env.EMAIL_FROM,
-            to: email,
-            subject: "OTP from backend",
-            html: `<h1>Sample OTP: 123456 </h1>`
-        });
-        res.send({ "status": "success", "message": "otp sent on mail" })
+class OtpService {
+    async generateOtp() {
+        //   const otp=`${Math.floor(100000+Math.random() * 99999)}`;
+        const otp = `${Math.floor(Math.random() * (999999 - 100000)) + 100000}`;
+        console.log(otp, "Generate");
+        return otp;
     }
-    else {
-        res.send({ "status": "fail", "message": "enter email" })
+    // sending through phone using twilio
+    async sendBySms(phone, otp) {
+        return await twilio.messages.create({
+            to: `+91${phone}`,
+            from: SMS_FROM_NUMBER,
+            body: `Your BlaccSckull register OTP is ${otp}`,
+        });
+    }
+
+    //sending by email using node mailer
+    async sendByEmail(email, otp) {
+        console.log("Email", email,otp);
+        
+        var transporter = nodemailer.createTransport({
+            // service: 'godaddy',
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.SENDER_EMAIL,
+                pass: process.env.SENDER_PASSWORD
+            }
+        });
+
+        var mailOptions = {
+            from: process.env.SENDER_EMAIL,
+            to: email,
+            subject: `Your OTP for Signin `,
+            html:`<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>OTP</title>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+                <style>
+                    body{
+                        font-family: "Poppins",'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        color:white;
+                    }
+                    .outer{
+                        background-color: teal;
+                        color: white;
+                        max-width: 500px;
+                        margin: auto;
+                        border-radius: 8px;
+                        padding: 40px;
+                    }
+                    .outer > *{
+                        width: max-content;
+                    }
+                    p{
+                        font-size: 24px;
+                    }
+                    .otp{
+                        font-size: 32px;
+                        font-weight: 700;
+                        padding: 8px 12px;
+                        margin: 6px ;
+                        border: 1px solid lightgray;
+                        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                    }
+                    *{
+                        color:white;
+                    }
+                </style>
+            </head>
+            <body>
+                    <div class="outer">
+                        <p>Welcome</p>
+                        <span>We Delight to see you</span>
+                        <br>
+                        <span>Your OTP for VenomCode is </span>
+                        <div class="otp">${otp}</div>
+                        <span>Do not Share your OTP</span>
+                        <br>
+                        <span>regards : Naveen Chaudahary</span>
+                    </div>
+                    
+            </body>
+            </html>`
+        };
+        try {
+            const info = await transporter.sendMail(mailOptions);
+            //   console.log(info);
+        } catch (error) {
+            console.log(error);
+            console.log(error.message, "While send email");
+        }
     }
 }
 
-module.exports = SendOtp
+
+module.exports = new OtpService();

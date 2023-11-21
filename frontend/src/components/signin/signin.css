@@ -34,6 +34,13 @@
      font-size: 18px;
      padding: 4px 8px;
 }
+.login-box-field select{
+    width: 80%;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    font-size: 18px;
+    padding: 4px 8px;
+}
 .login-box-title{
     font-size: 32px;
     margin-bottom: 10px;
@@ -54,13 +61,16 @@
 
 /* Sigin */
 .signin{
+    
     background-color: white;
     width: 100vw;
-    height: (100vh - 65px);
+    height: calc(100vh - 65px);
+    /* min-height: 100vh; */
     margin-top: 50px;
 }
 .stepper{
-    padding:10px 20px;
+    padding:30px 20px;
+    padding-bottom: 30px;
 }
 .signin-button{
     display: flex;
@@ -70,7 +80,8 @@
     padding: 4px 12px;
 }
 .signin-body{
-    height: 60vh;
+    height: max-content;
+    padding-bottom: 10px;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
@@ -106,5 +117,97 @@
     }
     .signin-button{
         width: 100vw;
+    }
+}
+
+.skills-array{
+    height: 40px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2px;
+    align-items: center;
+    /* box-shadow: -2px 0px 4px lightgray inset; */
+    border-radius: 5px;
+    border:1px solid lightgray ;
+    box-sizing: border-box;
+    overflow-x: scroll;
+}
+.login-side-display{
+    background-color: lightgray;
+    animation-name: fade;
+    animation-iteration-count: infinite;
+    transition: all;
+    animation-duration: 3s;
+}
+
+@keyframes fade{
+    0%{
+        background-color: lightgray;
+    }
+    50%{
+        background-color: rgb(187, 187, 187);
+    }
+    100%{
+        background-color: lightgray;
+    }
+    
+}
+.otp{
+
+    background-color: white;
+    margin: 20px auto;
+    width: 98vw;
+    max-width: 500px;
+}
+.otp-inbox{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+.otp-inbox input{
+    border: 1px solid lightgray;
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    justify-content: center;
+    border-radius: 6px;
+}
+.otp>div{
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 50px;
+}
+.otp>button{
+    margin: auto;
+}
+.otp>p{
+    margin-bottom: 10px;
+}
+.login-side-display{
+    background-color: transparent;
+    background-image: url('./../../static/bg.jpg');
+    transition: all;
+    transition-duration: 0.5s;
+    transition-property: inherit;
+    background-size: cover;
+    animation-name: fading;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+}
+@keyframes fading{
+    0%{
+        background-image: url('./../../static/bg.jpg');
+    }
+    33%{
+        background-image: url('./../../static/bg1.jpg');
+    }
+    66%{
+        background-image: url('./../../static/bg2.jpg');
+    }
+    99%{
+        background-image: url('./../../static/bg.jpg');
     }
 }

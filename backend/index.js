@@ -5,7 +5,7 @@ const routes = require('./routes/routes.js')
 const { notFound, errorHandler } = require('./middleware/errorMiddleware.js');
 const cookieParser = require('cookie-parser')
 const app = express();
-const port = process.env.PORT || 4004;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -13,7 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
 // DataBase Connection
-// connectdb();
+connectdb();
+
 
 app.get("/", (req, res) => {
     res.send("working");

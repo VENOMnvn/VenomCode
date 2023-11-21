@@ -17,7 +17,7 @@ import Badge from '@mui/material/Badge';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const user = useSelector(state=>state.user.user);
+  const user = useSelector(state=>state.user);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [showChat,setChat] = useState(false);
@@ -26,13 +26,6 @@ const Navbar = () => {
     setChat(false);
   }
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <nav className="navbar-container">
@@ -159,14 +152,17 @@ const Navbar = () => {
           <li></li>
         </ul>
 
+        <Button>
+            <Link to="/Login">{"Signin"}</Link>
+          </Button>
 
-        {useSelector((state) => state?.user?.user === false) ? (
+        {/* {user === false ? (
           <Button>
             <Link to="/Login">{"Signin"}</Link>
           </Button>
         ) : (
           <div className="flex gap-x-4">
-            <Avatar onClick={() => navigate("/profile")} className="cursor-pointer">{user?.name[0].toUpperCase()}</Avatar>
+            <Avatar onClick={() => navigate("/profile")} className="cursor-pointer">{user?.name[0]?.toUpperCase()}</Avatar>
             <button
               style={{
                 color: "black",
@@ -179,7 +175,8 @@ const Navbar = () => {
               Match
             </button>
           </div>
-        )}
+        )} */}
+
       </div>
     </nav>
   );
