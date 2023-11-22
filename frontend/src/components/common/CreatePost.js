@@ -5,12 +5,20 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Chip from '@mui/material/Chip';
-import { Button } from "@mui/material";
+import { Button, LinearProgress } from "@mui/material";
+import { useSelector } from "react-redux";
+import axios from 'axios'
+import path from './../../path';
+import {useNavigate} from 'react-router-dom';
 
-const CreatePost = () => {
+const CreatePost = ({cancel}) => {
 
-  const [title,setTitle] = useState("");
-  const [code,setCode] = useState("");
+  const [title,setTitle] = useState(false);
+  const user = useSelector(s=>s.user.user);
+  const [code,setCode] = useState(false);
+  const navigate = useNavigate();
+  const [load,setload] = useState(false);
+  const [success,setSuccess] = useState(false);
 
   const handleDelete=(e)=>{
     console.log(e);
@@ -18,7 +26,7 @@ const CreatePost = () => {
     setLabelArray(result);
 }
 
-    const [label,setLabelArray] = useState(["Leetcode"]);
+    const [label,setLabelArray] = useState(["DSA"]);
     
     const handleSubmitLabel = (e)=>{
       if(e.code == "Enter"){
@@ -26,13 +34,41 @@ const CreatePost = () => {
         e.target.value="";
       }
     }
-
+    
     const handleSubmit = async ()=>{
+      if(!user){
+        return;
+      }
+        setload(true);
+        const response = await axios.post(`${path}sharepost`,{
+          label,title,code,user:user?._id
+        });
+        console.log(response);
         
+        if(response.data.success){
+          console.log("Navigating now")
+          navigate("/home");
+          setSuccess(true);
+          setTimeout(()=>{
+            setSuccess(false);
+            cancel();
+          },1000);
+        }else{
+          alert("Some Error Occured Please Try Again later");
+        }
+        setload(false);
     };
 
   return (
     <div className="create-post-popup">
+    {
+      load && <LinearProgress></LinearProgress>
+    }
+    {
+      success ? <div className="success">Success</div>
+      :
+      <>
+
       <div className="create-header">
         <div className="create-header-left">
           <Avatar sx={{ width: "50px", height: "50px", bgcolor: "teal" }}>
@@ -87,8 +123,10 @@ const CreatePost = () => {
       </div>
 
       <div className="submit-post">
-        <Button variant="outlined" onClick={handleSubmit}>Upload</Button>
+        <Button variant="outlined" onClick={handleSubmit} disabled={load}>Upload</Button>
       </div>
+      </>
+    }
     </div>
   );
 };

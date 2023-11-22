@@ -9,6 +9,7 @@ import Messenger from './components/chat/Messengers';
 import Profilepage from './components/profile/profilepage';
 import Signin from './components/signin/Signin';
 import Login from './components/signin/Login';
+import axios from 'axios';
 import NavbarSimple from './components/common/NavBar-simple';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
    }
   },[location]);
 
+  
  
   return (
     <div className="App">
@@ -36,7 +38,8 @@ function App() {
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/chat" element={<PopUp element={<Messenger></Messenger>} cancel={()=>navigate("/")} isFull={true}></PopUp>}></Route>
         <Route path='/home'  element={<Homepage></Homepage>}></Route>
-        <Route path='/' index element={<Profilepage></Profilepage>}></Route>
+        <Route path='/' index  element={<Homepage></Homepage>}></Route>
+        <Route path='/profile'  element={<Profilepage></Profilepage>}></Route>
       </Routes>
     </div>
   );

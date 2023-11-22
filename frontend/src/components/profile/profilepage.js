@@ -33,7 +33,7 @@ const Profilepage = () => {
       <div className="cover-image-coverup">
         <div>
           <div>Naveen Chaudhary</div>
-          <p>Web Developer</p>
+          <p>{}</p>
         </div>
         <Button
           variant="outlined"

@@ -12,7 +12,7 @@ const CreatePost = ()=>{
     }
 
     return <div className="create-post">
-        {showPopUp?<Popup cancel={cancel} element={<CreatePostPopup></CreatePostPopup>}></Popup>:""}
+        {showPopUp?<Popup cancel={cancel} element={<CreatePostPopup cancel={cancel}></CreatePostPopup>}></Popup>:""}
         <h1 style={{fontWeight:"600",fontSize:"16px"}}>Want to share something</h1>
         <h6>Help ro build a community</h6>
         <Button variant="contained" onClick={()=>setshowPopUp(true)}>Share Code</Button>

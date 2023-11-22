@@ -8,16 +8,22 @@ const { profileComplete } = require("../Controllers/userRegisteration");
 const { addExperience } = require("../Controllers/userRegisteration");
 const { addDetails } = require("../Controllers/userRegisteration");
 const { uploadDocs } = require("../Controllers/userRegisteration");
+const {sharePost,getPosts}  = require("./../Controllers/post");
 
 const { upload } = require("../middleware/multerConfig");
 
 const express = require("express");
+const User = require("../MongoDB/UserSchema");
 const router = express.Router();
 
 
 router.post("/register", userRegisteration); //check
 router.post('/signin',userSignin);
 router.post("/login", userLogin);
+router.post("/sharepost",sharePost);
+router.get('/post',getPosts);
+
+
 
 
 router.get("/logout", userLogout);
