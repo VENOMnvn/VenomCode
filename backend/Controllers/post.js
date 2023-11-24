@@ -10,13 +10,14 @@ const sharePost = async (req,res)=>{
     if(user){
 
           try{
+            console.log("User At Creation Post",user);
             const postCreationResponse = await POSTS.create({
                 user,
                 postCode:code,
                 title,
                 label
             });
-            console.log(postCreationResponse);
+           
             res.send({
                 success:true,
                 response:postCreationResponse
@@ -37,18 +38,45 @@ const sharePost = async (req,res)=>{
     }
 }
 
-
 const getPosts = async (req,res)=>{
     try{
-        
+
         const page = req.query.page;
         const limit = req.query.limit;
-        const response = await POSTS.find().limit(limit).skip(page);
+        console.log(page,limit);
+        const response = await POSTS.find().limit(limit).skip(page*limit);
         res.send(response);
-
+        
     }catch(err){
 
     }
 };
 
-module.exports = {sharePost,getPosts};
+const addLike = async (req,res)=>{
+    console.log(req.body);
+    try{
+        const post = await POSTS.findById(req.body.post);
+        console.log(post);
+        post.likes.push(req.body.user);
+        await post.save();
+    }
+    catch(err){
+        res.send(err);
+    }
+};
+
+
+const postFilter = async (req,res)=>{
+    const {filter} = req.body;
+    try{
+        const page = req.query.page;
+        const limit = req.query.limit;
+        console.log(page,limit);
+        const response = await POSTS.find({label:{$in:filter}}).limit(limit).skip(page*limit);
+        res.send(response);
+    }catch(err){
+
+    }
+};
+
+module.exports = {sharePost,getPosts,addLike,postFilter};

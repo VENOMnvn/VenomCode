@@ -41,18 +41,26 @@ const CreatePost = ({cancel}) => {
       }
         setload(true);
         const response = await axios.post(`${path}sharepost`,{
-          label,title,code,user:user?._id
+          label,title,code,user:{
+            _id : user._id,
+            firstname:user.firstname,
+            lastname:user.lastname,
+            designation:user.designation,
+            profilePicture:"URL"
+          }
         });
+        
         console.log(response);
         
         if(response.data.success){
           console.log("Navigating now")
           navigate("/home");
-          setSuccess(true);
-          setTimeout(()=>{
-            setSuccess(false);
-            cancel();
-          },1000);
+          // setSuccess(true);
+          // setTimeout(()=>{
+          //   setSuccess(false);
+          //   cancel();
+          // },1000);
+          
         }else{
           alert("Some Error Occured Please Try Again later");
         }

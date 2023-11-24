@@ -7,14 +7,10 @@ import HomeFeed from "../homepage/homefeed";
 import Paper from '@mui/material/Paper';
 import ReplayIcon from '@mui/icons-material/Replay';
 import {useSelector} from 'react-redux';
-import EditIcon from '@mui/icons-material/Edit';
-import PopUp from "../common/popup";
-import EditProfile from "./EditProfile";
 
-const Profilepage = () => {
+const UserProfilepage = () => {
 
   const user = useSelector(state=>state.user.user);
-  const [show,setshow] = useState(false);
 
   const [backgroundDetails, setBackgroundDetails] = useState({
     occupation: "Student",
@@ -25,15 +21,10 @@ const Profilepage = () => {
     location: "Noida",
   });
 
-  const editPop = ()=>{
-    setshow(true);
-  };
-  
   const [skills,setSkills] = useState(["C++","JavaScript","ES6","React","Redux","C","HTML","CSS","NodeJS","ExpresJS","MongoDB"]);
 
   return (
     <div className="profilepage">
-    {show && <PopUp cancel={()=>setshow(false) } element={<EditProfile></EditProfile>}></PopUp>}
       <div className="cover-image">
         <div className="profile-pic">
           <Avatar src={profilepic}></Avatar>
@@ -42,15 +33,14 @@ const Profilepage = () => {
       <div className="cover-image-coverup">
         <div>
           <div>Naveen Chaudhary</div>
-          <p>{user?.designation}</p>
+          <p>{}</p>
         </div>
         <Button
           variant="outlined"
           className="addFreind"
-          startIcon={<EditIcon></EditIcon>}
-          onClick={editPop}
+          startIcon={<PersonAddIcon></PersonAddIcon>}
         >
-          Edit
+          Add Friend
         </Button>
       </div>
 
@@ -132,4 +122,4 @@ const Profilepage = () => {
   );
 };
 
-export default Profilepage;
+export default UserProfilepage;

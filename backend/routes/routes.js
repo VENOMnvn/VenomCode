@@ -8,7 +8,8 @@ const { profileComplete } = require("../Controllers/userRegisteration");
 const { addExperience } = require("../Controllers/userRegisteration");
 const { addDetails } = require("../Controllers/userRegisteration");
 const { uploadDocs } = require("../Controllers/userRegisteration");
-const {sharePost,getPosts}  = require("./../Controllers/post");
+const {editprofile} = require("./../Controllers/profile");
+const {sharePost,getPosts,addLike,postFilter}  = require("./../Controllers/post");
 
 const { upload } = require("../middleware/multerConfig");
 
@@ -21,9 +22,10 @@ router.post("/register", userRegisteration); //check
 router.post('/signin',userSignin);
 router.post("/login", userLogin);
 router.post("/sharepost",sharePost);
-router.get('/post',getPosts);
-
-
+router.get('/posts',getPosts);
+router.post('/addlike',addLike);
+router.post('/postfilter',postFilter);
+router.post('/editprofile',editprofile);
 
 
 router.get("/logout", userLogout);

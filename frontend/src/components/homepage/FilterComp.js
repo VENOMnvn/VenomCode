@@ -2,21 +2,23 @@ import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { Tooltip } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFilter,removeFilter } from '../../utils/slices/utilitySlice';
 const Filter = () => {
   
+  const filters = useSelector(state=>state.utility.filter);
+  const dispatch = useDispatch();
+
     const handleDelete=(e)=>{
         console.log(e.target.innerHTML);
-        const result = labelArray.filter((ele)=>ele != e.target.innerHTML);
-        setLabelArray(result);
+        dispatch(removeFilter(e.target.innerHTML));
     }
 
-    const [labelArray,setLabelArray] = useState(["LeetCode","HackerRank"]);
     const handlesubmit= (e)=>{
       if(e.key=="Enter"){
-        setLabelArray([...labelArray,e.target.value]);
+        dispatch(addFilter(e.target.value));
         e.target.value="";
       }
-
     };
 
   return (
@@ -27,7 +29,7 @@ const Filter = () => {
       <TextField label="Labels" color="primary" focused className='filter-input' onKeyDown={handlesubmit} onFilled={handlesubmit} placeholder='i.e. LeetCode'/>
       <div className="filter-bottom">
       {
-        labelArray.map((ele)=><span  onClick={handleDelete}><Tooltip title={"Delete"}><Chip label={ele} variant="outlined" onDelete={""}></Chip></Tooltip></span>)
+        filters.map((ele)=><span  onClick={handleDelete}><Tooltip title={"Delete"}><Chip label={ele} variant="outlined" onDelete={""}></Chip></Tooltip></span>)
       }
       </div>
     </div>

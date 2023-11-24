@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const postS = new Schema ({
     user:{
-      type:mongoose.ObjectId
+      type:Object
     },
     postCode:{
         type:String

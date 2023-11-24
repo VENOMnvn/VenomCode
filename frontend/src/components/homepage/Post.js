@@ -8,8 +8,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Button from '@mui/material/Button';
 import Badge from '@mui/material/Badge';
 import profile from './../../static/profile.jpeg';
+import axios from 'axios';
+import path from '../../path';
 import ShareIcon from '@mui/icons-material/Share';
 import { Avatar, TextField } from '@mui/material';
+import { useSelector } from 'react-redux';
+
+
 
 
 let s = `// C++ program to implement iterative Binary Search
@@ -53,25 +58,48 @@ int main(void)
 }
 `;
 
-const Post = ()=>{
+const Post = ({data})=>{
 
-    
-    const code = s.split(/\n/g);
    
+    const code = data ? data.postCode?.split(/\n/g) : s.split(/\n/g);
+    const [time,setTime] = React.useState("");
+    const user = useSelector(s=>s.user.user);
+
+    React.useEffect(()=>{
+        const date1 = new Date();
+        const date2 = new Date(data.createdAt);
+        const diffTime = Math.abs(date2 - date1); 
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        const diffMins = Math.ceil(diffTime/(1000*60));
+        if(diffMins>60){
+            setTime(diffDays+" Hours Ago");
+        }else{
+            setTime(diffMins+" mins Ago");
+        }
+
+    },[]);
+
+    const addLike = async ()=>{
+        const response = axios.post(`${path}addlike`,{
+            user:user._id,
+            post:data._id
+        })
+    };
+
     return <div className="post">
     <div className="post-head">
         <Avatar src={profile}></Avatar>
         <div className="post-head-details">
-            <p>Naveen Chaudhary</p>
-            <span>Web Developer</span>
-            <span>14 ha go</span>
+            <p>{data?.user?.firstname+" "+data?.user?.lastname}</p>
+            <span>{data?.user?.designation}</span>
+            <span>{time}</span>
         </div>
         <div className="post-head-tools">
             <MoreHorizIcon></MoreHorizIcon>
         </div>
     </div>
     <div className="post-body">
-        <span>Binary Search in 2 lines</span>
+        <span>{data.title}</span>
         <div>{code.map((ele)=><p>{ele}</p>)}</div>
     </div>
     <div className="post-lower">
@@ -84,7 +112,7 @@ const Post = ()=>{
 
      <div className='post-lower-group'> 
      <div>
-    <Button variant="text" startIcon={<FavoriteBorderIcon></FavoriteBorderIcon>}>Like</Button>
+    <Button variant="text" startIcon={<FavoriteBorderIcon></FavoriteBorderIcon>} onClick={addLike}>Like</Button>
      </div>
      <div>
     <Button variant="text" startIcon={<CommentIcon></CommentIcon>}>Comment</Button>

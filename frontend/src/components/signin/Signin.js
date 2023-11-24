@@ -236,6 +236,8 @@ const Signin = () => {
 
               <div className="login-box-error">{error}</div>
             </div>
+
+            
             <div className="login-side-display"></div>
           </>
         ) : // second panel

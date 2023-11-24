@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import PopUp from "./popup";
 import Messenger from "../chat/Messengers";
 import Badge from '@mui/material/Badge';
+import logo from './../../static/logocircle.png';
 
 
 const Navbar = () => {
@@ -39,7 +40,7 @@ const Navbar = () => {
         >
           <li>
           {
-            // <img src={siteicon} alt="LegalServices" width={"33px"} />
+            <img src={logo} alt="VenomCode" width={"33px"} />
           }
           </li>
           <li>

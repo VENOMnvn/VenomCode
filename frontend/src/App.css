@@ -4,3 +4,42 @@ body ::-webkit-scrollbar{
 body{
     background-color: #f4f2ee;
 }
+
+.loader {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0px;
+    flex-direction: column;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.468);
+  }
+
+.loader img{
+      width: 250px;
+      height: 250px;
+      animation-name: animloader;
+      animation-iteration-count: infinite;
+      animation-duration: 2s;
+}
+
+  @keyframes animloader {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);  
+    }
+  }
+
+.centerAll{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
