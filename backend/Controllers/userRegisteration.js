@@ -17,6 +17,7 @@ const maxAge = 3 * 24 * 60 * 60; // 3 days
 
 
 
+
 const userRegisteration = async (req,res)=>{
   console.log(req.body);
   const {
@@ -80,9 +81,9 @@ const userSignin = async (req,res)=>{
         const otpresponse = await OTP.findOne({email});
         console.log(otpresponse);
         if(!otpresponse){
+          
           return;
         }
-
 
         if(otpresponse.otp == otp){
 
@@ -117,7 +118,8 @@ const userSignin = async (req,res)=>{
       console.log(err);
       res.send({
         success:false,
-        msg:err
+        msg:"some Network Error",
+        err
       })
     }
 }
@@ -224,6 +226,34 @@ const userSignin = async (req,res)=>{
 //   }
 // };
 
+
+const getUserName = async (req,res)=>{
+  try{
+    const {user} = req.query;
+    console.log(user);
+    const isValid = await User.findOne({username:user});
+    if(isValid){
+      res.send({
+        isUserUnique:false
+      })
+      return;
+    }
+
+    res.send({
+      isUserUnique:true
+    });
+    
+  }catch(err){
+    console.log(err);
+    res.send({
+      isUserUnique:false,
+      success:false,
+      res:err
+    })
+  }
+
+
+};
 const addDetails = async (req, res) => {
   const { adharNo, panNo, licenseNo, barCouncilNo, officeAddress } = req.body;
   console.log("Aadhar No:", adharNo);
@@ -356,5 +386,6 @@ module.exports = {
   addDetails,
   uploadDocs,
   addExperience,
-  userSignin
+  userSignin,
+  getUserName
 };

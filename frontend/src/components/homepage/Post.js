@@ -10,9 +10,11 @@ import Badge from '@mui/material/Badge';
 import profile from './../../static/profile.jpeg';
 import axios from 'axios';
 import path from '../../path';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 import ShareIcon from '@mui/icons-material/Share';
-import { Avatar, TextField } from '@mui/material';
+import { Avatar, TextField, Tooltip } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 
 
@@ -64,6 +66,8 @@ const Post = ({data})=>{
     const code = data ? data.postCode?.split(/\n/g) : s.split(/\n/g);
     const [time,setTime] = React.useState("");
     const user = useSelector(s=>s.user.user);
+    const [likes,setLikes] = useState(data?.likes?.length);
+    const [commentInputshow,setCommentInput] = React.useState(false);
 
     React.useEffect(()=>{
         const date1 = new Date();
@@ -71,6 +75,7 @@ const Post = ({data})=>{
         const diffTime = Math.abs(date2 - date1); 
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
         const diffMins = Math.ceil(diffTime/(1000*60));
+    
         if(diffMins>60){
             setTime(diffDays+" Hours Ago");
         }else{
@@ -80,10 +85,13 @@ const Post = ({data})=>{
     },[]);
 
     const addLike = async ()=>{
-        const response = axios.post(`${path}addlike`,{
+        const response = await axios.post(`${path}addlike`,{
             user:user._id,
             post:data._id
-        })
+        });
+        if(response.data.success){
+            setLikes(likes+1);
+        }
     };
 
     return <div className="post">
@@ -106,8 +114,12 @@ const Post = ({data})=>{
 
 
     <div className='post-lower-count'>
-        <p>234 k <span>Likes</span></p>
-        <p>24 k <span>Comment</span></p>
+        <Tooltip>
+        <p>{likes+" "}<span>Likes</span></p>
+        </Tooltip>
+        <Tooltip title='see Comments'>
+        <p>{data.comments?.length+" "}<span><CommentIcon sx={{color:"gray"}}></CommentIcon></span></p>
+        </Tooltip>
     </div>
 
      <div className='post-lower-group'> 
@@ -115,7 +127,9 @@ const Post = ({data})=>{
     <Button variant="text" startIcon={<FavoriteBorderIcon></FavoriteBorderIcon>} onClick={addLike}>Like</Button>
      </div>
      <div>
-    <Button variant="text" startIcon={<CommentIcon></CommentIcon>}>Comment</Button>
+     <Tooltip title="add comment">
+     <Button variant="text" startIcon={<AddCommentIcon></AddCommentIcon>} onClick={()=>setCommentInput(!commentInputshow)}>Comment</Button>
+     </Tooltip>
      </div>
      <div>
     <Button variant="text" startIcon={<BookmarkBorderIcon></BookmarkBorderIcon>}>Save</Button>
@@ -124,11 +138,15 @@ const Post = ({data})=>{
     <Button variant="text" startIcon={<ShareIcon></ShareIcon>}>Share</Button>
      </div>
      </div>
-    
-     <div className='comment-edit'>
+    {
+        commentInputshow ? <div className='comment-edit'>
         <span>Comment</span>
         <input type='text' placeholder='Type here'></input>
-     </div>
+        </div>
+        :""
+    }
+     
+
     </div>
 </div>
 }

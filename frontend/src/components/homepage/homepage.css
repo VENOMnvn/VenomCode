@@ -7,6 +7,7 @@
 .left-homepage{
    
 }
+
 .center-homepage{
     display: flex;
     box-sizing: border-box;
@@ -115,26 +116,7 @@ body::-webkit-scrollbar{
 .post-lower-group>*{
     z-index: 0;
 }
-@media (width<750px) {
-    .left-homepage {
-        display: none;
-    }
-    
-    .right-homepage{
-        display: none;
-    }
-    .center-homepage{
-        width: 90%;
-    }
-}
-@media (width<480px){
-    .center-homepage{
-        width: 100%;
-    }
-    .post-lower-group div{
-        transform: scale(0.8);
-    }
-}
+
 .create-post{
     background-color: white;
     border-radius:12px;
@@ -228,6 +210,7 @@ body::-webkit-scrollbar{
     gap: 6px;
     justify-content: space-between;
     padding: 0px 8px;
+    color: gray;
     border-bottom: 1px solid lightgray;
 }
 .comment-edit{
@@ -261,4 +244,50 @@ body::-webkit-scrollbar{
 }
 .comment-edit input:active{
     border: 2px solid teal;
+}
+
+
+.css-1nvnyqx-MuiPaper-root-MuiDrawer-paper>*{
+    width: 98vw;
+    max-width: 1000px;
+    margin: auto;
+}
+
+@media (width<750px) {
+    .left-homepage {
+        display: none;
+    }
+    .right-homepage{
+        display: none;
+    }
+    .center-homepage{
+        width: 90%;
+    }
+    .filter-container{
+        width: 100%;
+    }
+    .profile-card{
+        border: 1px solid gray;
+        width: 100%;
+    }
+    .create-post{
+        width: 100%;
+    }
+}
+
+.drawerOpener{
+    display: none !important;
+    border: 10px solid red;
+}
+
+@media (width<480px){
+    .filter-container{
+        width: 100%;
+    }
+    .center-homepage{
+        width: 100%;
+    }
+    .post-lower-group div{
+        transform: scale(0.8);
+    }
 }

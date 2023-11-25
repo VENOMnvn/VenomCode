@@ -1,6 +1,6 @@
 import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFilter,removeFilter } from '../../utils/slices/utilitySlice';
@@ -13,12 +13,18 @@ const Filter = () => {
         console.log(e.target.innerHTML);
         dispatch(removeFilter(e.target.innerHTML));
     }
+   
 
     const handlesubmit= (e)=>{
+    
+      if(e.target.value.length==0){
+        return;
+      }
       if(e.key=="Enter"){
-        dispatch(addFilter(e.target.value));
+        dispatch(addFilter(e.target.value.toUpperCase()));
         e.target.value="";
       }
+      
     };
 
   return (

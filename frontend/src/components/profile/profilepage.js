@@ -28,7 +28,8 @@ const Profilepage = () => {
   const editPop = ()=>{
     setshow(true);
   };
-  
+  console.log(user);
+
   const [skills,setSkills] = useState(["C++","JavaScript","ES6","React","Redux","C","HTML","CSS","NodeJS","ExpresJS","MongoDB"]);
 
   return (
@@ -36,13 +37,13 @@ const Profilepage = () => {
     {show && <PopUp cancel={()=>setshow(false) } element={<EditProfile></EditProfile>}></PopUp>}
       <div className="cover-image">
         <div className="profile-pic">
-          <Avatar src={profilepic}></Avatar>
+          <Avatar src={user?.profilePicture}></Avatar>
         </div>
       </div>
       <div className="cover-image-coverup">
         <div>
           <div>Naveen Chaudhary</div>
-          <p>{user?.designation}</p>
+          <p>{user?.username}</p>
         </div>
         <Button
           variant="outlined"
@@ -66,7 +67,7 @@ const Profilepage = () => {
           <p>Background</p>
           <div className="background">
             <div className="background-row">
-              <div className="background-left">Occupation</div>
+              <div className="background-left">Designation</div>
               <div className="background-right">
                 <p>{user?.designation}</p>
               </div>
@@ -119,10 +120,12 @@ const Profilepage = () => {
         </div>
       </div>
       <hr style={{marginTop:"12px"}}></hr>
-      <Paper elevation={6} className="profile-page-post-title">
-      Posts
+
+      <div elevation={6} className="profile-page-post-title">
+       Posts
       <ReplayIcon></ReplayIcon>
-      </Paper>
+      </div>
+
       <hr style={{marginTop:"12px"}}></hr>
       <div className="profile-page-post">
       <HomeFeed></HomeFeed>

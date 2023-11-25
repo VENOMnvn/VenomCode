@@ -1,4 +1,4 @@
-const { userRegisteration,userSignin} = require("../Controllers/userRegisteration");
+const { userRegisteration,userSignin,getUserName} = require("../Controllers/userRegisteration");
 const userLogin = require("../Controllers/userLogin");
 const SendOtp = require("../Controllers/SendOtp");
 const userLogout = require("../Controllers/userLogout");
@@ -26,22 +26,11 @@ router.get('/posts',getPosts);
 router.post('/addlike',addLike);
 router.post('/postfilter',postFilter);
 router.post('/editprofile',editprofile);
+router.get('/getusername',getUserName);
 
 
 router.get("/logout", userLogout);
 router.post("/filter", filterFunction);
-
-router.post(
-  "/uploadDocs/:id",
-  upload.fields([
-    { name: "adharImage", maxCount: 1 },
-    { name: "panImage", maxCount: 1 },
-    { name: "licenseImage", maxCount: 1 },
-    { name: "educationalCertificate", maxCount: 1 },
-  ]),
-  uploadDocs
-);
-
 router.post("/addExperience", addExperience);
 router.post("/proffesionalData", profileComplete);
 

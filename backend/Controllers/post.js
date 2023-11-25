@@ -59,12 +59,14 @@ const addLike = async (req,res)=>{
         console.log(post);
         post.likes.push(req.body.user);
         await post.save();
+        res.send({
+            success:true
+        });
     }
     catch(err){
         res.send(err);
     }
 };
-
 
 const postFilter = async (req,res)=>{
     const {filter} = req.body;

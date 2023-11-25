@@ -39,7 +39,7 @@ const USER = new Schema ({
     },
     profilePicture: {
         type: String,
-        default: null
+        default: "http://res.cloudinary.com/dcnvvzsdh/image/upload/v1700839981/venomcode/uh0p4n8yozlo0ptha5ht.png"
     },
     skills: {
         type: [String]
@@ -61,10 +61,11 @@ const USER = new Schema ({
     },
     bio:{
         type:String,
-        default:"I am a Web Developer and I know HTML CSS JS react and many other front end framework and I also study in JSS college"
+        default:"I am a Web Developer and I know HTML CSS JS react and many other front end framework"
     },
     exp:{
-        type:Number
+        type:Number,
+        default:0
     }
 
 },{timestamps:true});

@@ -15,6 +15,9 @@ import axios from "axios";
 import { addUser } from "../../utils/slices/userSlice";
 import {useDispatch} from 'react-redux';
 import LinearProgress from '@mui/material/LinearProgress';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Signin = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -33,6 +36,9 @@ const Signin = () => {
   const [city, setcity] = useState("");
   const [skills, setskills] = useState([]);
   const [load,setload] = useState(false);
+  const [disabled,setDisabled] = useState(true);
+  const [isUserUnique,setUserUnique] = useState(true);
+  const [aSkill,setASkill] = useState("");
   const dispatch = useDispatch();
 
   let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,6 +49,7 @@ const Signin = () => {
       if (e.target.value.length > 0)
         setskills([...skills, e.target.value.toUpperCase()]);
       e.target.value = "";
+      setASkill("");
     }
   };
 
@@ -83,10 +90,12 @@ const Signin = () => {
   };
 
   const handleSubmitOtp = (e)=>{
-     console.log(e.target.value)
+     console.log(e);
+
      if(e.target.value == ''){
       setOtp('');
      }
+
      if(e.target.value.length <=6 && e.target.value.slice(-1)>='0' && e.target.value.slice(-1)<='9'){
       console.log("run")
       setOtp(e.target.value);
@@ -96,12 +105,14 @@ const Signin = () => {
 
   const handleSubmitSignin = async ()=>{
      if(otp.length<6){
+      toast.error("OTP should be 6 digit");
       return;
      }
+
       setload(true);
       try{
 
-        const response = await axios.post(`${path}signin`,{
+          const response = await axios.post(`${path}signin`,{
           email,
           otp,
           username,
@@ -124,6 +135,7 @@ const Signin = () => {
         }
 
         else{
+          toast.error(response.data.msg);
           setError(response.data.msg)
         }
       }
@@ -136,7 +148,8 @@ const Signin = () => {
 
 
   const submitHandler = async () => {
-    if (validate() && isEmpty()) {
+    if (validate() && isEmpty() && isUserUnique) {
+
       setload(true);
       const res = await axios.post(`${path}register`, {
         email
@@ -147,22 +160,38 @@ const Signin = () => {
       }
       setload(false);
     }
+    else{
+      toast.error("Please ! Fill correct details");
+    }
   };
 
+  
 
+  const userNameChangeHandler = async ()=>{
+      try{
+          const response = await axios.get(`${path}getUserName?user=${username}`);
+          console.log(response);
 
+          if(!response.data.isUserUnique){
+            toast.error("Username is not available",{
+              className: "toast-message"
+            });
+          }else{
+            toast.success("Username is available");
+          }
 
-
-
-
-
-
+          setUserUnique(response.data.isUserUnique);
+      }
+      catch(err){
+        toast.error("Error Occured in Fetchin Username");
+      }
+  };
 
 
   return (
     <div className="signin">
     {load && <LinearProgress></LinearProgress>}
-      
+      <ToastContainer></ToastContainer>
       <div className="stepper">
         <Stepper activeStep={activeStep}>
           <Step>
@@ -197,15 +226,19 @@ const Signin = () => {
             {/* First Paenel */}
             <div className="login-box">
               <div className="login-box-title">Welcome</div>
-              <div className="login-box-field">
+              <div className={isUserUnique?"login-box-field":"login-box-field invalid-user"}>
                 <p>Username</p>
                 <input
                   value={username}
-                  onChange={(e) => setusername(e.target.value)}
-                  onBlur={validate}
+                  onChange={(e) => setusername(e.target.value?.toLowerCase())}
+                  onBlur={()=>{ 
+                    validate()
+                    userNameChangeHandler()
+                    }}
                   placeholder="Choose a unique username"
                 ></input>
               </div>
+
               <div className="login-box-field">
                 <p>Email</p>
                 <input
@@ -296,6 +329,8 @@ const Signin = () => {
                 <input
                   onKeyDown={skillselecthandle}
                   placeholder="Type skills and hit Enter"
+                  value={aSkill}
+                  onChange={(e)=>setASkill(e.target.value)}
                 ></input>
               </div>
 

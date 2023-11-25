@@ -10,7 +10,9 @@ import Profilepage from './components/profile/profilepage';
 import Signin from './components/signin/Signin';
 import Login from './components/signin/Login';
 import axios from 'axios';
+import SharePost from './components/common/SharePost';
 import NavbarSimple from './components/common/NavBar-simple';
+import Search from './components/common/Search';
 
 function App() {
 
@@ -39,6 +41,8 @@ function App() {
         <Route path="/chat" element={<PopUp element={<Messenger></Messenger>} cancel={()=>navigate("/")} isFull={true}></PopUp>}></Route>
         <Route path='/home'  element={<Homepage></Homepage>}></Route>
         <Route path='/' index  element={<Homepage></Homepage>}></Route>
+        <Route path='/sharepost' element={<SharePost></SharePost>}></Route>
+        <Route path='/search' element={<Search></Search>}></Route>
         <Route path='/profile'  element={<Profilepage></Profilepage>}></Route>
       </Routes>
     </div>

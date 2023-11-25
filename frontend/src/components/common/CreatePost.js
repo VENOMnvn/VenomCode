@@ -30,7 +30,7 @@ const CreatePost = ({cancel}) => {
     
     const handleSubmitLabel = (e)=>{
       if(e.code == "Enter"){
-        setLabelArray([...label,e.target.value]);
+        setLabelArray([...label,e.target.value?.toUpperCase()]);
         e.target.value="";
       }
     }

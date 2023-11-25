@@ -211,3 +211,11 @@
         background-image: url('./../../static/bg.jpg');
     }
 }
+
+.toast-message{
+    color: blue;
+    background-color: black;
+}
+.invalid-user input{
+    border: 2px solid red;
+}
