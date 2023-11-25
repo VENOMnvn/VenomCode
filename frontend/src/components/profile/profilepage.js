@@ -110,14 +110,14 @@ const Profilepage = () => {
 
           </div>
         </div>
+
         <div className="right">
             <div>Skills and Languages</div>
             <div>
-
             {user?.skills.map((ele)=><span>{ele}</span>)}
-
             </div>
         </div>
+        
       </div>
       <hr style={{marginTop:"12px"}}></hr>
 

@@ -128,7 +128,7 @@
     align-items: center;
     /* box-shadow: -2px 0px 4px lightgray inset; */
     border-radius: 5px;
-    border:1px solid lightgray ;
+    /* border:1px solid lightgray ; */
     box-sizing: border-box;
     overflow-x: scroll;
 }
