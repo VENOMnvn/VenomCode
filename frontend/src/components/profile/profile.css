@@ -124,13 +124,13 @@
     
 
 }
-.profile-page-body > .right{
+.profile-page-body>.right{
     border: 2px solid rgba(211, 211, 211, 0.750);
     min-width: 250px;
     width: 400px;
     height: 100%;
     border-radius: 10px;
-    margin-top: 50px;
+    margin-top: 10px;
     min-height: 250px;
     display: flex;
     flex-direction: column;
@@ -166,7 +166,7 @@
     font-weight: 600;
     color: rgb(23, 23, 65);
     margin:32px auto;
-    background-color: whitesmoke;
+    background-color: white;
     color: black;
     display: flex;
     justify-content: space-between;
@@ -185,12 +185,13 @@
 }
 .preview-Image{
     width: 60%;
-    margin: auto;
-    border: 1px solid teal;
+    border: 1px solid rgb(206, 206, 206);
 }
 .editprofile-div{
     width: 80%;
     display: flex;
+    background-color: whitesmoke;
+    box-shadow: 0px 0px 2px whitesmoke;
     justify-content: space-between;
     border-radius: 6px;
     font-size: 18px;

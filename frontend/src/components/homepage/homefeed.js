@@ -42,15 +42,12 @@ const HomeFeed = ()=>{
             var postData;
 
             if(filters.length>0){
-                console.log("+2");
                  postData = await axios.post(`${path}postfilter?page=${page}&limit=${limit}`,{
                     filter:filters
                 });
             }else{
                  postData = await axios.get(`${path}posts?page=${page}&limit=${limit}`);
             }
-           
-            console.log(postData);
             setPosts(postData.data);
         }catch(err){
             console.log(err);

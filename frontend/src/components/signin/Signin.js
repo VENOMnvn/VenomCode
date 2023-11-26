@@ -5,7 +5,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./signin.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Chip } from "@mui/material";
@@ -40,6 +40,7 @@ const Signin = () => {
   const [isUserUnique,setUserUnique] = useState(true);
   const [aSkill,setASkill] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
@@ -95,7 +96,6 @@ const Signin = () => {
      if(e.target.value == ''){
       setOtp('');
      }
-
      if(e.target.value.length <=6 && e.target.value.slice(-1)>='0' && e.target.value.slice(-1)<='9'){
       console.log("run")
       setOtp(e.target.value);
@@ -132,6 +132,7 @@ const Signin = () => {
         if(response.data.success){
             dispatch(addUser(response.data.msg));
             setError("");
+            navigate('/');
         }
 
         else{
@@ -148,7 +149,8 @@ const Signin = () => {
 
 
   const submitHandler = async () => {
-    if (validate() && isEmpty() && isUserUnique) {
+    // if (validate() && isEmpty() && isUserUnique) {
+      if(1){
 
       setload(true);
       const res = await axios.post(`${path}register`, {

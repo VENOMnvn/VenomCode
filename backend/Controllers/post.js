@@ -1,3 +1,4 @@
+const User = require('../MongoDB/UserSchema');
 const { post } = require('../routes/routes');
 const POSTS = require('./../MongoDB/postSchema');
 
@@ -17,12 +18,16 @@ const sharePost = async (req,res)=>{
                 title,
                 label
             });
-           
+            
+            await User.findOneAndUpdate({username:user.username},{$push:{posts:postCreationResponse._id}});
             res.send({
                 success:true,
                 response:postCreationResponse
             })
+            
+
           }catch(err){
+            console.log(err);
             res.send({
                 success:false,
                 msg:err
@@ -49,6 +54,24 @@ const getPosts = async (req,res)=>{
         
     }catch(err){
 
+    }
+};
+
+const getPost = async (req,res)=>{
+    try{
+        const {postid} = req.body;
+        console.log(req.body);
+        const response = await POSTS.findById(postid);
+        res.send({
+            success:true,
+            data : response
+        });
+
+    }catch(err){
+        console.log(err);
+        res.send({
+            Error:err
+        })
     }
 };
 
@@ -81,4 +104,17 @@ const postFilter = async (req,res)=>{
     }
 };
 
-module.exports = {sharePost,getPosts,addLike,postFilter};
+const setComment = async (req,res)=>{
+    try{
+        const {postid,user,commentText} = req.body;
+        console.log("Comment recieved",req.body);
+        const response = await POSTS.findByIdAndUpdate(postid,{$push:{comments:{comment:commentText,user}}}); 
+        res.send(response);
+    }
+    catch(err){
+        res.send({err:true});
+    }
+
+};
+
+module.exports = {sharePost,getPosts,addLike,postFilter,setComment,getPost};

@@ -58,7 +58,11 @@ column-gap: 1rem;
 }
 .nav-icons>li{
   display: flex;
+  width: 30px;
+  height: 30px;
+  background-color: #e4e6eb;
   align-items: center;
+  border-radius: 50%;
   justify-content: center;
 }
 .userSearch{

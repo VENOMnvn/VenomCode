@@ -13,15 +13,19 @@ import axios from 'axios';
 import SharePost from './components/common/SharePost';
 import NavbarSimple from './components/common/NavBar-simple';
 import Search from './components/common/Search';
+import { useDispatch, useSelector } from 'react-redux';
+import path from './path';
+import { addUser } from './utils/slices/userSlice';
 
 function App() {
 
   const [nav,isNav] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(state=>state.user.user);
 
   useEffect(()=>{
-
    if(location.pathname == '/register' || location.pathname == '/login'){
     isNav(false);
    }
@@ -31,7 +35,6 @@ function App() {
   },[location]);
 
   
- 
   return (
     <div className="App">
     {nav? <Navbar></Navbar>:<NavbarSimple></NavbarSimple>}

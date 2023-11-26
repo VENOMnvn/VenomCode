@@ -1,20 +1,25 @@
 import { Avatar, Button, ButtonBase } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import profilepic from "./../../static/profile.jpeg";
 import "./profile.css";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HomeFeed from "../homepage/homefeed";
 import Paper from '@mui/material/Paper';
 import ReplayIcon from '@mui/icons-material/Replay';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import PopUp from "../common/popup";
+import axios from "axios";
 import EditProfile from "./EditProfile";
+import path from "../../path";
+import { addUserDB } from "../../utils/slices/userSlice";
 
 const Profilepage = () => {
 
   const user = useSelector(state=>state.user.user);
   const [show,setshow] = useState(false);
+  const [userDB,setuserDB] = useState(user);
+  const dispatch = useDispatch();
 
   const [backgroundDetails, setBackgroundDetails] = useState({
     occupation: "Student",
@@ -28,8 +33,29 @@ const Profilepage = () => {
   const editPop = ()=>{
     setshow(true);
   };
-  console.log(user);
 
+  const getUserDetails = async ()=>{
+    if(user){
+      try{
+        const res = await axios.post(`${path}getuserdetails`,{
+          userid : user?._id,
+        });
+        console.log(res);
+        if(res.data.success){
+          setuserDB(res.data.user);
+        
+          dispatch(addUserDB(res.data.user));
+        }
+      }catch(err){
+        console.log(err);
+      }
+    }
+  };
+
+ 
+  useEffect(()=>{
+    getUserDetails();
+  },[]);
   const [skills,setSkills] = useState(["C++","JavaScript","ES6","React","Redux","C","HTML","CSS","NodeJS","ExpresJS","MongoDB"]);
 
   return (
@@ -37,7 +63,7 @@ const Profilepage = () => {
     {show && <PopUp cancel={()=>setshow(false) } element={<EditProfile></EditProfile>}></PopUp>}
       <div className="cover-image">
         <div className="profile-pic">
-          <Avatar src={user?.profilePicture}></Avatar>
+          <Avatar src={userDB?.profilePicture}></Avatar>
         </div>
       </div>
       <div className="cover-image-coverup">
@@ -60,8 +86,9 @@ const Profilepage = () => {
           <span>About</span>
           <div className="about">
             <p>
-              I am a Web Developer and I know HTML CSS JS react and many other
-              front end framework and I also study in JSS college
+            {
+              userDB?.bio
+            }
             </p>
           </div>
           <p>Background</p>
@@ -69,14 +96,14 @@ const Profilepage = () => {
             <div className="background-row">
               <div className="background-left">Designation</div>
               <div className="background-right">
-                <p>{user?.designation}</p>
+                <p>{userDB?.designation}</p>
               </div>
             </div>
 
             <div className="background-row">
               <div className="background-left">Experience</div>
               <div className="background-right">
-                <p>{backgroundDetails.experience}</p>
+                <p>{userDB?.exp}</p>
               </div>
             </div>
 
@@ -107,17 +134,17 @@ const Profilepage = () => {
                 <p>{user?.city}</p>
               </div>
             </div>
-
           </div>
         </div>
 
         <div className="right">
+            
             <div>Skills and Languages</div>
             <div>
-            {user?.skills.map((ele)=><span>{ele}</span>)}
+            {user?.skills?.map((ele)=><span>{ele}</span>)}
             </div>
         </div>
-        
+
       </div>
       <hr style={{marginTop:"12px"}}></hr>
 

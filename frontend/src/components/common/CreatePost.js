@@ -42,7 +42,7 @@ const CreatePost = ({cancel}) => {
         setload(true);
         const response = await axios.post(`${path}sharepost`,{
           label,title,code,user:{
-            _id : user._id,
+            username:user.username,
             firstname:user.firstname,
             lastname:user.lastname,
             designation:user.designation,

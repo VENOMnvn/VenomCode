@@ -22,5 +22,5 @@ const postS = new Schema ({
     }
 },{timestamps:true});
 
-const POSTS = mongoose.model("post",postS);
+const POSTS = mongoose.model("POSTS",postS);
 module.exports = POSTS;

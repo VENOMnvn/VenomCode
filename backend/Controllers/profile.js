@@ -14,18 +14,70 @@ const editprofile = async (req,res)=>{
     try{
         const {profileURL,user} = req.body;
         console.log(req.body);
-
         if(profileURL){
             const responseByUser = await User.findByIdAndUpdate(user,{profilePicture:profileURL});
             res.send(responseByUser);
             return;
         }
-        
         res.send("OKK");
     }catch(err){
         console.log(err);
         res.send({success:false,msg:err});
     }
 };
+const getUserDetails = async (req,res)=>{
+    console.log(req.body);
+    try{
+        const {username,userid} = req.body;
+        if(username){
+            let user = await User.findOne({username}).populate('POSTS');
+            console.log(user);
+            if(user){
+                user.password = "Hidden";
+                user._id = "Hidden";
+                res.send({
+                    success:true,
+                    user:user
+                });
 
-module.exports = {editprofile}
+            }else{
+                res.send({msg:"User Not Found"});
+            }
+            
+        }else if(userid){
+            let user = await User.findById(userid).populate({path:'posts'});
+            if(user){
+                user.password = "Hidden";
+
+                res.send({
+                    success:true,
+                    user:user
+                });
+
+            }else{
+                res.send({msg:"User Not Found"});
+            }
+        }
+        else{
+            res.send("Send Parameters");
+        }
+
+    }catch(err){
+        console.log(err);
+        res.send({err});
+    }
+}
+
+const getUserQuery = async (req,res)=>{
+    const {query} = req.query;
+    console.log(query);
+    try{
+        let users = await User.find({$or:[{firstname:{$regex:new RegExp(query, "i")}},{username:{$regex:new RegExp(query, "i")}}]});
+        res.send({users});
+
+    }catch(err){
+        console.log(err)
+    }
+};
+
+module.exports = {editprofile,getUserDetails,getUserQuery};

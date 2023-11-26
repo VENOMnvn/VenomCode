@@ -36,7 +36,6 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [showChat, setChat] = useState(false);
@@ -184,7 +183,7 @@ const Navbar = () => {
               {"Home"}
             </li>
             <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
-              Problem
+              Followers
             </li>
           </ul>
 
@@ -217,7 +216,7 @@ const Navbar = () => {
               <Tooltip title="Search">
               <IconButton aria-label="delete" onClick={()=>navigate('/search')}>
                 <SearchIcon
-                  sx={{ color: "#1C8765", fontSize: "28px" }}
+                  sx={{ color: "black", fontSize: "28px" }}
                 />
               </IconButton>
               </Tooltip>
@@ -226,15 +225,15 @@ const Navbar = () => {
             <li onClick={() => setChat(true)}>
               <Tooltip title="Message">
                 <IconButton aria-label="delete" className="chat-icon">
-                  <Badge badgeContaent={4} color="primary">
+                  <Badge badgeContent={4} color="primary">
                     <ChatBubbleOutlineRoundedIcon
-                      sx={{ color: "#1C8765", fontSize: "25px" }}
+                      sx={{ color: "black", fontSize: "25px" }}
                     />
                   </Badge>
                 </IconButton>
               </Tooltip>
             </li>
-            <li></li>
+
           </ul>
 
           {user.user === false ? (
@@ -247,7 +246,7 @@ const Navbar = () => {
               <Avatar
                 sx={{ height: "30px", width: "30px" }}
                 onClick={() => navigate("/profile")}
-                src={user.user?.profilePicture}
+                src={user.userDB?.profilePicture || user.user?.profilePicture}
                 className="cursor-pointer"
               ></Avatar>
             </div>

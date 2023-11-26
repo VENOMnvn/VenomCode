@@ -68,7 +68,7 @@ const Login = () => {
     <>
     <div className='login'>
       <div className='login-box'>
-    {load && <LinearProgress></LinearProgress>}
+      {load && <LinearProgress></LinearProgress>}
         <div className='login-box-title'>
             Login to Continue
         </div>

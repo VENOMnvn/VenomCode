@@ -13,6 +13,9 @@ const USER = new Schema ({
     },
     organisation:String,
     designation:String,
+    posts:{
+        type:[{type:mongoose.SchemaTypes.ObjectId,ref:"POSTS"}]
+    },
     email: {
         type: String,
         default: null
@@ -39,7 +42,7 @@ const USER = new Schema ({
     },
     profilePicture: {
         type: String,
-        default: "http://res.cloudinary.com/dcnvvzsdh/image/upload/v1700839981/venomcode/uh0p4n8yozlo0ptha5ht.png"
+        default: "http://res.cloudinary.com/dcnvvzsdh/image/upload/v1700899005/venomcode/i7fz88hriv0uppirfjyu.png"
     },
     skills: {
         type: [String]

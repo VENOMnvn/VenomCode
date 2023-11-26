@@ -39,7 +39,28 @@
  top: 0px;
  padding: 4px 8px;
  display: flex;
- justify-content: flex-end;
+ justify-content:flex-end;
+}
+.popup-header>div{
+    width: 50%;
+    display: flex;
+    font-weight: 600;
+    font-size: 1.2rem;
+    justify-content: flex-end;
+}
+.popup-header>div>div{
+    background-color: rgb(215, 213, 213);
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.popup-header>div>div:hover{
+    background-color: rgb(200, 199, 199);
+    padding: 8px;
+    border-radius: 50%;
+}
+.popup-header img{
+    height:15px;
 }
 @keyframes popUp{
     0%{

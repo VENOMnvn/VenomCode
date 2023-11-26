@@ -1,11 +1,21 @@
 import './popup.css';
-import CancelIcon from '@mui/icons-material/Cancel';
-const PopUp = (properties)=>{
+import cancelIcon from './../ICONS/cancel.png';
 
+const PopUp = (properties)=>{
+    console.log(properties);
     return <div className='popup-container'>
-    <div className={properties.isFull ? "popup full-width-popup":"popup"}>
+    <div className={properties.isFull ? "popup full-width-popup":"popup"}
+    style={{width:properties.wid}}
+    >
         <div className='popup-header'>
-            <CancelIcon sx={{color:"gray"}} onClick={properties.cancel} className='cancel'></CancelIcon>
+           <div>
+                    {properties.heading}
+           </div>
+           <div>
+                <div onClick={properties.cancel}>
+                <img src={cancelIcon}></img>
+                </div>
+           </div>
         </div>
         <div className='popup-body'>
          {properties.element}
