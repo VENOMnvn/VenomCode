@@ -40,7 +40,7 @@ const SearchElement = () => {
     try{
       const response = await axios.get(`${path}getUser?query=${query}`);
       console.log(response);
-
+      setusers(response.data.users);
     }catch(err){
 
     }
@@ -69,20 +69,20 @@ const SearchElement = () => {
 
 
 
-      {users.map((user) => (
+      {users?.map((user) => (
         <div className="search-user">
           <div className="search-avatar">
-            <Avatar></Avatar>
+            <Avatar src={user.profilePicture}></Avatar>
           </div>
           <div className="search-text">
             <div className="search-details">
               <p>
-               Naveen Chaudhary
+               {user.firstname + user.lastname}
               </p>
               <span>
-              {" "}venomnvn{" "}
-              - {" "}SDE{" "}
-              - {""}Agra
+              {" "}{user.username}{" "}
+              - {" "}{user.designation}{" "}
+              - {""}{user.city}
               </span>
             </div>
             <div className="search-button-group">

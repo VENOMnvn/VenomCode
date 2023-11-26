@@ -72,7 +72,7 @@ const getUserQuery = async (req,res)=>{
     const {query} = req.query;
     console.log(query);
     try{
-        let users = await User.find({$or:[{firstname:{$regex:new RegExp(query, "i")}},{username:{$regex:new RegExp(query, "i")}}]});
+        let users = await User.find({$or:[{firstname:{$regex:new RegExp(query, "i")}},{username:{$regex:new RegExp(query, "i")}}]}).select('username firstname lastname profilePicture city designation -_id');
         res.send({users});
 
     }catch(err){
