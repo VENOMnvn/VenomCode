@@ -63,6 +63,24 @@ const Login = () => {
       }
       setload(false);
   };
+
+  const guestLogin = async ()=>{
+    setload(true);
+    
+      const response = await axios.post(`${path}login`,{
+        password:"Naveen1402#$",
+        email:'navi1419naveen@gmail.com'
+      });
+      console.log(response);
+      if(response.data.success){
+          setError("");
+          dispatch(addUser(response.data.user));
+          setload(false);
+          navigate('/');
+      }
+    
+    setload(false);
+  };
     
   return (
     <>
@@ -83,6 +101,7 @@ const Login = () => {
         <div className='login-box-error'>{error}</div>
         <Button fullwidth variant='contained' disabled={disabled} onClick={submitHandler}>Login</Button>
         <div>Dont have an account ? <Link to={'/register'}>Register Yourself</Link> instead</div>
+        <div>Are you a Developer ? <Link onClick={guestLogin}>Guest Login</Link></div>
       </div>
       <div className='login-side-display'></div>
     </div>

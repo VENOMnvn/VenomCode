@@ -1,5 +1,5 @@
 import { Avatar, Button, ButtonBase } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import profilepic from "./../../static/profile.jpeg";
 import "./profile.css";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -7,10 +7,17 @@ import HomeFeed from "../homepage/homefeed";
 import Paper from '@mui/material/Paper';
 import ReplayIcon from '@mui/icons-material/Replay';
 import {useSelector} from 'react-redux';
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import path from "../../path";
+import userill from '../../static/userill.jpg';
 
 const UserProfilepage = () => {
 
-  const user = useSelector(state=>state.user.user);
+  const [user,setuser] = useState("");
+  const [load,setload] = useState(false);
+  const [msg,setmsg] = useState('Loading...');
+  const {id} = useParams();
 
   const [backgroundDetails, setBackgroundDetails] = useState({
     occupation: "Student",
@@ -21,19 +28,45 @@ const UserProfilepage = () => {
     location: "Noida",
   });
 
+  const getUser = async (req,res)=>{
+    try{
+      const response = await axios.post(`${path}getuserdetails`,{
+        username:id
+      });
+      console.log(response);
+      if(response.data.success){
+        setuser(response.data.user);
+      }else{
+        setmsg("User not found")
+      }
+    }catch(err){
+      setmsg("Some Error Occured");
+      console.log(err);
+    }
+  };
+
+  useEffect(()=>{
+    getUser();
+  },[]);
+
+  useEffect(()=>{
+    console.log(user);
+  },[user]);
+  
   const [skills,setSkills] = useState(["C++","JavaScript","ES6","React","Redux","C","HTML","CSS","NodeJS","ExpresJS","MongoDB"]);
 
-  return (
-    <div className="profilepage">
+  return (  <>
+  {user&&!load ?
+  <div className="profilepage">
       <div className="cover-image">
         <div className="profile-pic">
-          <Avatar src={profilepic}></Avatar>
+          <Avatar src={user?.profilePicture}></Avatar>
         </div>
       </div>
       <div className="cover-image-coverup">
         <div>
-          <div>Naveen Chaudhary</div>
-          <p>{}</p>
+          <div>{user?.firstname + " " + user?.lastname}</div>
+          <p>{user?.username}</p>
         </div>
         <Button
           variant="outlined"
@@ -49,8 +82,9 @@ const UserProfilepage = () => {
           <span>About</span>
           <div className="about">
             <p>
-              I am a Web Developer and I know HTML CSS JS react and many other
-              front end framework and I also study in JSS college
+             {
+              user?.bio
+             }
             </p>
           </div>
           <p>Background</p>
@@ -65,7 +99,7 @@ const UserProfilepage = () => {
             <div className="background-row">
               <div className="background-left">Experience</div>
               <div className="background-right">
-                <p>{backgroundDetails.experience}</p>
+                <p>{user?.exp}</p>
               </div>
             </div>
 
@@ -103,23 +137,26 @@ const UserProfilepage = () => {
             <div>Skills and Languages</div>
             <div>
 
-            {user?.skills.map((ele)=><span>{ele}</span>)}
+            {user?.skills?.map((ele)=><span>{ele}</span>)}
 
             </div>
         </div>
       </div>
       <hr style={{marginTop:"12px"}}></hr>
-      <Paper elevation={6} className="profile-page-post-title">
+      <div  className="profile-page-post-title">
       Posts
       <ReplayIcon></ReplayIcon>
-      </Paper>
+      </div>
       <hr style={{marginTop:"12px"}}></hr>
       <div className="profile-page-post">
       <HomeFeed></HomeFeed>
       </div>
-
     </div>
-  );
+  :<div className="fullscreen centerAll">
+             <Avatar src={userill} sx={{width:"200px",height:"200px"}}></Avatar>
+             <p>{msg}</p>
+  </div>} 
+  </>);
 };
 
 export default UserProfilepage;

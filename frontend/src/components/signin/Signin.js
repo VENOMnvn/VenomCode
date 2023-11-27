@@ -131,10 +131,9 @@ const Signin = () => {
 
         if(response.data.success){
             dispatch(addUser(response.data.msg));
-            setError("");
             navigate('/');
+            setError("");
         }
-
         else{
           toast.error(response.data.msg);
           setError(response.data.msg)

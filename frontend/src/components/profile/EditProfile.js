@@ -1,4 +1,4 @@
-import { Button, Tooltip } from "@mui/material";
+import { Button, LinearProgress, Tooltip } from "@mui/material";
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import path from "../../path";
@@ -7,31 +7,37 @@ import Edit from "@mui/icons-material/Edit";
 
 const EditProfile = () => {
   const user = useSelector(s=>s.user.user);
+
   const imageRef = useRef();
   const [imageState, setimageState] = useState("");
   const [image,setImage] = useState("");
   const [exp,setExp] = useState(user.exp);
   const [editExp,seteditExp] = useState(false);
+  const [about,setabout] = useState(user.bio);
+  const [editAbout,seteditAbout] = useState(false);
+
+  const [load,setload] = useState(false);
 
   const submitHandler = async ()=>{
+      setload(true);
       try{
-
         const data = new FormData();
         data.append("file",image);
         data.append("upload_preset","venomcodetrial");
         const imageResponse = await axios.post('http://api.cloudinary.com/v1_1/dcnvvzsdh/image/upload',data);
         console.log(imageResponse);
-
         if(imageResponse.data.url){
           const res = await axios.post(`${path}editprofile`,{profileURL:imageResponse.data.url,
           user:user?._id
           });
           console.log(res);
+          window.location.reload();
         }
 
       }catch(Err){
         console.log(Err);
       }
+      setload(false);
   };
   
   const imageChangeHandler =  (e)=>{
@@ -40,6 +46,7 @@ const EditProfile = () => {
   }
   return (
     <div className="editProfile">
+   
       <div className="login-box">
         <div className="login-box-title">Edit Your Profile</div>
 
@@ -70,8 +77,41 @@ const EditProfile = () => {
         }
 
 
-        <div className="login-box-field">
+         <div className="login-box-field">
           <p>Experience</p>
+          {
+            editExp ? <input type="number" value={exp} onChange={e=>setExp(e.target.value)} placeholder="Enter Your Exprience"></input> 
+            :
+            <>
+          <div className="editprofile-div">{
+            exp
+          }
+          <Tooltip>
+           <Edit sx={{color:"gray"}} onClick={()=>seteditExp(1)}></Edit>
+          </Tooltip>
+          </div>
+            </>
+          }
+        </div>
+
+        <div className="login-box-field">
+          <p>About</p>
+          {
+            editAbout ? <input type="text" value={about} onChange={e=>setabout(e.target.value)} placeholder="Enter Your About"></input> 
+            :
+            <>
+          <div className="editprofile-div">
+          {about}
+          <Tooltip>
+           <Edit sx={{color:"gray"}} onClick={()=>seteditAbout(1)}></Edit>
+          </Tooltip>
+          </div>
+            </>
+          }
+        </div>
+
+        <div className="login-box-field">
+          <p>Designation</p>
           {
             editExp ? <input type="number" value={exp} onChange={e=>setExp(e.target.value)} placeholder="Enter Your Exprience"></input> 
             :
@@ -83,8 +123,9 @@ const EditProfile = () => {
           </div>
             </>
           }
-        
         </div>
+
+
 
 
 
@@ -96,6 +137,9 @@ const EditProfile = () => {
         <Button variant="outlined" onClick={submitHandler}>Upload</Button>
         </div>
       </div>
+      {
+      load && <LinearProgress></LinearProgress>
+    }
     </div>
   );
 };

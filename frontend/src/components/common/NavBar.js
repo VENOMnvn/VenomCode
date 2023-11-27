@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import {
   Button,
   Avatar,
@@ -222,6 +223,21 @@ const Navbar = () => {
               </Tooltip>
             </li>
 
+            {user.user && <li onClick={()=>{
+              localStorage.clear();
+              window.location.reload();
+            }}>
+
+              <Tooltip title="Logout">
+                <IconButton aria-label="delete" className="chat-icon">
+                    <LogoutRoundedIcon
+                      sx={{ color: "black", fontSize: "25px" }}
+                    />
+                </IconButton>
+              </Tooltip>
+            </li>
+            }
+
             <li onClick={() => setChat(true)}>
               <Tooltip title="Message">
                 <IconButton aria-label="delete" className="chat-icon">
@@ -237,9 +253,9 @@ const Navbar = () => {
           </ul>
 
           {user.user === false ? (
-            <Button>
+            <button>
               <Link to="/Login">{"Signin"}</Link>
-            </Button>
+            </button>
           ) : (
             <div className="flex gap-x-4">
               {console.log(user)}

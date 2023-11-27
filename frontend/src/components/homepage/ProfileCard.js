@@ -3,6 +3,7 @@ import React from 'react'
 import profilePic from './../../static/profile.jpeg'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useSelector } from 'react-redux';
+import userill from './../../static/userill.jpg';
 
 const ProfileCard = () => {
     const user = useSelector(s=>s.user.user);
@@ -11,6 +12,7 @@ const ProfileCard = () => {
 
   return (
     <div className='profile-card'>
+       {user?<>
         <div className='profile-card-top'>
         <div>
             <Avatar src={userDB?.profilePicture}>NC</Avatar>
@@ -28,6 +30,28 @@ const ProfileCard = () => {
             <BookmarkIcon sx={{color:"gray"}}></BookmarkIcon>{"  "}
             My items
         </div>
+       </>:<>
+        <div className='profile-card-top'>
+        <div>
+            <Avatar src={userill}></Avatar>
+        </div>
+        </div>
+        <div className='profile-card-details'>
+            <p>About this website</p>
+        </div>
+        <div className='profile-card-followers'>
+            <p>This is a Website to help you in your programming journey</p>
+            <ul>
+                <li>See solutions of famous problems</li>
+                <li>Diffrent platform problems solution at a single place</li>
+
+            </ul>
+        </div>
+        <div className='profile-card-bottom'>
+           <button>Login/Signin</button>
+        </div>
+       
+       </>}
     </div>
   )
 }

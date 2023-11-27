@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CreatePostpopup.css";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
@@ -19,6 +19,12 @@ const CreatePost = ({cancel}) => {
   const navigate = useNavigate();
   const [load,setload] = useState(false);
   const [success,setSuccess] = useState(false);
+
+  useEffect(()=>{
+    if(!user){
+      navigate('/pleaselogin');
+    }
+  },[]);
 
   const handleDelete=(e)=>{
     console.log(e);

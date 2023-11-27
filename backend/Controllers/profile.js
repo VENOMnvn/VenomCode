@@ -30,16 +30,13 @@ const getUserDetails = async (req,res)=>{
     try{
         const {username,userid} = req.body;
         if(username){
-            let user = await User.findOne({username}).populate('POSTS');
+            let user = await User.findOne({username}).populate({path:'posts'}).select('-password -_id');
             console.log(user);
             if(user){
-                user.password = "Hidden";
-                user._id = "Hidden";
                 res.send({
                     success:true,
                     user:user
                 });
-
             }else{
                 res.send({msg:"User Not Found"});
             }

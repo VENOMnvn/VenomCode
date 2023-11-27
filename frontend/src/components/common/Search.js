@@ -24,16 +24,14 @@ import WorkIcon from "@mui/icons-material/Work";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import axios from "axios";
 import path from "../../path";
+import { useSelector } from "react-redux";
 
 const SearchElement = () => {
   const [load,setLoad] = useState(false);
   const [query,setQuery] = useState("");
-
-   const [users,setusers] = useState([
-    { name: "Naveen", username: "venomnvn" },
-    { name: "Aegon", username: "venom" },
-    { name: "Bhoomi", username: "bhmi14" },
-  ]);
+  const [users,setusers] = useState([]);
+  const navigate = useNavigate();
+  const userDB = useSelector(s=>s.user.userDB);
 
   const handleSearch = async (event)=>{
   
@@ -54,7 +52,7 @@ const SearchElement = () => {
           <SearchIcon color="info" />
         </IconButton>
         <InputBase
-          sx={{ ml: 1, flex: 1 }}
+          sx={{ ml: 1, flex: 1 ,backgroundColor:'aliceblue'}}
           placeholder={"Search for User"}
           inputProps={{ "aria-label": "Search for user" }}
           onChange={(e)=>setQuery(e.target.value)}
@@ -70,7 +68,7 @@ const SearchElement = () => {
 
 
       {users?.map((user) => (
-        <div className="search-user">
+        <div className="search-user" onClick={()=>{navigate(`/user/${user.username}`)}}>
           <div className="search-avatar">
             <Avatar src={user.profilePicture}></Avatar>
           </div>

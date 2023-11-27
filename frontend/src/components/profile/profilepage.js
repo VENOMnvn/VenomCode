@@ -13,6 +13,7 @@ import axios from "axios";
 import EditProfile from "./EditProfile";
 import path from "../../path";
 import { addUserDB } from "../../utils/slices/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Profilepage = () => {
 
@@ -20,6 +21,13 @@ const Profilepage = () => {
   const [show,setshow] = useState(false);
   const [userDB,setuserDB] = useState(user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!user){
+      navigate('../pleaselogin',{ replace: true });
+    };
+  },[]);
 
   const [backgroundDetails, setBackgroundDetails] = useState({
     occupation: "Student",

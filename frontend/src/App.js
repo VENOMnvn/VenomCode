@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from './components/common/NavBar';
 import Register from './components/common/register';
-import {Routes,Route, useLocation, useNavigate} from 'react-router-dom';
+import {Routes,Route, useLocation, useNavigate, Link} from 'react-router-dom';
 import Homepage from './components/homepage/homepage';
 import { useEffect, useState } from 'react';
 import PopUp from './components/common/popup';
@@ -16,6 +16,25 @@ import Search from './components/common/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import path from './path';
 import { addUser } from './utils/slices/userSlice';
+import UserProfilepage from './components/profile/user';
+import userill from './static/userill.jpg';
+import { Avatar } from '@mui/material';
+import LoginWarning from './components/common/LoginWarning';
+
+const NotFound = ({msg})=>{
+  return <>
+  <div className="fullscreen centerAll">
+             <Avatar src={userill} sx={{width:"200px",height:"200px"}}></Avatar>
+             <p>{msg?msg:"Page Not Found"}
+              </p>
+             <Link to={'/'}>
+             <button>
+             Go to Home
+             </button>
+             </Link>
+  </div>
+  </>;
+}
 
 function App() {
 
@@ -47,9 +66,13 @@ function App() {
         <Route path='/sharepost' element={<SharePost></SharePost>}></Route>
         <Route path='/search' element={<Search></Search>}></Route>
         <Route path='/profile'  element={<Profilepage></Profilepage>}></Route>
+        <Route path='/user/:id' element={<UserProfilepage></UserProfilepage>}></Route>
+        <Route path='pleaselogin' element={<LoginWarning></LoginWarning>}></Route>
+        <Route path='/:error' element={<NotFound></NotFound>}></Route>
       </Routes>
     </div>
   );
 }
 
 export default App;
+export {NotFound};
