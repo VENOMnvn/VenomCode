@@ -3,7 +3,8 @@ const utilitySlice = createSlice({
   name:"utility", 
   initialState:{
     filter:[],
-    drawer:false
+    drawer:false,
+    codeRunner:{}
   },
   reducers:{
         addFilter : (state,action)=>{
@@ -17,10 +18,14 @@ const utilitySlice = createSlice({
           console.log("RUnn");
           state.drawer = !state.drawer;
           return;
+        },
+        setCodeRunner:(state,action)=>{
+          state.codeRunner = action.payload;
+          return;
         }
   }
 })
 
-export const { addFilter,removeFilter,setDrawer} = utilitySlice.actions;
+export const { addFilter,removeFilter,setDrawer,setCodeRunner} = utilitySlice.actions;
 
 export default utilitySlice.reducer;

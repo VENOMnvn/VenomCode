@@ -75,7 +75,7 @@ const SearchElement = () => {
           <div className="search-text">
             <div className="search-details">
               <p>
-               {user.firstname + user.lastname}
+               {user.firstname + " "+user.lastname}
               </p>
               <span>
               {" "}{user.username}{" "}

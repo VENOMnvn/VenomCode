@@ -22,7 +22,7 @@ import PopUp from "./popup";
 import Messenger from "../chat/Messengers";
 import Badge from "@mui/material/Badge";
 import CreatePost from "./../homepage/CreatePost";
-import logo from "./../../static/logocircle.png";
+import logo from "./../../static/logo.png";
 import { Drawer, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -112,7 +112,7 @@ const Navbar = () => {
             <li>
               <span
                 className=""
-                style={{ "font-weight": 700, "font-size": "1.4rem" }}
+                style={{ "font-weight": 700, "font-size": "1.4rem" ,marginLeft:"4px"}}
               >
                 Venom
               </span>

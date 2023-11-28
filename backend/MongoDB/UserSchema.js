@@ -42,7 +42,7 @@ const USER = new Schema ({
     },
     profilePicture: {
         type: String,
-        default: "http://res.cloudinary.com/dcnvvzsdh/image/upload/v1700899005/venomcode/i7fz88hriv0uppirfjyu.png"
+        default: "http://res.cloudinary.com/dcnvvzsdh/image/upload/v1701096607/venomcode/ay07lxp5mxbsiciluo2m.jpg"
     },
     skills: {
         type: [String]

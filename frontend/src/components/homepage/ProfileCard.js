@@ -8,8 +8,7 @@ import userill from './../../static/userill.jpg';
 const ProfileCard = () => {
     const user = useSelector(s=>s.user.user);
     const userDB = useSelector(s=>s.user.userDB);
-
-
+    
   return (
     <div className='profile-card'>
        {user?<>
@@ -41,10 +40,9 @@ const ProfileCard = () => {
         </div>
         <div className='profile-card-followers'>
             <p>This is a Website to help you in your programming journey</p>
-            <ul>
+            <ul style={{color:"gray",fontSize:"12px"}}>
                 <li>See solutions of famous problems</li>
                 <li>Diffrent platform problems solution at a single place</li>
-
             </ul>
         </div>
         <div className='profile-card-bottom'>

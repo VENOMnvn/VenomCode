@@ -20,6 +20,10 @@ import UserProfilepage from './components/profile/user';
 import userill from './static/userill.jpg';
 import { Avatar } from '@mui/material';
 import LoginWarning from './components/common/LoginWarning';
+import PostPage from './components/homepage/PostPage';
+import CodeRunner from './components/common/CodeRunner';
+// import 'codemirror/keymap/sublime';
+// import 'codemirror/theme/monkai.css';
 
 const NotFound = ({msg})=>{
   return <>
@@ -67,7 +71,9 @@ function App() {
         <Route path='/search' element={<Search></Search>}></Route>
         <Route path='/profile'  element={<Profilepage></Profilepage>}></Route>
         <Route path='/user/:id' element={<UserProfilepage></UserProfilepage>}></Route>
-        <Route path='pleaselogin' element={<LoginWarning></LoginWarning>}></Route>
+        <Route path='/pleaselogin' element={<LoginWarning></LoginWarning>}></Route>
+        <Route path='/post/:id' element={<PostPage></PostPage>}></Route>
+        <Route path="/execute" element={<CodeRunner></CodeRunner>}></Route>
         <Route path='/:error' element={<NotFound></NotFound>}></Route>
       </Routes>
     </div>

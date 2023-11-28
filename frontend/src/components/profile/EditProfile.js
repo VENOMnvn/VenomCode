@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import Edit from "@mui/icons-material/Edit";
 
 const EditProfile = () => {
-  const user = useSelector(s=>s.user.user);
+  const user = useSelector(s=>s.user.userDB);
 
   const imageRef = useRef();
   const [imageState, setimageState] = useState("");
@@ -15,25 +15,42 @@ const EditProfile = () => {
   const [editExp,seteditExp] = useState(false);
   const [about,setabout] = useState(user.bio);
   const [editAbout,seteditAbout] = useState(false);
-
+  const [desig,setdesig] = useState(user?.designation);
+  const [editdesig,seteditdesig] = useState(false);
   const [load,setload] = useState(false);
 
   const submitHandler = async ()=>{
       setload(true);
       try{
+        if(image){
         const data = new FormData();
         data.append("file",image);
         data.append("upload_preset","venomcodetrial");
         const imageResponse = await axios.post('http://api.cloudinary.com/v1_1/dcnvvzsdh/image/upload',data);
         console.log(imageResponse);
         if(imageResponse.data.url){
+
           const res = await axios.post(`${path}editprofile`,{profileURL:imageResponse.data.url,
-          user:user?._id
+          user:user?._id,
+          exp,
+          designation:desig,
+          bio:about
           });
+
           console.log(res);
           window.location.reload();
         }
-
+        }else{
+          const res = await axios.post(`${path}editprofile`,{
+            user:user?._id,
+            exp,
+            designation:desig,
+            bio:about
+            });
+            console.log(res);
+            window.location.reload();
+        }
+        
       }catch(Err){
         console.log(Err);
       }
@@ -113,12 +130,12 @@ const EditProfile = () => {
         <div className="login-box-field">
           <p>Designation</p>
           {
-            editExp ? <input type="number" value={exp} onChange={e=>setExp(e.target.value)} placeholder="Enter Your Exprience"></input> 
+            editdesig ? <input type="text" value={desig} onChange={e=>setdesig(e.target.value)} placeholder="Your Proffesion"></input> 
             :
             <>
-          <div className="editprofile-div">24
+          <div className="editprofile-div">{user?.designation}
           <Tooltip>
-           <Edit sx={{color:"gray"}} onClick={()=>seteditExp(1)}></Edit>
+           <Edit sx={{color:"gray"}} onClick={()=>seteditdesig(1)}></Edit>
           </Tooltip>
           </div>
             </>

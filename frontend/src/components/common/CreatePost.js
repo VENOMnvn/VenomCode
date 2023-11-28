@@ -9,13 +9,19 @@ import { Button, LinearProgress } from "@mui/material";
 import { useSelector } from "react-redux";
 import axios from 'axios'
 import path from './../../path';
+import CodeMirror from '@uiw/react-codemirror';
+import { basicLight } from '@uiw/codemirror-theme-basic';
+import { langs } from '@uiw/codemirror-extensions-langs';
+import { xcodeLight, xcodeLightInit, xcodeDark, xcodeDarkInit } from '@uiw/codemirror-theme-xcode';
 import {useNavigate} from 'react-router-dom';
 
 const CreatePost = ({cancel}) => {
 
   const [title,setTitle] = useState(false);
   const user = useSelector(s=>s.user.user);
-  const [code,setCode] = useState(false);
+  const userDB = useSelector(s=>s.user.userDB);
+
+  const [code,setCode] = useState("");
   const navigate = useNavigate();
   const [load,setload] = useState(false);
   const [success,setSuccess] = useState(false);
@@ -85,12 +91,12 @@ const CreatePost = ({cancel}) => {
 
       <div className="create-header">
         <div className="create-header-left">
-          <Avatar sx={{ width: "50px", height: "50px", bgcolor: "teal" }}>
-            NC
+          <Avatar sx={{ width: "50px", height: "50px", bgcolor: "teal" }} src={userDB?.profilePicture}>
+       
           </Avatar>
           <div>
-            <p>Naveen Chaudhary</p>
-            <span>Web Developer</span>
+            <p>{userDB?.firstname + " " + userDB?.lastname}</p>
+            <span>{userDB?.username+" || "+userDB?.designation}</span>
           </div>
         </div>
       </div>
@@ -105,17 +111,24 @@ const CreatePost = ({cancel}) => {
           placeholder="Example : Flatten the Tree into Linked list"
         />
         <span>Describe your Code title or prblem Statement </span>
-        <TextField
-          id="standard-multiline-flexible"
-          label="Code "
-          multiline
-          onChange={(e)=>setCode(e.target.value)}
-          maxRows={12}
-          variant="standard"
-          placeholder="example : #include <stdio.h>"
-          style={{marginTop:"12px"}}
-        />
+
+        
+
+      <CodeMirror
+      value={code}
+      height="400px"
+      onChange={(editor,state)=>{
+          setCode(editor);
+      }}
+      theme={xcodeLight}
+      extensions={[langs.cpp()]}></CodeMirror>
+
+
       </div>
+
+
+
+
       <div className="labels-form-create-post">
       <TextField
         id="input-with-icon-textfield"

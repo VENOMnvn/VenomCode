@@ -131,7 +131,7 @@ const Signin = () => {
 
         if(response.data.success){
             dispatch(addUser(response.data.msg));
-            navigate('/');
+            navigate('../');
             setError("");
         }
         else{

@@ -11,6 +11,10 @@ import axios from "axios";
 import path from "../../path";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import ShareIcon from "@mui/icons-material/Share";
+import CodeMirror from '@uiw/react-codemirror';
+import { basicDark } from '@uiw/codemirror-theme-basic';
+import { langs } from '@uiw/codemirror-extensions-langs';
+import { EditorView } from '@uiw/react-codemirror';
 import {
   Avatar,
   ListItem,
@@ -23,6 +27,7 @@ import { useState } from "react";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import SendIcon from "@mui/icons-material/Send";
 import { ToastContainer, toast } from "react-toastify";
+import {Link} from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import {
   ListItemButton,
@@ -43,6 +48,7 @@ const CommentComponent = ({ data }) => {
         <div className="comment-list-container">
           <List>
             {data.map((cmmnt) => (
+              <Link to={`/user/${cmmnt.user.username}`}>
               <ListItemButton>
                 <ListItemAvatar>
                   <Avatar src={cmmnt.user.profilePicture}></Avatar>
@@ -52,6 +58,7 @@ const CommentComponent = ({ data }) => {
                   secondary={cmmnt.comment}
                 ></ListItemText>
               </ListItemButton>
+              </Link>
             ))}
           </List>
         </div>
@@ -66,10 +73,9 @@ const Post = (props) => {
   const user = useSelector((s) => s.user.user);
   const UserDB = useSelector((s) => s.user.userDB);
   const [commentText, setCommentText] = useState("");
-
   const [commnentPopup, setCommentPopup] = useState(false);
   const [commentInputshow, setCommentInput] = React.useState(false);
-  const code = data ? data.postCode?.split(/\n/g) : "";
+  // const code = data ? data.postCode?.split(/\n/g) : "";
 
   React.useEffect(() => {
     const date1 = new Date();
@@ -89,6 +95,10 @@ const Post = (props) => {
     if(commentText.length==0){
       return;
     }
+    if(!user){
+      toast.info("Please Sigin First ");
+      return;
+    }
     try {
       const res = axios.post(`${path}comment`, {
         postid: data._id,
@@ -100,7 +110,7 @@ const Post = (props) => {
         },
         commentText,
       });
-      console.log(res);
+     
       setCommentText("");
       toast.info("Comment posted");
       getPost();
@@ -122,14 +132,24 @@ const Post = (props) => {
   };
 
   const addLike = async () => {
+    if(!user){
+      toast.info("Please Sigin First to Login");
+      return;
+    }
     const response = await axios.post(`${path}addlike`, {
       user: user._id,
       post: data._id,
     });
+
     if (response.data.success) {
       getPost();
     }
   };
+
+
+  React.useEffect(()=>{
+    console.log(data);
+  },[data]);
 
   return (
     <div className="post">
@@ -146,7 +166,7 @@ const Post = (props) => {
 
       <ToastContainer></ToastContainer>
       <div className="post-head">
-        <Avatar src={profile}></Avatar>
+        <Avatar src={data?.user?.profilePicture}></Avatar>
         <div className="post-head-details">
           <p>{data?.user?.firstname + " " + data?.user?.lastname}</p>
           <span>{data?.user?.designation}</span>
@@ -158,11 +178,22 @@ const Post = (props) => {
       </div>
       <div className="post-body">
         <span>{data.title}</span>
+
         <div>
-          {code.map((ele) => (
+          {/* {code.map((ele) => (
             <p>{ele}</p>
-          ))}
+          ))} */}
+          <CodeMirror
+      value={data.postCode}
+      style={{maxHeight:"600px"}}
+      theme={basicDark}
+      extensions={[langs.cpp(), EditorView.editable.of(false),]}
+      readOnly
+      ></CodeMirror>
         </div>
+
+
+
       </div>
       <div className="post-lower">
         <div className="post-lower-count">
@@ -192,12 +223,12 @@ const Post = (props) => {
               Vote
             </Button>
           </div>
-          <div>
+          <div   onClick={()=>{ setCommentInput((prev)=>!prev)}}>
             <Tooltip title="add comment">
               <Button
                 variant="text"
                 startIcon={<AddCommentIcon></AddCommentIcon>}
-                onClick={()=>setCommentInput(!commentInputshow)}
+              
                 sx={{ color: "gray" }}
               >
                 Comment
@@ -214,6 +245,7 @@ const Post = (props) => {
             </Button>
           </div>
           <div>
+             <Link to={`/post/${data._id}`}>
             <Button
               variant="text"
               startIcon={<ShareIcon></ShareIcon>}
@@ -221,6 +253,7 @@ const Post = (props) => {
             >
               Share
             </Button>
+             </Link>
           </div>
         </div>
         {commentInputshow ? (
