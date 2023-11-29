@@ -38,7 +38,7 @@
 .cover-image-coverup div{
     font-size: 24px;
     font-weight: 500;
-    height: min-content;
+
 }
 .cover-image-coverup p{
     color: gray;
@@ -107,7 +107,7 @@
 @media (width<600px){
     .cover-image-coverup{
         height: 150px;
-        justify-content: flex-start;
+     
     }
     .cover-image-coverup > button{
         margin: 0px;
@@ -156,8 +156,10 @@
 }
 .profile-page-post{
     display: flex;
-    width: 90%;
+    width: 98%;
+    flex-wrap: wrap;
     margin: auto;
+    gap: 15px;
     justify-content: center;
 }
 
@@ -196,4 +198,68 @@
     border-radius: 6px;
     font-size: 18px;
     padding: 4px 8px;
+}
+.icons-back{
+    display: flex;
+    width: 30px !important;
+    height: 30px;
+    background-color: #e4e6eb;
+    align-items: center;
+    border-radius: 50%;
+    margin: 10px;
+    justify-content: center;
+}
+.usercard{
+    max-width: 280px;
+    width: 280px;
+    border: 1px solid lightgray;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+.usercard-img{
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    border-radius: 10px 10px 0px 0px;
+}
+.usercard-img img{
+    width: 100%;
+    border-radius: 10px;
+    border-radius: 10px 10px 0px 0px;
+    height: 280px;
+}
+.usercard-username{
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+}
+.usercard p{
+    text-align: center;
+    color: gray;
+    font-family: 14px;
+}
+.usercard-container{
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+.usercard-skelton{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.usercard-empty{
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 15px;
+    color: gray;
+    text-align: center;
+}
+.usercard>a{
+   
 }

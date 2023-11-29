@@ -188,15 +188,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {showChat ? (
-            <PopUp
-              element={<Messenger></Messenger>}
-              cancel={cancel}
-              isFull={true}
-            ></PopUp>
-          ) : (
-            ""
-          )}
+
           <div style={{ flex: 1 }}></div>
 {/*           
           <div className="userSearch" component="form">
@@ -238,7 +230,8 @@ const Navbar = () => {
             </li>
             }
 
-            <li onClick={() => setChat(true)}>
+            <li>
+            <Link to={'/chat'}>
               <Tooltip title="Message">
                 <IconButton aria-label="delete" className="chat-icon">
                   <Badge badgeContent={4} color="primary">
@@ -248,6 +241,7 @@ const Navbar = () => {
                   </Badge>
                 </IconButton>
               </Tooltip>
+            </Link>
             </li>
 
           </ul>
@@ -258,7 +252,6 @@ const Navbar = () => {
             </button>
           ) : (
             <div className="flex gap-x-4">
-              {console.log(user)}
               <Avatar
                 sx={{ height: "30px", width: "30px" }}
                 onClick={() => navigate("/profile")}

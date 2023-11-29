@@ -16,6 +16,9 @@ const USER = new Schema ({
     posts:{
         type:[{type:mongoose.SchemaTypes.ObjectId,ref:"POSTS"}]
     },
+    savedpost:{
+        type:[{type:mongoose.SchemaTypes.ObjectId,ref:"POSTS"}]
+    },
     email: {
         type: String,
         default: null
@@ -51,10 +54,10 @@ const USER = new Schema ({
         type: [String]
     },
     following: {
-        type: Array,
+        type:[String]
     },
     followers: {
-        type: [String],
+        type:[String]
     },
     country: {
         type: String,

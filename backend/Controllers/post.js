@@ -9,7 +9,6 @@ const sharePost = async (req,res)=>{
     } = req.body;
 
     if(user){
-
           try{
             console.log("User At Creation Post",user);
             const postCreationResponse = await POSTS.create({
@@ -117,4 +116,18 @@ const setComment = async (req,res)=>{
 
 };
 
-module.exports = {sharePost,getPosts,addLike,postFilter,setComment,getPost};
+const savePost = async (req,res)=>{
+    try{
+        const {post,user} = req.body;
+        console.log(post,user);
+        const response = await User.findByIdAndUpdate(user,{$push:{savedpost:post}});
+        console.log(response);
+        res.send("OK");
+    }
+    catch(err){
+        console.log(err);
+        res.send(err);
+    }
+}
+
+module.exports = {sharePost,getPosts,addLike,postFilter,setComment,getPost,savePost};

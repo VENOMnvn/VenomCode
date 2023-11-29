@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PopUp from "./popup";
 import { useNavigate } from "react-router-dom";
 import "./Search.css";
@@ -34,7 +34,6 @@ const SearchElement = () => {
   const userDB = useSelector(s=>s.user.userDB);
 
   const handleSearch = async (event)=>{
-  
     try{
       const response = await axios.get(`${path}getUser?query=${query}`);
       console.log(response);
@@ -44,6 +43,18 @@ const SearchElement = () => {
     }
   }
 
+  const randomSearch = async ()=>{
+    try{
+      const response = await axios.get(`${path}getUser?limit=10&skip=0`);
+      console.log(response);
+      setusers(response.data.users);
+    }catch(err){
+    }
+  }
+
+  useEffect(()=>{
+    randomSearch();
+  },[]);
   return (
     <div className="search-tab">
       <h1>Search a user or post</h1>

@@ -9,11 +9,10 @@ cloudinary.config({
   api_secret:process.env.CLOUDINARY_CLIENT_SECRET_KEY
 });
 
-
 const editprofile = async (req,res)=>{
     try{
         const {profileURL,user} = req.body;
-        console.log(req.body);
+       
         if(profileURL){
             const responseByUser = await User.findByIdAndUpdate(user,{profilePicture:profileURL});
             res.send(responseByUser);
@@ -25,24 +24,16 @@ const editprofile = async (req,res)=>{
         res.send({success:false,msg:err});
     }
 };
+
 const getUserDetails = async (req,res)=>{
-    console.log(req.body);
+ 
+
     try{
-        const {username,userid} = req.body;
-        if(username){
-            let user = await User.findOne({username}).populate({path:'posts'}).select('-password -_id');
-            console.log(user);
-            if(user){
-                res.send({
-                    success:true,
-                    user:user
-                });
-            }else{
-                res.send({msg:"User Not Found"});
-            }
-            
-        }else if(userid){
-            let user = await User.findById(userid).populate({path:'posts'});
+        const {userid,username,visitor} = req.body;
+
+        if(userid){
+            let user = await User.findById(userid).populate({path:'posts'}).populate({path:"savedpost"});
+         
             if(user){
                 user.password = "Hidden";
 
@@ -55,6 +46,23 @@ const getUserDetails = async (req,res)=>{
                 res.send({msg:"User Not Found"});
             }
         }
+
+        else if(username){
+
+            let user = await User.findOne({username}).populate({path:'posts'}).select('-password -_id');
+            const isFollower = user.followers.includes(visitor);
+            
+            user = {
+                ...user._doc,
+                isFollower
+            }  
+
+         
+            res.send({
+                success:true,
+                user
+            })
+        }
         else{
             res.send("Send Parameters");
         }
@@ -66,9 +74,21 @@ const getUserDetails = async (req,res)=>{
 }
 
 const getUserQuery = async (req,res)=>{
-    const {query} = req.query;
-    console.log(query);
+    const {query,username,limit,skip} = req.query;
     try{
+
+        if(limit){
+            let users = await User.find().limit(limit).select('username profilePicture firstname lastname designation -_id');
+            res.send({users});
+            return
+        }
+
+        if(username){
+        let user = await User.findOne({username}).select('username profilePicture firstname lastname designation -_id');
+        res.send({success:true,user});
+        return;
+        }
+
         let users = await User.find({$or:[{firstname:{$regex:new RegExp(query, "i")}},{username:{$regex:new RegExp(query, "i")}}]}).select('username firstname lastname profilePicture city designation -_id');
         res.send({users});
 
@@ -77,4 +97,27 @@ const getUserQuery = async (req,res)=>{
     }
 };
 
-module.exports = {editprofile,getUserDetails,getUserQuery};
+
+const addFollower = async (req,res)=>{
+    try{
+        const {followingId,followerId} = req.body;
+        await User.findOneAndUpdate({username:followingId},{$push:{followers:followerId}});
+        await User.findOneAndUpdate({username:followerId},{$push:{following:followingId}});
+        res.send({
+            success:true
+        });
+    }catch(err){
+
+    };
+}
+
+
+const getFollower = async (req,res)=>{
+    try{
+       
+    }catch(err){
+    console.log(err);
+    };
+};
+
+module.exports = {editprofile,getUserDetails,getUserQuery,addFollower,getFollower};

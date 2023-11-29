@@ -172,7 +172,7 @@ body::-webkit-scrollbar{
     margin-top: 12px;
 }
 .profile-card-top{
-    background-color: #1C8765;
+    background-color: aliceblue;
     width: 100%;
     border-radius: 10px 10px 0px 0px;
     display: flex;
@@ -302,7 +302,7 @@ body::-webkit-scrollbar{
         width: 100%;
     }
     .post-lower-group div{
-        transform: scale(0.8);
+        
     }
 }
 
@@ -395,4 +395,17 @@ button:hover{
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+}
+.post-head .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.post-head-tools{
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #e4e6eb;
+    height: 30px;
 }

@@ -3,7 +3,8 @@ const cors = require('cors');
 const connectdb = require('./config/connectdb.js')
 const routes = require('./routes/routes.js')
 const { notFound, errorHandler } = require('./middleware/errorMiddleware.js');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const User = require('./MongoDB/UserSchema.js');
 const app = express();
 const port = process.env.PORT || 5000;
 

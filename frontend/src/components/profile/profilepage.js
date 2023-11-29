@@ -1,33 +1,32 @@
-import { Avatar, Button, ButtonBase } from "@mui/material";
+import { Avatar, Button, ButtonBase, Tab, Tabs, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import profilepic from "./../../static/profile.jpeg";
 import "./profile.css";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import HomeFeed from "../homepage/homefeed";
-import Paper from '@mui/material/Paper';
-import ReplayIcon from '@mui/icons-material/Replay';
-import {useDispatch, useSelector} from 'react-redux';
-import EditIcon from '@mui/icons-material/Edit';
+import { useDispatch, useSelector } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
 import PopUp from "../common/popup";
 import axios from "axios";
 import EditProfile from "./EditProfile";
 import path from "../../path";
 import { addUserDB } from "../../utils/slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import Post from "../homepage/Post";
+import UserCard from "./userCard";
+import { Link } from "react-router-dom";
 
 const Profilepage = () => {
-
-  const user = useSelector(state=>state.user.user);
-  const [show,setshow] = useState(false);
-  const [userDB,setuserDB] = useState(user);
+  const user = useSelector((state) => state.user.user);
+  const [show, setshow] = useState(false);
+  const userDB = useSelector((state) => state.user.userDB);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [tabPanel, settabPanel] = useState(0);
 
-  useEffect(()=>{
-    if(!user){
-      navigate('../pleaselogin',{ replace: true });
-    };
-  },[]);
+  useEffect(() => {
+    if (!user) {
+      navigate("../pleaselogin", { replace: true });
+    }
+  }, []);
 
   const [backgroundDetails, setBackgroundDetails] = useState({
     occupation: "Student",
@@ -38,37 +37,57 @@ const Profilepage = () => {
     location: "Noida",
   });
 
-  const editPop = ()=>{
+  const editPop = () => {
     setshow(true);
   };
 
-  const getUserDetails = async ()=>{
-    if(user){
-      try{
-        const res = await axios.post(`${path}getuserdetails`,{
-          userid : user?._id,
+  const getUserDetails = async () => {
+    if (user) {
+      try {
+        const res = await axios.post(`${path}getuserdetails`, {
+          userid: user?._id,
         });
-        console.log(res);
-        if(res.data.success){
-          setuserDB(res.data.user);
-        
+        if (res.data.success) {
           dispatch(addUserDB(res.data.user));
         }
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
     }
   };
 
- 
-  useEffect(()=>{
+  const TabPanelChangeHandler = (event, newValue) => {
+    settabPanel(newValue);
+  };
+
+  const getFollower = async () => {
+    try {
+      console.log("==");
+
+      const resp = await axios.post(`${path}getfollowers`,{
+        userid:user?._id
+     });
+
+     console.log(resp);
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
     getUserDetails();
-  },[]);
-  const [skills,setSkills] = useState(["C++","JavaScript","ES6","React","Redux","C","HTML","CSS","NodeJS","ExpresJS","MongoDB"]);
+    getFollower();
+  }, []);
 
   return (
     <div className="profilepage">
-    {show && <PopUp cancel={()=>setshow(false) } element={<EditProfile></EditProfile>}></PopUp>}
+      {show && (
+        <PopUp
+          cancel={() => setshow(false)}
+          element={<EditProfile></EditProfile>}
+        ></PopUp>
+      )}
       <div className="cover-image">
         <div className="profile-pic">
           <Avatar src={userDB?.profilePicture}></Avatar>
@@ -76,8 +95,10 @@ const Profilepage = () => {
       </div>
       <div className="cover-image-coverup">
         <div>
-          <div>Naveen Chaudhary</div>
-          <p>{user?.username}</p>
+          <div>{user?.firstname + " " + user?.lastname}</div>
+          <Tooltip title={"username"}>
+            <p>{user?.username}</p>
+          </Tooltip>
         </div>
         <Button
           variant="outlined"
@@ -93,11 +114,7 @@ const Profilepage = () => {
         <div className="left">
           <span>About</span>
           <div className="about">
-            <p>
-            {
-              userDB?.bio
-            }
-            </p>
+            <p>{userDB?.bio}</p>
           </div>
           <p>Background</p>
           <div className="background">
@@ -146,26 +163,87 @@ const Profilepage = () => {
         </div>
 
         <div className="right">
-            
-            <div>Skills and Languages</div>
-            <div>
-            {user?.skills?.map((ele)=><span>{ele}</span>)}
-            </div>
+          <div>Skills and Languages</div>
+          <div>
+            {user?.skills?.map((ele) => (
+              <span>{ele}</span>
+            ))}
+          </div>
         </div>
-
       </div>
-      <hr style={{marginTop:"12px"}}></hr>
+      <hr style={{ marginTop: "12px" }}></hr>
 
       <div elevation={6} className="profile-page-post-title">
-       Posts
-      <ReplayIcon></ReplayIcon>
+        {/* Posts
+      <ReplayIcon></ReplayIcon> */}
+
+        <Tabs
+          value={tabPanel}
+          onChange={TabPanelChangeHandler}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
+          selectionFollowsFocus 
+        >
+          <Tab label={"Posts"}></Tab>
+          <Tab label={"Saved"}></Tab>
+          <Tab label={"Followers"}></Tab>
+          <Tab label={"Following"}></Tab>
+        </Tabs>
       </div>
 
-      <hr style={{marginTop:"12px"}}></hr>
-      <div className="profile-page-post">
-      <HomeFeed></HomeFeed>
-      </div>
+      <hr style={{ marginTop: "12px" }}></hr>
+      {tabPanel == 0 && (
+        <div
+          className="profile-page-post"
+          style={{ backgroundColor: "aliceblue" }}
+        >
+          {userDB?.posts?.map((ele) => (
+            <Post data={ele}></Post>
+          ))}
+        </div>
+      )}
 
+      {tabPanel == 1 && (
+        <div
+          className="profile-page-post"
+          style={{ backgroundColor: "aliceblue" }}
+        >
+          {userDB?.savedpost?.map((ele) => (
+            <Post data={ele}></Post>
+          ))}
+         
+        </div>
+      )}
+
+      {tabPanel == 3 && (
+        <div
+           className="usercard-container"
+        >
+          {userDB?.following?.map((ele) => (
+            <div> <UserCard username={ele}></UserCard></div>
+          ))}
+          {
+            userDB?.following?.length == 0 && <div className="fullwidth centerAll"> You dont Follow any one <Link to='/search'>Find here</Link></div> 
+          }
+
+        </div>
+      )}
+
+      {tabPanel == 2 && (
+        <div
+          className="usercard-container"
+        >
+          {userDB?.followers?.map((ele) => {<div>
+              <UserCard username={ele}></UserCard>
+            </div>
+          })}
+          {
+            userDB?.followers?.length == 0 && <div className="usercard-empty"> No one Follows you </div> 
+          }
+
+        </div>
+      )}
     </div>
   );
 };

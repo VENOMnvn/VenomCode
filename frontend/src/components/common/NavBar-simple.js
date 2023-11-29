@@ -5,7 +5,9 @@ import './Navbar.css';
 
 
 const NavbarSimple = () => {
+  
   const navigate = useNavigate();
+
   return (
     <nav className="navbar-container">
       <div className="navbar-toolbar">

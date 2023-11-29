@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import profile from './../../static/chat.jpg';
+import profile from './../../static/profile.jpeg';
 import { Avatar } from '@mui/material';
 import {TextField} from '@mui/material';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import Message from './Message';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 const Chat = () => {
   const [msgs,setMsgs] = useState(["Hellp","how r u","good","and You","also fine ","And I am also fine so what about you","Nothing","My name is Naveen","and yours","And then who is sonu","He is No one","and your","Aur btao","Bss badhiya"]);
   const [currentMsg,setcurrentMsg] = useState("");
@@ -24,8 +26,8 @@ const Chat = () => {
             Sonu
         </div>
      
-        <div>
-            I
+        <div className='chat-top-options'>
+           <MoreVertIcon></MoreVertIcon>
         </div>
     </div>
 

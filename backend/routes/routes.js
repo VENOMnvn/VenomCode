@@ -1,9 +1,9 @@
 const { userRegisteration,userSignin,getUserName,addExperience,profileComplete} = require("../Controllers/userRegisteration");
-const userLogin = require("../Controllers/userLogin");
+const {userLogin,resetPassword, resetLogin} = require("../Controllers/userLogin");
 const userLogout = require("../Controllers/userLogout");
 const filterFunction = require("../Controllers/filter");
-const {editprofile,getUserDetails,getUserQuery} = require("./../Controllers/profile");
-const {sharePost,getPosts,addLike,postFilter,setComment,getPost}  = require("./../Controllers/post");
+const {editprofile,getUserDetails,getUserQuery, addFollower,getFollower} = require("./../Controllers/profile");
+const {sharePost,getPosts,addLike,postFilter,setComment,getPost, savePost}  = require("./../Controllers/post");
 const express = require("express");
 const router = express.Router();
 
@@ -21,7 +21,11 @@ router.get('/getusername',getUserName);
 router.post('/getuserdetails',getUserDetails);
 router.post('/comment',setComment);
 router.get('/getUser',getUserQuery);
-
+router.post('/savepost',savePost);
+router.post('/addfollower',addFollower)
+router.post('/resetpassword',resetPassword);
+router.get('/resetlogin',resetLogin);
+router.post('/getfollowers',getFollower);
 
 
 router.get("/logout", userLogout);

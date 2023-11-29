@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./messenger.css";
 import { Avatar } from "@mui/material";
 import profilepic from "./../../static/profile.jpeg";
-import sonu from './../../static/chat.jpg';
+import sonu from './../../static/profile.jpeg';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Paper from '@mui/material/Paper';
@@ -69,14 +69,15 @@ const Messenger = () => {
           sx={{
             bgcolor: "yellow",
             color: "black",
-            width: "60px",
-            height: "60px",
+            width: "30px",
+            height: "30px",
           }}
+
           src={profilepic}
           variant="dot"
         ></Avatar>
         </StyledBadge>
-        <span>Messenger</span>
+        <span>Chats</span>
       </div>
       {
         mobile ?  <div className="chats Mobile-Chats">

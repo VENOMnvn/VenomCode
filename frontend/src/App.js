@@ -22,6 +22,7 @@ import { Avatar } from '@mui/material';
 import LoginWarning from './components/common/LoginWarning';
 import PostPage from './components/homepage/PostPage';
 import CodeRunner from './components/common/CodeRunner';
+import SavedPost from './components/profile/Savedpost';
 // import 'codemirror/keymap/sublime';
 // import 'codemirror/theme/monkai.css';
 
@@ -64,7 +65,8 @@ function App() {
       <Routes>
         <Route path="/register" element={<Signin></Signin>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/chat" element={<PopUp element={<Messenger></Messenger>} cancel={()=>navigate("/")} isFull={true}></PopUp>}></Route>
+        {/* <Route path="/chat" element={<PopUp element={<Messenger></Messenger>} cancel={()=>navigate("/")} isFull={true}></PopUp>}></Route> */}
+        <Route path="/chat" element={<Messenger></Messenger>}></Route>
         <Route path='/home'  element={<Homepage></Homepage>}></Route>
         <Route path='/' index  element={<Homepage></Homepage>}></Route>
         <Route path='/sharepost' element={<SharePost></SharePost>}></Route>
@@ -73,6 +75,7 @@ function App() {
         <Route path='/user/:id' element={<UserProfilepage></UserProfilepage>}></Route>
         <Route path='/pleaselogin' element={<LoginWarning></LoginWarning>}></Route>
         <Route path='/post/:id' element={<PostPage></PostPage>}></Route>
+        <Route path='/saved' element={<SavedPost></SavedPost>}></Route>
         <Route path="/execute" element={<CodeRunner></CodeRunner>}></Route>
         <Route path='/:error' element={<NotFound></NotFound>}></Route>
       </Routes>

@@ -114,6 +114,7 @@ const userSignin = async (req,res)=>{
               msg:"OTP invalid"
             });
         }
+        
     }catch(err){
       console.log(err);
       res.send({
