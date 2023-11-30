@@ -30,14 +30,7 @@ const Profilepage = () => {
     }
   }, []);
 
-  const [backgroundDetails, setBackgroundDetails] = useState({
-    occupation: "Student",
-    experience: "3",
-    noOfPost: "34",
-    followers: "432",
-    college: "St cf Andrews School",
-    location: "Noida",
-  });
+
 
   const editPop = () => {
     setshow(true);
@@ -58,9 +51,11 @@ const Profilepage = () => {
     }
   };
 
+
   const TabPanelChangeHandler = (event, newValue) => {
     settabPanel(newValue);
   };
+
 
   const getFollower = async () => {
     try {
@@ -130,21 +125,21 @@ const Profilepage = () => {
             <div className="background-row">
               <div className="background-left">Experience</div>
               <div className="background-right">
-                <p>{userDB?.exp}</p>
+                <p>{userDB?.exp +" years"}</p>
               </div>
             </div>
 
             <div className="background-row">
               <div className="background-left">Post</div>
               <div className="background-right">
-                <p>{backgroundDetails.noOfPost}</p>
+                <p>{userDB?.posts?.length + " posts"}</p>
               </div>
             </div>
 
             <div className="background-row">
               <div className="background-left">Followers</div>
               <div className="background-right">
-                <p>{backgroundDetails.followers}</p>
+                <p>{userDB?.followers?.length+" Follower"}</p>
               </div>
             </div>
 

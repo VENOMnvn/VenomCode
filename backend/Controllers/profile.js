@@ -9,16 +9,17 @@ cloudinary.config({
   api_secret:process.env.CLOUDINARY_CLIENT_SECRET_KEY
 });
 
+
 const editprofile = async (req,res)=>{
     try{
-        const {profileURL,user} = req.body;
-       
-        if(profileURL){
-            const responseByUser = await User.findByIdAndUpdate(user,{profilePicture:profileURL});
+        const {profileURL,user,exp,designation,bio,city} = req.body;
+        console.log(profileURL,user,exp,designation,bio,city);
+
+        
+            const responseByUser = await User.findByIdAndUpdate(user,{profilePicture:profileURL,exp,designation,bio,city});
             res.send(responseByUser);
             return;
-        }
-        res.send("OKK");
+      
     }catch(err){
         console.log(err);
         res.send({success:false,msg:err});

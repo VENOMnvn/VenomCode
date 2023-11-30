@@ -5,6 +5,7 @@ import path from "../../path";
 import { useSelector } from "react-redux";
 import Edit from "@mui/icons-material/Edit";
 
+
 const EditProfile = () => {
   const user = useSelector(s=>s.user.userDB);
 
@@ -18,9 +19,19 @@ const EditProfile = () => {
   const [desig,setdesig] = useState(user?.designation);
   const [editdesig,seteditdesig] = useState(false);
   const [load,setload] = useState(false);
+  const [err,seterr] = useState("");
+  const [location,setLocation] = useState(user.city);
+  const [editLoc ,setEditLoc] = useState(false);
 
   const submitHandler = async ()=>{
-      setload(true);
+
+    
+    if((editAbout && !about) || (editdesig && !desig) || (editExp && !exp)){
+      seterr("Empty Field")
+      return;
+    }
+    seterr("");
+    setload(true);
       try{
         if(image){
         const data = new FormData();
@@ -29,23 +40,24 @@ const EditProfile = () => {
         const imageResponse = await axios.post('http://api.cloudinary.com/v1_1/dcnvvzsdh/image/upload',data);
         console.log(imageResponse);
         if(imageResponse.data.url){
-
           const res = await axios.post(`${path}editprofile`,{profileURL:imageResponse.data.url,
           user:user?._id,
           exp,
           designation:desig,
-          bio:about
+          bio:about,
+          city:location
           });
-
           console.log(res);
           window.location.reload();
         }
         }else{
-          const res = await axios.post(`${path}editprofile`,{
+
+            const res = await axios.post(`${path}editprofile`,{
             user:user?._id,
             exp,
             designation:desig,
-            bio:about
+            bio:about,
+            city:location
             });
             console.log(res);
             window.location.reload();
@@ -61,6 +73,7 @@ const EditProfile = () => {
     setimageState(URL.createObjectURL(e.target.files[0]))
     setImage(e.target.files[0])
   }
+
   return (
     <div className="editProfile">
    
@@ -142,16 +155,30 @@ const EditProfile = () => {
           }
         </div>
 
+        <div className="login-box-field">
+          <p>Location</p>
+          {
+            editLoc ? <input type="text" value={location} onChange={e=>setLocation(e.target.value)} placeholder="Your City / Country"></input> 
+            :
+            <>
+          <div className="editprofile-div">{user?.city}
+          <Tooltip>
+           <Edit sx={{color:"gray"}} onClick={()=>setEditLoc(1)}></Edit>
+          </Tooltip>
+          </div>
+            </>
+          }
+        </div>
 
 
 
 
-        <div className="login-box-error">{}</div>
+        <div className="login-box-error">{err}</div>
         <div
           className="signin-button"
           style={{ justifyContent: "center", paddingBottom: "20px" }}
         >
-        <Button variant="outlined" onClick={submitHandler}>Upload</Button>
+        <Button variant="outlined" onClick={submitHandler} disabled={load}>Upload</Button>
         </div>
       </div>
       {

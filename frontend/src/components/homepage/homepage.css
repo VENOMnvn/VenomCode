@@ -147,6 +147,16 @@ body::-webkit-scrollbar{
     flex-direction: column;
     gap: 12px;
     font-size: 14px;
+    padding-bottom: 8px;
+    border: 1px soldid #004E64;
+}
+.create-post h1{
+    background-color: #004E64;
+    color: white;
+    padding: 4px 8px;
+    text-align: center;
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
 }
 .filter-container{
     background-color: white;
