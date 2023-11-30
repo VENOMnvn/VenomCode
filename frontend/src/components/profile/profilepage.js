@@ -9,18 +9,20 @@ import axios from "axios";
 import EditProfile from "./EditProfile";
 import path from "../../path";
 import { addUserDB } from "../../utils/slices/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Post from "../homepage/Post";
 import UserCard from "./userCard";
 import { Link } from "react-router-dom";
 
 const Profilepage = () => {
   const user = useSelector((state) => state.user.user);
-  const [show, setshow] = useState(false);
+  const [SearchParams] = useSearchParams();
+  const [show, setshow] = useState(SearchParams.get('edit'));
   const userDB = useSelector((state) => state.user.userDB);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [tabPanel, settabPanel] = useState(0);
+  
 
   useEffect(() => {
     if (!user) {

@@ -4,7 +4,7 @@ const utilitySlice = createSlice({
   initialState:{
     filter:[],
     drawer:false,
-    codeRunner:{}
+    codeRunner:{},
   },
   reducers:{
         addFilter : (state,action)=>{

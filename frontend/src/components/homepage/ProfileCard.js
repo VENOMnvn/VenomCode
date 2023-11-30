@@ -1,4 +1,4 @@
-import { Avatar } from '@mui/material'
+import { Avatar, Button } from '@mui/material'
 import React from 'react'
 import profilePic from './../../static/profile.jpeg'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -27,9 +27,9 @@ const ProfileCard = () => {
             <p>People who follows you <span>{userDB?.followers?.length}</span></p>
             <p>People who followed by you <span>{userDB?.following?.length}</span></p>
         </div>
-        <div className='profile-card-bottom' onClick={()=>navigate('/saved')} style={{cursor:"pointer"}}>
-            <BookmarkIcon sx={{color:"green"}}></BookmarkIcon>{"  "}
-            My items
+        <div className='profile-card-bottom' onClick={()=>navigate('/profile?edit=1')} style={{cursor:"pointer"}}>
+           <Button fullWidth variant='contained'>Edit Profile</Button>
+           <Button fullWidth variant='outlined' startIcon={<BookmarkIcon></BookmarkIcon>} sx={{marginTop:2}}>My Saved</Button>
         </div>
        </>:<>
         <div className='profile-card-top'>

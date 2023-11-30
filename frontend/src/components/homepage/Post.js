@@ -84,6 +84,7 @@ const Post = (props) => {
 
   const [showMenu, setshowMenu] = useState(false);
   const [showlabel, setshowlabel] = useState(false);
+  const labelArray = data.label;
 
   const menuRef = React.useRef();
   const labelButtonRef = React.useRef();
@@ -260,17 +261,13 @@ const Post = (props) => {
             vertical: "top",
             horizontal: "right",
           }}
-        > <MenuItem>
-            <ul>
-              {data.label?.map((ele)=>{<li>  
-              "Naveen"
-              </li>
-              })}
-              <li>
-                "nn"
-              </li>
-            </ul>
-          </MenuItem>
+        > {
+          data.label?.map((ele)=>{
+            return <MenuItem>
+              <ListItemText>{ele}</ListItemText>
+            </MenuItem>
+          })
+          }
         </Menu>
 
         <div

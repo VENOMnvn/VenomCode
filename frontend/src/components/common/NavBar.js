@@ -32,15 +32,14 @@ import PostAddIcon from '@mui/icons-material/PostAdd';
 import TuneIcon from '@mui/icons-material/Tune';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 
-
 const Navbar = () => {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const [showChat, setChat] = useState(false);
+  const setChat = ()=>{
 
+  };
 
   const cancel = () => {
     setChat(false);
@@ -183,9 +182,11 @@ const Navbar = () => {
             <li className="cursor-pointer" onClick={() => navigate("/home")}>
               {"Home"}
             </li>
-            <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
-              Followers
+            <Link>
+            <li className="cursor-pointer" style={{ minWidth: "4rem" } }>
+              Theme
             </li>
+            </Link>
           </ul>
 
 

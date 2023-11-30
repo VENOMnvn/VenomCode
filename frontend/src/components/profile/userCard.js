@@ -43,7 +43,7 @@ const UserCard = ({username}) => {
            {username}
         </p>
 
-        <Link to={`/user/id=${username}`} style={{width:"100%",padding:"3px 8px"}}>
+        <Link to={`/user/${username}`} style={{width:"100%",padding:"3px 8px"}}>
         <Button  variant='contained' sx={{}} fullWidth >Visit</Button>
         </Link>
         <Link to={`/chat`} style={{width:"100%",padding:"3px 8px"}}>

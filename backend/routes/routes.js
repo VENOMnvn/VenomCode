@@ -28,7 +28,7 @@ router.get('/resetlogin',resetLogin);
 router.post('/getfollowers',getFollower);
 
 
-router.get("/logout", userLogout);
+
 router.post("/filter", filterFunction);
 router.post("/addExperience", addExperience);
 router.post("/proffesionalData", profileComplete);

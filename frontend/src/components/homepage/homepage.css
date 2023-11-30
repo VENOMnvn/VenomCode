@@ -172,7 +172,7 @@ body::-webkit-scrollbar{
     margin-top: 12px;
 }
 .profile-card-top{
-    background-color: aliceblue;
+    background-color:#004E64;
     width: 100%;
     border-radius: 10px 10px 0px 0px;
     display: flex;
