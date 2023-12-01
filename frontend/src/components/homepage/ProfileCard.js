@@ -38,17 +38,16 @@ const ProfileCard = () => {
         </div>
         </div>
         <div className='profile-card-details'>
-            <p>About this website</p>
+            <p style={{fontSize:"24px"}}>About us </p>
         </div>
         <div className='profile-card-followers'>
             <p>This is a Website to help you in your programming journey</p>
-            <ul style={{color:"gray",fontSize:"12px"}}>
-                <li>See solutions of famous problems</li>
-                <li>Diffrent platform problems solution at a single place</li>
-            </ul>
+            <p>Share your Solutions</p>
+            <p>Learn from other's Solutions</p>
         </div>
         <div className='profile-card-bottom'>
-           <button>Login/Signin</button>
+           <Button fullWidth variant='contained' onClick={()=>navigate('/login')}>Login</Button>
+           <Button fullWidth variant='outlined' startIcon={""} sx={{marginTop:2}} onClick={()=>navigate('/register')}>Register</Button>
         </div>
        
        </>}
