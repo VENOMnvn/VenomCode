@@ -5,15 +5,15 @@ const { profileComplete } = require('./userRegisteration');
 const htmlToSend = ``;
 
 
-class OtpService {
-    async generateOtp() {
+
+    async function generateOtp() {
         //   const otp=`${Math.floor(100000+Math.random() * 99999)}`;
         const otp = `${Math.floor(Math.random() * (999999 - 100000)) + 100000}`;
         console.log(otp, "Generate");
         return otp;
     }
     // sending through phone using twilio
-    async sendBySms(phone, otp) {
+    async function sendBySms(phone, otp) {
         return await twilio.messages.create({
             to: `+91${phone}`,
             from: SMS_FROM_NUMBER,
@@ -22,7 +22,7 @@ class OtpService {
     }
 
     //sending by email using node mailer
-    async sendByEmail(email, otp) {
+    async function sendByEmail(email, otp) {
         console.log("Email", email,otp);
 
         var transporter = nodemailer.createTransport({
@@ -105,7 +105,6 @@ class OtpService {
             console.log(error.message, "While send email");
         }
     }
-};
 
 
   
@@ -201,5 +200,5 @@ const sendToken = async (token,email)=>{
 
 
 
-module.exports = new OtpService();
-module.exports = {sendToken};
+
+module.exports = {sendToken,sendByEmail,generateOtp};

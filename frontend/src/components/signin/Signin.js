@@ -193,7 +193,7 @@ const Signin = () => {
     <div className="signin">
     {load && <LinearProgress></LinearProgress>}
       <ToastContainer></ToastContainer>
-      <div className="stepper">
+      <div className="stepper largeScreen">
         <Stepper activeStep={activeStep}>
           <Step>
             <StepLabel>Register</StepLabel>
@@ -209,6 +209,25 @@ const Signin = () => {
           </Step>
         </Stepper>
       </div>
+      
+      <div className="stepper smallScreen">
+      <Stepper activeStep={activeStep}>
+        <Step>
+          <StepLabel></StepLabel>
+        </Step>
+        <Step>
+          <StepLabel></StepLabel>
+        </Step>
+        <Step>
+          <StepLabel></StepLabel>
+        </Step>
+        <Step>
+          <StepLabel></StepLabel>
+        </Step>
+      </Stepper>
+    </div>
+
+      
 
       <div className="signin-button">
         <Button

@@ -118,6 +118,9 @@
     .signin-button{
         width: 100vw;
     }
+    .signin{
+        height: max-content;
+    }
 }
 
 .skills-array{
@@ -219,3 +222,4 @@
 .invalid-user input{
     border: 2px solid red;
 }
+

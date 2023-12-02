@@ -2,7 +2,7 @@ const User = require("../MongoDB/UserSchema.js");
 const ProfessionModel = require("../MongoDB/professionSchema.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const OtpService = require('./SendOtp.js');
+const {generateOtp,sendByEmail} = require('./SendOtp.js');
 const OTP = require('./../MongoDB/OTPschema.js');
 
 const cloudinary = require("cloudinary");
@@ -36,8 +36,8 @@ const userRegisteration = async (req,res)=>{
       return;
     }
 
-    const otp = await OtpService.generateOtp();
-    await OtpService.sendByEmail(email,otp);
+    const otp = await generateOtp();
+    await sendByEmail(email,otp);
     await OTP.deleteMany({email});
     const otpResponse = await OTP.create({otp,email});
     console.log(otpResponse);

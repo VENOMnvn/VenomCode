@@ -68,8 +68,8 @@ const Login = () => {
     setload(true);
     
       const response = await axios.post(`${path}login`,{
-        password:"Naveen1402#$",
-        email:'navi1419naveen@gmail.com'
+        password:"@Admin1234",
+        email:'naveen@venom.navi'
       });
       console.log(response);
       if(response.data.success){
