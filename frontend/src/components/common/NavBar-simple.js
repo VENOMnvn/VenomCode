@@ -24,7 +24,7 @@ const NavbarSimple = () => {
           }
           </li>
           <li>
-            <span className="" style={{"font-weight":700,"font-size":"1.4rem"}}>Venom</span>
+            <span className="" style={{"font-weight":700,"font-size":"1.4rem"}}>Venom's</span>
             <span className="" style={{"font-weight":800,"color":"#1C8765","font-size":"1.4rem"}}>Code</span>
           </li>
         </ul>

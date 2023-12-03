@@ -113,7 +113,7 @@ const Navbar = () => {
                 className=""
                 style={{ "font-weight": 700, "font-size": "1.4rem" ,marginLeft:"4px"}}
               >
-                Venom
+                Venom's
               </span>
               <span
                 className=""
