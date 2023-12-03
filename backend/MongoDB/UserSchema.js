@@ -11,8 +11,14 @@ const USER = new Schema ({
         type: String,
         required: true
     },
-    organisation:String,
-    designation:String,
+    organisation:{
+        type:String,
+        default:"Not Set"
+    },
+    designation:{
+        type:String,
+        default:"Venom Code User"
+    },
     posts:{
         type:[{type:mongoose.SchemaTypes.ObjectId,ref:"POSTS"}]
     },
@@ -32,8 +38,7 @@ const USER = new Schema ({
         required: true
     },
     password: {
-        type: String,
-        required: true
+        type: String
     },
     gender: {
         type: String,
@@ -64,6 +69,7 @@ const USER = new Schema ({
     },
     city: {
         type: String,
+        default:"Not Set"
     },
     bio:{
         type:String,
