@@ -288,6 +288,7 @@ const Signin = () => {
               </div>
 
               <div className="login-box-error">{error}</div>
+              <div className="login-box-link">Have a Account ? Login <Link to='/login'>here</Link></div>
             </div>
 
             

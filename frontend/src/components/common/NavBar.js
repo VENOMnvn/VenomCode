@@ -248,9 +248,9 @@ const Navbar = () => {
           </ul>
 
           {user.user === false ? (
-            <button>
+            <Button variant="outlined">
               <Link to="/Login">{"Signin"}</Link>
-            </button>
+            </Button>
           ) : (
             <div className="flex gap-x-4">
               <Avatar

@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './signin.css';
-import { Button, TextField } from "@mui/material";
+import { Button, TextField ,IconButton, Icon} from "@mui/material";
 import { Link, useNavigate } from 'react-router-dom';
 import path from './../../path.js';
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { addUser } from './../../utils/slices/userSlice.js'
 import LinearProgress from '@mui/material/LinearProgress';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider, GoogleLogin ,useGoogleLogin} from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
+import logo from './google.png'
 
 
 const Login = () => {
@@ -69,7 +70,6 @@ const Login = () => {
 
   const guestLogin = async () => {
     setload(true);
-
     const response = await axios.post(`${path}login`, {
       password: "@Admin1234",
       email: 'naveen@venom.navi'
@@ -81,9 +81,16 @@ const Login = () => {
       setload(false);
       navigate('/');
     }
-
     setload(false);
   };
+
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log(tokenResponse)
+      },
+  });
+
 
   return (
     <>
@@ -104,7 +111,14 @@ const Login = () => {
           </div>
           <div className='login-box-error'>{error}</div>
           <Button fullwidth variant='contained' disabled={disabled} onClick={submitHandler}>Login</Button>
-          <GoogleOAuthProvider clientId="713976535576-c7c6grdnm12gjr9imqm388bp8utginil.apps.googleusercontent.com">
+          <hr></hr>
+          <Button fullwidth variant='outlined'  onClick={loginWithGoogle} startIcon={<IconButton>
+            <img src={logo} style={{
+              width:"100%",
+              height:"100%"
+             }}></img>
+          </IconButton>}>Continue with Google</Button>
+{/* 
             <GoogleLogin
               onSuccess={credentialResponse => {
                 console.log(credentialResponse);
@@ -118,8 +132,8 @@ const Login = () => {
                 width:"100%",
                 margin:"auto"
               }}
-            />
-          </GoogleOAuthProvider>
+              /> */}
+        
           <div>Dont have an account ? <Link to={'/register'}>Register Yourself</Link> instead</div>
           <div>Are you a Developer ? <Link onClick={guestLogin}>Guest Login</Link></div>
         </div>

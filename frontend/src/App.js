@@ -24,6 +24,7 @@ import path from "./path";
 import { addUser } from "./utils/slices/userSlice";
 import UserProfilepage from "./components/profile/user";
 import userill from "./static/userill.jpg";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Avatar } from "@mui/material";
 import LoginWarning from "./components/common/LoginWarning";
 import PostPage from "./components/homepage/PostPage";
@@ -76,8 +77,8 @@ function App() {
       <div className="App">
         {nav ? <Navbar></Navbar> : <NavbarSimple></NavbarSimple>}
         <Routes>
-          <Route path="/register" element={<Signin></Signin>}></Route>
-          <Route path="/login" element={<Login></Login>}></Route>
+          <Route path="/register" element={<GoogleOAuthProvider clientId="713976535576-c7c6grdnm12gjr9imqm388bp8utginil.apps.googleusercontent.com"><Signin></Signin></GoogleOAuthProvider>}></Route>
+          <Route path="/login" element={<GoogleOAuthProvider clientId="713976535576-c7c6grdnm12gjr9imqm388bp8utginil.apps.googleusercontent.com"><Login></Login></GoogleOAuthProvider>}></Route>
           {/* <Route path="/chat" element={<PopUp element={<Messenger></Messenger>} cancel={()=>navigate("/")} isFull={true}></PopUp>}></Route> */}
           <Route path="/chat" element={<Messenger></Messenger>}></Route>
           <Route path="/home" element={<Homepage></Homepage>}></Route>
