@@ -230,11 +230,11 @@ const Profilepage = () => {
       {tabPanel == 2 && (
         <div
           className="usercard-container"
-        >
-          {userDB?.followers?.map((ele) => {<div>
+        >  
+          {userDB?.followers.map((ele) => <div>
               <UserCard username={ele}></UserCard>
             </div>
-          })}
+          )}
           {
             userDB?.followers?.length == 0 && <div className="usercard-empty"> No one Follows you </div> 
           }
