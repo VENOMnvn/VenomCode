@@ -112,7 +112,9 @@ const Login = () => {
           <div className='login-box-error'>{error}</div>
           <Button fullwidth variant='contained' disabled={disabled} onClick={submitHandler}>Login</Button>
           <hr></hr>
-          <Button fullwidth variant='outlined'  onClick={loginWithGoogle} startIcon={<IconButton>
+          <Button fullwidth variant='outlined'  
+           className='sm-text'
+           onClick={loginWithGoogle} startIcon={<IconButton>
             <img src={logo} style={{
               width:"100%",
               height:"100%"
@@ -134,8 +136,8 @@ const Login = () => {
               }}
               /> */}
         
-          <div>Dont have an account ? <Link to={'/register'}>Register Yourself</Link> instead</div>
-          <div>Are you a Developer ? <Link onClick={guestLogin}>Guest Login</Link></div>
+          <div className='sm-text-p'>Dont have an account ? <Link to={'/register'}>Register Yourself</Link> instead</div>
+          <div className='sm-text-p'>Are you a Developer ? <Link onClick={guestLogin}>Guest Login</Link></div>
         </div>
         <div className='login-side-display'></div>
       </div>

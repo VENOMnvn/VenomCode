@@ -13,10 +13,14 @@ import path from "../../path";
 import userill from "../../static/userill.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
-import { MenuItem } from "@mui/material";
+import { MenuItem,Tab, Tabs, Tooltip  } from "@mui/material";
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import Typography from '@mui/material/Typography';
+import { addUserDB } from "../../utils/slices/userSlice";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Post from "../homepage/Post";
+import UserCard from "./userCard";
+import { Link } from "react-router-dom";
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 
@@ -27,33 +31,23 @@ const UserProfilepage = () => {
   const [msg, setmsg] = useState("Loading...");
   const [isFriendLoad, setIsFriendLoad] = useState(false);
   const { id } = useParams();
-
+  const [tabPanel, settabPanel] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
 
-  const [backgroundDetails, setBackgroundDetails] = useState({
-    occupation: "Student",
-    experience: "3",
-    noOfPost: "34",
-    followers: "432",
-    college: "St cf Andrews School",
-    location: "Noida",
-  });
 
 
   const getUser = async (req, res) => {
     try {
 
       const response = await axios.post(`${path}getuserdetails`, {
-        username: id,
-        visitor:userDB?._id
+        username:id,
+        visitor:userDB?.username
       });
 
       if (response.data.success) {
-
         console.log(response.data.user);
         setuser(response.data.user);
-
       } else {
         setmsg("User not found");
       }
@@ -61,12 +55,18 @@ const UserProfilepage = () => {
       setmsg("Some Error Occured");
       console.log(err);
     }
+
   };
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [id]);
 
+
+
+  const TabPanelChangeHandler = (event, newValue) => {
+    settabPanel(newValue);
+  };
 
 
 
@@ -76,7 +76,6 @@ const UserProfilepage = () => {
       return;
     }
     setIsFriendLoad(true);
-
     try {
       console.log(
         "Adding " + user.username + " as a friend by " + userDB.username
@@ -88,7 +87,7 @@ const UserProfilepage = () => {
       };
       
       const response = await axios.post(`${path}addfollower`, body);
-      getUser();
+      await getUser();
     } catch (err) {
       console.log(err);
     }
@@ -96,19 +95,7 @@ const UserProfilepage = () => {
 
   };
 
-  const [skills, setSkills] = useState([
-    "C++",
-    "JavaScript",
-    "ES6",
-    "React",
-    "Redux",
-    "C",
-    "HTML",
-    "CSS",
-    "NodeJS",
-    "ExpresJS",
-    "MongoDB",
-  ]);
+
 
   return (
     <>
@@ -200,14 +187,14 @@ const UserProfilepage = () => {
                 <div className="background-row">
                   <div className="background-left">Post</div>
                   <div className="background-right">
-                    <p>{backgroundDetails.noOfPost}</p>
+                    <p>{user?.posts?.length}</p>
                   </div>
                 </div>
 
                 <div className="background-row">
                   <div className="background-left">Followers</div>
                   <div className="background-right">
-                    <p>{backgroundDetails.followers}</p>
+                    <p>{user?.followers?.length}</p>
                   </div>
                 </div>
 
@@ -236,14 +223,67 @@ const UserProfilepage = () => {
             </div>
           </div>
           <hr style={{ marginTop: "12px" }}></hr>
-          <div className="profile-page-post-title">
-            Posts
-            <ReplayIcon></ReplayIcon>
-          </div>
-          <hr style={{ marginTop: "12px" }}></hr>
-          <div className="profile-page-post">
-            <HomeFeed></HomeFeed>
-          </div>
+          <div elevation={6} className="profile-page-post-title">
+        {/* Posts
+      <ReplayIcon></ReplayIcon> */}
+
+        <Tabs
+          value={tabPanel}
+          onChange={TabPanelChangeHandler}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
+          selectionFollowsFocus 
+        >
+          <Tab label={"Posts"}></Tab>
+          <Tab label={"Followers"}></Tab>
+          <Tab label={"Following"}></Tab>
+        </Tabs>
+      </div>
+
+      <hr style={{ marginTop: "12px" }}></hr>
+      {tabPanel == 0 && (
+        <div
+          className="profile-page-post"
+          style={{ backgroundColor: "aliceblue" }}
+        >
+          {user?.posts?.map((ele) => (
+            <Post data={ele}></Post>
+          ))}
+        </div>
+      )}
+
+  
+
+      {tabPanel == 2 && (
+        <div
+           className="usercard-container"
+        >
+          {user?.following?.map((ele) => (
+            <div> <UserCard username={ele}></UserCard></div>
+          ))}
+          {
+            user?.following?.length == 0 && <div className="fullwidth centerAll"> You dont Follow any one <Link to='/search'>Find here</Link></div> 
+          }
+
+        </div>
+      )}
+
+      {tabPanel == 1 && (
+        <div
+          className="usercard-container"
+        >
+          {user?.followers?.map((ele) => {<div>
+              <UserCard username={ele}></UserCard>
+            </div>
+          })}
+          {
+            user?.followers?.length == 0 && <div className="usercard-empty"> No one Follows you </div> 
+          }
+
+        </div>
+      )}
+          
         </div>
       ) : (
         <div className="fullscreen centerAll">

@@ -1,3 +1,4 @@
+
 .login{
     display: flex;
     width: 100vw;
@@ -223,3 +224,14 @@
     border: 2px solid red;
 }
 
+@media (width<500px) {
+    .sm-text{
+        font-size: 10px !important;
+    }
+    .sm-text-p{
+        font-size: 14px ;
+    }
+    .sm-text img{
+        height: 20px !important;
+    }
+}

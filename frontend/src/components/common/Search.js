@@ -94,9 +94,9 @@ const SearchElement = () => {
               - {""}{user.city}
               </span>
             </div>
-            <div className="search-button-group">
+            {/* <div className="search-button-group">
             <button><AddIcon></AddIcon>Follow</button>
-            </div>
+            </div> */}
           </div>
         </div>
       ))}
