@@ -130,7 +130,7 @@ const Navbar = () => {
               <span style={{
                 margin:"4px",
                 color:"gray"
-              }}>v.1.2</span>
+              }}>v.1.3</span>
             </li>
           </ul>
 
