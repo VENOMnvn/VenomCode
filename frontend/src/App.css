@@ -63,7 +63,7 @@ textarea:focus, input:focus{
       transform: rotate(360deg);  
     }
   }
-
+ 
 .centerAll{
     width: 100%;
     display: flex;
@@ -127,4 +127,8 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.MuiBottomNavigation-root{
+  font-size: 36px !important;
 }

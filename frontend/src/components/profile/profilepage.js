@@ -1,5 +1,5 @@
 import { Avatar, Button, ButtonBase, Tab, Tabs, Tooltip } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import profilepic from "./../../static/profile.jpeg";
 import "./profile.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,22 +16,30 @@ import { Link } from "react-router-dom";
 
 const Profilepage = () => {
   const user = useSelector((state) => state.user.user);
+
   const [SearchParams] = useSearchParams();
+
   const [show, setshow] = useState(SearchParams.get('edit'));
+  const [saved,setSaved] = useState(SearchParams.get("saved"));
+  const savedRef = useRef();
   const userDB = useSelector((state) => state.user.userDB);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [tabPanel, settabPanel] = useState(0);
   
+  useEffect(()=>{
+      if(saved){
+        settabPanel(1);
+        savedRef.current?.scrollIntoView();
+      }
+  },[saved]);
 
   useEffect(() => {
     if (!user) {
       navigate("../pleaselogin", { replace: true });
     }
   }, []);
-
-
-
+  
   const editPop = () => {
     setshow(true);
   };
@@ -60,13 +68,10 @@ const Profilepage = () => {
   const getFollower = async () => {
     try {
       console.log("==");
-
       const resp = await axios.post(`${path}getfollowers`,{
         userid:user?._id
      });
-
      console.log(resp);
-
     } catch (err) {
       console.log(err);
     }
@@ -146,14 +151,14 @@ const Profilepage = () => {
             <div className="background-row">
               <div className="background-left">College</div>
               <div className="background-right">
-                <p>{user?.organisation}</p>
+                <p>{userDB?.organisation}</p>
               </div>
             </div>
 
             <div className="background-row">
               <div className="background-left">Location</div>
               <div className="background-right">
-                <p>{user?.city}</p>
+                <p>{userDB?.city}</p>
               </div>
             </div>
           </div>
@@ -162,7 +167,7 @@ const Profilepage = () => {
         <div className="right">
           <div>Skills and Languages</div>
           <div>
-            {user?.skills?.map((ele) => (
+            {userDB?.skills?.map((ele) => (
               <span>{ele}</span>
             ))}
           </div>
@@ -173,12 +178,12 @@ const Profilepage = () => {
       <div elevation={6} className="profile-page-post-title">
         {/* Posts
       <ReplayIcon></ReplayIcon> */}
-
         <Tabs
           value={tabPanel}
           onChange={TabPanelChangeHandler}
           variant="scrollable"
           scrollButtons
+          ref={savedRef}
           allowScrollButtonsMobile
           selectionFollowsFocus 
         >
@@ -192,6 +197,7 @@ const Profilepage = () => {
       <hr style={{ marginTop: "12px" }}></hr>
       {tabPanel == 0 && (
         <div
+
           className="profile-page-post"
           style={{ backgroundColor: "aliceblue" }}
         >
@@ -220,6 +226,7 @@ const Profilepage = () => {
           {userDB?.following?.map((ele) => (
             <div> <UserCard username={ele}></UserCard></div>
           ))}
+
           {
             userDB?.following?.length == 0 && <div className="fullwidth centerAll"> You dont Follow any one <Link to='/search'>Find here</Link></div> 
           }

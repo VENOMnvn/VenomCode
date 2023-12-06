@@ -78,6 +78,10 @@ const USER = new Schema ({
     exp:{
         type:Number,
         default:0
+    },
+    googleUser:{
+        type:Boolean,
+        default:false
     }
 
 },{timestamps:true});

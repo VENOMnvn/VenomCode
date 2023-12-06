@@ -31,6 +31,14 @@ import PostPage from "./components/homepage/PostPage";
 import CodeRunner from "./components/common/CodeRunner";
 import SavedPost from "./components/profile/Savedpost";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import HomeMaxOutlinedIcon from '@mui/icons-material/HomeMaxOutlined';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import Filter from "./components/homepage/FilterComp";
 
 const NotFound = ({ msg }) => {
   return (
@@ -58,6 +66,7 @@ function App() {
   });
 
   const [nav, isNav] = useState(true);
+  const [value, setValue] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -85,6 +94,7 @@ function App() {
           <Route path="/" index element={<Homepage></Homepage>}></Route>
           <Route path="/sharepost" element={<SharePost></SharePost>}></Route>
           <Route path="/search" element={<Search></Search>}></Route>
+          <Route path='/filter' element={<Filter></Filter>}></Route>
           <Route path="/profile" element={<Profilepage></Profilepage>}></Route>
           <Route
             path="/user/:id"
@@ -99,6 +109,7 @@ function App() {
           <Route path="/execute" element={<CodeRunner></CodeRunner>}></Route>
           <Route path="/:error" element={<NotFound></NotFound>}></Route>
         </Routes>
+
       </div>
       </ThemeProvider>
     </>

@@ -27,9 +27,9 @@ const ProfileCard = () => {
             <p>People who follows you <span>{userDB?.followers?.length}</span></p>
             <p>People who followed by you <span>{userDB?.following?.length}</span></p>
         </div>
-        <div className='profile-card-bottom' onClick={()=>navigate('/profile?edit=1')} style={{cursor:"pointer"}}>
-           <Button fullWidth variant='contained'>Edit Profile</Button>
-           <Button fullWidth variant='outlined' startIcon={<BookmarkIcon></BookmarkIcon>} sx={{marginTop:2}}>My Saved</Button>
+        <div className='profile-card-bottom'  style={{cursor:"pointer"}}>
+           <Button fullWidth variant='contained' onClick={()=>navigate('/profile?edit=1')} >Edit Profile</Button>
+           <Button fullWidth variant='outlined' startIcon={<BookmarkIcon></BookmarkIcon>} sx={{marginTop:2}} onClick={()=>navigate('/profile?saved=1')} >My Saved</Button>
         </div>
        </>:<>
         <div className='profile-card-top'>

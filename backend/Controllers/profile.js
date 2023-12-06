@@ -12,11 +12,9 @@ cloudinary.config({
 
 const editprofile = async (req,res)=>{
     try{
-        const {profileURL,user,exp,designation,bio,city} = req.body;
-        console.log(profileURL,user,exp,designation,bio,city);
-
-        
-            const responseByUser = await User.findByIdAndUpdate(user,{profilePicture:profileURL,exp,designation,bio,city});
+        const {profileURL,user,exp,designation,bio,city,organisation,skills} = req.body;
+        console.log(profileURL,user,exp,designation,bio,city,organisation,skills);
+            const responseByUser = await User.findByIdAndUpdate(user,{profilePicture:profileURL,exp,designation,bio,city,organisation,skills});
             res.send(responseByUser);
             return;
       
@@ -79,13 +77,13 @@ const getUserQuery = async (req,res)=>{
     try{
 
         if(limit){
-            let users = await User.find().limit(limit).select('username profilePicture firstname lastname designation -_id');
+            let users = await User.find().limit(limit).select('username profilePicture firstname lastname designation city -_id');
             res.send({users});
             return
         }
 
         if(username){
-        let user = await User.findOne({username}).select('username profilePicture firstname lastname designation -_id');
+        let user = await User.findOne({username}).select('username profilePicture firstname lastname designation city -_id');
         res.send({success:true,user});
         return;
         }

@@ -1,12 +1,11 @@
 const Token = require('../MongoDB/TokenSchema');
 const User = require('../MongoDB/UserSchema');
 const {sendToken} = require('./SendOtp');
-
+const {jwtDecode} = require("jwt-decode")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const axios = require('axios');
 const maxAge = 3 * 24 * 60 * 60;
-
 
 const userLogin = async (req, res) => {
     try {
@@ -85,5 +84,74 @@ const resetLogin = async (req,res)=>{
     }
 }
 
+const googlesignin = async (req,res)=>{
+    try {
+        if(req.body){
+        
+            const dataFromGoogle = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo?access_token='+req.body.access_token);
+            console.log(dataFromGoogle.data);
+            if(dataFromGoogle.data){
+                   
+                    const existingUser = await User.findOne({email:dataFromGoogle.data.email}).select(' -password');
+                    console.log(existingUser,"rr");
+                    if(existingUser){
 
-module.exports = {userLogin,resetPassword,resetLogin};
+                        res.send({
+                            success:true,
+                            user:existingUser
+                        });
+
+                    }else{
+
+                        function generatePassword(length) {
+                            
+                                charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$@%",
+                                retVal = "";
+                            for (var i = 0, n = charset.length; i < length; ++i) {
+                                retVal += charset.charAt(Math.floor(Math.random() * n));
+                            }
+                            return retVal;
+                        }
+
+                        const password = generatePassword(6);
+                        const salt = await bcrypt.genSalt(10);
+                        const hashPassword = await bcrypt.hash(password, salt);
+                        const username  = generatePassword(10);
+                        const dob = new Date('2003-01-20');
+                        const user = {
+                            email:dataFromGoogle.data.email,
+                            firstname:dataFromGoogle.data.given_name,
+                            lastname:dataFromGoogle.data.family_name,
+                            profilePicture:dataFromGoogle.data.picture,
+                            password:hashPassword,
+                            dob,
+                            gender:"Not Set",
+                            username,
+                            googleUser:True
+                        }
+                        console.log(user);
+
+                        let responseFromCreate = await User.create(user);
+                        responseFromCreate.password="hidden";
+                        console.log('new',responseFromCreate);
+                        res.send({
+                            success:true,
+                            user:responseFromCreate
+                        });
+                    }
+            }else{
+                res.send({
+                    msg:"Email Not valid"
+                });
+            }
+            
+        }else{
+            res.send("Not reached google");
+        }
+        
+    } catch (error) {
+            console.log(error);
+    }
+}
+
+module.exports = {userLogin,resetPassword,resetLogin,googlesignin};

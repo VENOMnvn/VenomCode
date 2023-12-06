@@ -1,5 +1,5 @@
 const { userRegisteration,userSignin,getUserName,addExperience,profileComplete} = require("../Controllers/userRegisteration");
-const {userLogin,resetPassword, resetLogin} = require("../Controllers/userLogin");
+const {userLogin,resetPassword, resetLogin,googlesignin} = require("../Controllers/userLogin");
 const userLogout = require("../Controllers/userLogout");
 const filterFunction = require("../Controllers/filter");
 const {editprofile,getUserDetails,getUserQuery, addFollower,getFollower} = require("./../Controllers/profile");
@@ -26,7 +26,7 @@ router.post('/addfollower',addFollower)
 router.post('/resetpassword',resetPassword);
 router.get('/resetlogin',resetLogin);
 router.post('/getfollowers',getFollower);
-
+router.post("/signingoogle",googlesignin);
 
 
 router.post("/filter", filterFunction);

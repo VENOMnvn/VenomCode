@@ -48,11 +48,21 @@ const Signin = () => {
   const skillselecthandle = (e) => {
     if (e.key == "Enter") {
       if (e.target.value.length > 0)
-        setskills([...skills, e.target.value.toUpperCase()]);
+        setskills([...skills, e.target.value.toUpperCase().trim()]);
       e.target.value = "";
       setASkill("");
     }
   };
+
+  const deleteSkill = (e)=>{
+    let skillTemp = skills;
+    skillTemp = skillTemp.filter((ele)=>{
+      return ele != e.target.innerText;
+    })
+    console.log(skillTemp);
+    setskills(skillTemp);
+    return;
+  }
 
   const validate = () => {
     if (!emailRegex.test(email) && email.length > 0) {
@@ -345,6 +355,7 @@ const Signin = () => {
           <>
             <div className="login-box">
               <div className="login-box-title">Final Step</div>
+
               <div className="login-box-field">
                 <p>Skills</p>
                 <input
@@ -357,9 +368,10 @@ const Signin = () => {
 
               <div className="skills-array">
                 {skills.map((skill) => (
-                  <Chip label={skill}></Chip>
+                  <Chip label={skill} onClick={deleteSkill}></Chip>
                 ))}
               </div>
+
               <div className="login-box-field">
                 <p>Designation</p>
                 <input
