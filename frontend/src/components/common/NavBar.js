@@ -126,6 +126,12 @@ const Navbar = () => {
                 Code
               </span>
             </li>
+            <li>
+              <span style={{
+                margin:"4px",
+                color:"gray"
+              }}>v.1.2</span>
+            </li>
           </ul>
 
           {
