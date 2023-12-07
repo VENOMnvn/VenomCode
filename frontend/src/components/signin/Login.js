@@ -92,16 +92,17 @@ const Login = () => {
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-        const res = await axios.post(path+"signingoogle",tokenResponse);
-        if(res.data.success){
-          dispatch(addUser(res.data.user));
-          navigate("/../");
-        }else{
-          alert("Error");
-        }
-      
-        console.log(res);
+      const res = await axios.post(path + "signingoogle", tokenResponse);
+      if (res.data.success) {
+        dispatch(addUser(res.data.user));
+        navigate("/../");
+      } else {
+        alert("Error");
+      }
+
+      console.log(res);
     },
+    useOneTap: true,
   });
 
   return (
@@ -128,6 +129,7 @@ const Login = () => {
             Login
           </Button>
           <hr></hr>
+
           <Button
             fullwidth
             variant="outlined"
@@ -148,10 +150,21 @@ const Login = () => {
             Continue with Google
           </Button>
 
+          {/* <div className="googleButton">
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              console.log(credentialResponse);
+            }}
+            // theme="filled_blue"
+            shape="pill"
+            useOneTap
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+          </div> */}
+        
           
-          ;
-
-
           {/* 
             <GoogleLogin
               onSuccess={credentialResponse => {

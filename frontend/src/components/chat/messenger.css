@@ -22,7 +22,7 @@
 
 @media (width<750px) {
     .messenger{
-        height: calc(100vh - 32px);
+        
     }
 }
 .messenger-top span{
@@ -194,4 +194,15 @@
     height: calc(100vh - 192px);
     box-sizing: border-box;
     overflow-y: scroll;
+}
+.Mobile-Chats{
+    width: 50px;
+}
+@media (width<500px){
+.messenger{
+    grid-template-columns: 50px auto;
+}    
+.chat-thumbnail{
+    padding: 2px;
+}
 }

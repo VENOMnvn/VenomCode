@@ -235,3 +235,10 @@
         height: 20px !important;
     }
 }
+
+.googleButton{
+    /* border: 1px solid red; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

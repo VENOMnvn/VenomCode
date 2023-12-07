@@ -51,7 +51,7 @@ const Messenger = () => {
       setMobile(false);
     }
 
-  });
+  },[]);
 
   const [ActiveChat,setActiveChat] = useState("");
   const [chats,setChats] = useState(["Venom","Naveen","Aegon","Sonu","Kittu","Praveen","Karan","Rohit","Bh","Ragnar","Lucifer","samael"]);
@@ -88,10 +88,6 @@ const Messenger = () => {
                 <Paper onClick={()=>setActiveChat(ele)}>
                 <div className={ele == ActiveChat ? "chat-thumbnail Active-chat-thumbnail":"chat-thumbnail"}>
                     <Avatar src={sonu}></Avatar>
-                    <div>
-                      <p>{ele}</p>
-                      <span>How are you</span>
-                    </div>
                 </div>
                 </Paper>
               );

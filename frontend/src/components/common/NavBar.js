@@ -31,6 +31,7 @@ import ProfileCard from "../homepage/ProfileCard";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import TuneIcon from '@mui/icons-material/Tune';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import { version } from "../../path";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -130,7 +131,10 @@ const Navbar = () => {
               <span style={{
                 margin:"4px",
                 color:"gray"
-              }}>v.1.3</span>
+              }}>
+                {version}
+                
+              </span>
             </li>
           </ul>
 
