@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Chip from '@mui/material/Chip';
-import { Button, LinearProgress } from "@mui/material";
+import { Button, CircularProgress, LinearProgress } from "@mui/material";
 import { useSelector } from "react-redux";
 import axios from 'axios'
 import path from './../../path';
@@ -38,13 +38,16 @@ const CreatePost = ({cancel}) => {
     setLabelArray(result);
 }
 
-    const [label,setLabelArray] = useState(["DSA"]);
+    const [label,setLabelArray] = useState([]);
     
     const handleSubmitLabel = (e)=>{
       if(e.code == "Enter"){
         setLabelArray([...label,e.target.value?.toUpperCase()]);
         e.target.value="";
       }
+    }
+    const deletLabel = (e)=>{
+
     }
     
     const handleSubmit = async ()=>{
@@ -150,7 +153,9 @@ const CreatePost = ({cancel}) => {
       </div>
 
       <div className="submit-post">
-        <Button variant="outlined" onClick={handleSubmit} disabled={load}>Upload</Button>
+        <Button variant="outlined" onClick={handleSubmit} disabled={load}>
+            {load?<CircularProgress></CircularProgress>:"Upload"}
+        </Button>
       </div>
       </>
     }

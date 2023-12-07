@@ -3,6 +3,7 @@ const {userLogin,resetPassword, resetLogin,googlesignin} = require("../Controlle
 const filterFunction = require("../Controllers/filter");
 const {editprofile,getUserDetails,getUserQuery, addFollower,getFollower} = require("./../Controllers/profile");
 const {sharePost,getPosts,addLike,postFilter,setComment,getPost, savePost}  = require("./../Controllers/post");
+const {sendMessage,getConversations,getChat,deleteMessage}= require('../Controllers/Chat');
 
 const express = require("express");
 const router = express.Router();
@@ -42,8 +43,9 @@ router.post('/addfollower',addFollower)
 router.post('/getfollowers',getFollower);
 
 //Chat
-
-
+router.post('/getchat',getChat);
+router.get('/conversation',getConversations);
+router.post('/message',sendMessage);
 
 
 module.exports = router;

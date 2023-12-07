@@ -34,8 +34,7 @@ const UserProfilepage = () => {
   const [tabPanel, settabPanel] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
-
-
+  const navigate = useNavigate();
 
   const getUser = async (req, res) => {
     try {
@@ -96,7 +95,6 @@ const UserProfilepage = () => {
   };
 
 
-
   return (
     <>
       {user && !load ? (
@@ -117,7 +115,7 @@ const UserProfilepage = () => {
               anchorEl={anchorEl}
               onClose={() => setShowMenu(false)}
             >
-              <MenuItem>
+              <MenuItem onClick={()=>navigate('/chat?user='+user.username)}>
                 {" "}
                 <ListItemIcon>
                   <MessageRoundedIcon></MessageRoundedIcon>
@@ -259,8 +257,7 @@ const UserProfilepage = () => {
         <div
            className="usercard-container"
         >
-          {user?.following?.map((ele) => (
-            <div> <UserCard username={ele}></UserCard></div>
+          {user?.following?.map((ele) => (<div> <UserCard username={ele}></UserCard></div>
           ))}
           {
             user?.following?.length == 0 && <div className="fullwidth centerAll"> You dont Follow any one <Link to='/search'>Find here</Link></div> 
@@ -273,7 +270,7 @@ const UserProfilepage = () => {
         <div
           className="usercard-container"
         >
-          {user?.followers?.map((ele) => {<div>
+          {user?.followers?.map((ele) => {return <div>
               <UserCard username={ele}></UserCard>
             </div>
           })}

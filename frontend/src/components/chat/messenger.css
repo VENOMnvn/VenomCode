@@ -70,6 +70,7 @@
     height: calc(100%-100px);
     box-sizing: border-box;
     overflow-y: scroll;
+    background-color: white;
     border-right: 2px solid lightgray;
 }
 .chats::-webkit-scrollbar{
@@ -86,10 +87,10 @@
 }
 
 .chat{
+    background-color: white;
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;   
-
+    box-sizing: border-box;
 }
 .chat-top{
     padding: 1px 5px;
@@ -127,6 +128,7 @@
 }
 .chat-body{
     background-color: white;
+   
 }
 .chat-bottom p{
     margin: 2px 8px;
@@ -189,8 +191,6 @@
     border-top-right-radius: 0px;
 }
 .chat-body{
-    display: flex;
-    flex-direction: column-reverse;
     height: calc(100vh - 192px);
     box-sizing: border-box;
     overflow-y: scroll;

@@ -1,8 +1,9 @@
 const { model, Schema, Model } = require("mongoose");
+const mongoose = require('mongoose');
 
 const CONVERSATION = new Schema({
     users:{
-        type:[String],
+        type:[{type:mongoose.SchemaTypes.ObjectId,ref:"User"}],
         require:true
     },
     messages:{
@@ -15,4 +16,4 @@ const CONVERSATION = new Schema({
     
 });
 const Conversation = new model("Conversation",CONVERSATION);
-export default Conversation;
+module.exports = Conversation;

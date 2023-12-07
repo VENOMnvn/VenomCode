@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Poppins:wght@200&display=swap');
+:root {
+    --bg: #121212;
+    --sbg: #1e1e1e;
+    --lvg:#292929;
+}
 
 .smallScreen{
   display: none;

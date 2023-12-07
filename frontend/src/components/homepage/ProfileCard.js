@@ -20,8 +20,8 @@ const ProfileCard = () => {
         </div>
         </div>
         <div className='profile-card-details'>
-            <p>{user?.firstname + " " + user?.lastname}</p>
-            <div>{user?.bio}</div>
+            <p>{userDB?.firstname + " " + userDB?.lastname}</p>
+            <div>{userDB?.bio}</div>
         </div>
         <div className='profile-card-followers'>
             <p>People who follows you <span>{userDB?.followers?.length}</span></p>

@@ -57,26 +57,29 @@
 .labels-form-create-post{
     padding: 0px 32px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
 }
 .labels-form-create-post-left{
+    margin: 15px 2px;
     border: 1px solid rgb(227, 226, 226);
     box-shadow: inset -2px 0px 8px rgb(162, 162, 162);
     display: flex;
     padding: 6px;
     border-radius: 10px;
+    min-height: 45px;
     flex-wrap: nowrap;
     overflow-y: scroll;
-    width: 80%;
+    width: 100%;
 }
 .submit-post{
     display: flex;
     flex-direction: row-reverse;
     padding: 8px 32px;
+    margin-bottom: 30px;
 }
 .lang-select{
     padding: 0px 32px;
-    
     padding-bottom:10px;
 }
 .codeRun{
