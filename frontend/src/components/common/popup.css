@@ -52,6 +52,11 @@
     background-color: rgb(215, 213, 213);
     padding: 8px;
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 .popup-header>div>div:hover{

@@ -47,9 +47,16 @@ const Profilepage = () => {
   const getUserDetails = async () => {
     if (user) {
       try {
+
         const res = await axios.post(`${path}getuserdetails`, {
           userid: user?._id,
         });
+        
+        const ress = await axios.post(path+'notifications',{
+          userId:userDB._id
+        })
+        console.log(ress);
+
         if (res.data.success) {
           dispatch(addUserDB(res.data.user));
         }
@@ -201,9 +208,7 @@ const Profilepage = () => {
           className="profile-page-post"
           style={{ backgroundColor: "aliceblue" }}
         >
-          {userDB?.posts?.map((ele) => (
-            <Post data={ele}></Post>
-          ))}
+          {userDB?.posts?.map((ele) => ( <Post data={ele}></Post> ))}
         </div>
       )}
 

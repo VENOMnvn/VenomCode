@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import profile from "./../../static/profile.jpeg";
-import { Avatar } from "@mui/material";
+import { Avatar, IconButton} from "@mui/material";
 import { TextField } from "@mui/material";
 import AddReactionIcon from "@mui/icons-material/AddReaction";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
@@ -8,17 +8,15 @@ import Message from "./Message";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import path from "../../path";
 
-const Chat = ({ data }) => {
+const Chat = ({ data,cancel }) => {
 
   const [msgs, setMsgs] = useState(data.messages);
   const [currentMsg, setcurrentMsg] = useState("");
   const userDB = useSelector((s) => s.user.userDB);
   const chatbodyref = useRef();
-
-
-
   const [activeUser, setActiveUser] = useState(0);
 
   useEffect(() => {
@@ -40,6 +38,11 @@ const Chat = ({ data }) => {
   },[msgs])
 
   const MessageSend = async () => {
+
+    if(!currentMsg || currentMsg.length == 0 || currentMsg=="\n"){
+      return;
+    }
+    
     try {
       const response = await axios.post(path + "message", {
         msg: currentMsg,
@@ -62,10 +65,20 @@ const Chat = ({ data }) => {
   const handleChange = (e) => {
     setcurrentMsg(e.target.value);
   };
+  const EnterKeyHandler = (e)=>{
+    if(e.key == 'Enter'){
+      MessageSend();
+    }
+  }
 
   return (
     <>
       <div className="chat-top">
+        {
+          cancel &&   <IconButton onClick={()=>cancel(false)}>
+          <ArrowBackIosRoundedIcon></ArrowBackIosRoundedIcon>
+        </IconButton>
+        }
         <div>
           <Avatar src={activeUser?.profilePicture}></Avatar>
           {activeUser?.firstname + " " + activeUser?.lastname}
@@ -91,12 +104,13 @@ const Chat = ({ data }) => {
           maxRows={1}
           className="chat-input"
           onChange={handleChange}
+          onKeyDown={EnterKeyHandler}
           value={currentMsg}
         ></TextField>
         <div className="chat-input-send" onClick={MessageSend}>
           <ArrowForwardOutlinedIcon></ArrowForwardOutlinedIcon>
         </div>
-        <div></div>
+       
       </div>
     </>
   );

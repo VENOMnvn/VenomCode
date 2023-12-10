@@ -95,6 +95,22 @@ const UserProfilepage = () => {
   };
 
 
+  const removeFollower = async ()=>{
+    try {
+          const response = await axios.post(path+'removefollower',{
+            username:user.username,
+            FollowUsername:userDB.username,
+            userId:userDB._id
+          })    
+          if(response.data.success){
+            window.location.reload();
+          } 
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   return (
     <>
       {user && !load ? (
@@ -125,7 +141,7 @@ const UserProfilepage = () => {
                   ⌘X
                 </Typography> */}
               </MenuItem>
-              <MenuItem>
+              <MenuItem onClick={removeFollower}>
                 {" "}
                 <ListItemIcon>
                   <PersonRemoveRoundedIcon></PersonRemoveRoundedIcon>

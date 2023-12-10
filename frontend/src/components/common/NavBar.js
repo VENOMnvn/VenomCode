@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import InputBase from "@mui/material/InputBase";
+import React, { useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import {
   Button,
   Avatar,
@@ -13,38 +11,46 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded';
+import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./Navbar.css";
 import Tooltip from "@mui/material/Tooltip";
-import PopUp from "./popup";
-import Messenger from "../chat/Messengers";
 import Badge from "@mui/material/Badge";
-import CreatePost from "./../homepage/CreatePost";
 import logo from "./../../static/logo.png";
 import { Drawer, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Filter from "../homepage/FilterComp";
-import ProfileCard from "../homepage/ProfileCard";
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import TuneIcon from '@mui/icons-material/Tune';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import { version } from "../../path";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import TuneIcon from "@mui/icons-material/Tune";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import path, { version } from "../../path";
+import axios from 'axios';
+
 
 const Navbar = () => {
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.user);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const setChat = ()=>{
+  const [showModal, setShowModal] = useState(false);
+  const [notificationBadge,setNotificationBadge] =  useState(0);
 
-  };
+  const checknotification = async ()=>{
+      try{
+        const response = await axios.get(path+'checknotification?userId='+user.user._id);
+        if(response.data.success){
+          setNotificationBadge(response.data.notifications);
+        }
+      }catch(err){
+        console.log(err);
+      }
+  }
 
-  const cancel = () => {
-    setChat(false);
-  };
+  useEffect(()=>{
+checknotification();
+  },[]);
 
   return (
     <>
@@ -59,13 +65,14 @@ const Navbar = () => {
             </div>
             <div className="drawer">
               <List>
-
-                <ListItemButton onClick={()=>{
-                  navigate('/sharepost')
-                  setDrawerOpen(false)
-                }}>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/sharepost");
+                    setDrawerOpen(false);
+                  }}
+                >
                   <ListItemIcon>
-                      <PostAddIcon></PostAddIcon>
+                    <PostAddIcon></PostAddIcon>
                   </ListItemIcon>
                   <ListItemText primary="Share a Post"></ListItemText>
                 </ListItemButton>
@@ -77,22 +84,24 @@ const Navbar = () => {
                   <ListItemText primary="Add a Filter"></ListItemText>
                 </ListItemButton>
 
-                <ListItemButton onClick={()=>{
-                navigate('/chat')
-                setDrawerOpen(false)
-                }
-                }>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/chat");
+                    setDrawerOpen(false);
+                  }}
+                >
                   <ListItemIcon>
-                      <ChatBubbleIcon></ChatBubbleIcon>
+                    <ChatBubbleIcon></ChatBubbleIcon>
                   </ListItemIcon>
                   <ListItemText primary="Messenger"></ListItemText>
                 </ListItemButton>
 
-                <ListItemButton onClick={()=>{
-                navigate('/search')
-                setDrawerOpen(false)
-                }
-                }>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/search");
+                    setDrawerOpen(false);
+                  }}
+                >
                   <ListItemIcon>
                     <SearchIcon></SearchIcon>
                   </ListItemIcon>
@@ -107,12 +116,20 @@ const Navbar = () => {
       )}
       <nav className="navbar-container">
         <div className="navbar-toolbar">
-          <ul className="icon-class" style={{ minWidth: "9.4rem" }} onClick={()=>navigate('/')}>
+          <ul
+            className="icon-class"
+            style={{ minWidth: "9.4rem" }}
+            onClick={() => navigate("/")}
+          >
             <li>{<img src={logo} alt="VenomCode" width={"33px"} />}</li>
             <li>
               <span
                 className=""
-                style={{ "font-weight": 700, "font-size": "1.4rem" ,marginLeft:"4px"}}
+                style={{
+                  "font-weight": 700,
+                  "font-size": "1.4rem",
+                  marginLeft: "4px",
+                }}
               >
                 Venom's
               </span>
@@ -128,12 +145,13 @@ const Navbar = () => {
               </span>
             </li>
             <li>
-              <span style={{
-                margin:"4px",
-                color:"gray"
-              }}>
+              <span
+                style={{
+                  margin: "4px",
+                  color: "gray",
+                }}
+              >
                 {version}
-                
               </span>
             </li>
           </ul>
@@ -193,15 +211,14 @@ const Navbar = () => {
               {"Home"}
             </li>
             <Link>
-            <li className="cursor-pointer" style={{ minWidth: "4rem" } }>
-              Theme
-            </li>
+              <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
+                Theme
+              </li>
             </Link>
           </ul>
 
-
           <div style={{ flex: 1 }}></div>
-{/*           
+          {/*           
           <div className="userSearch" component="form">
             <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
               <SearchIcon color="info" />
@@ -218,41 +235,58 @@ const Navbar = () => {
           <ul className="nav-icons">
             <li>
               <Tooltip title="Search">
-              <IconButton aria-label="delete" onClick={()=>navigate('/search')}>
-                <SearchIcon
-                  sx={{ color: "black", fontSize: "28px" }}
-                />
-              </IconButton>
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => navigate("/search")}
+                >
+                  <SearchIcon sx={{ color: "black", fontSize: "28px" }} />
+                </IconButton>
               </Tooltip>
             </li>
 
-            {user.user && <li onClick={()=>{
-              localStorage.clear();
-              window.location.reload();
-            }}>
-
-              <Tooltip title="Logout">
-                <IconButton aria-label="delete" className="chat-icon">
+            {user.user && (
+              <li
+                onClick={() => {
+                  setShowModal(!showModal);
+                }}
+              >
+                <Tooltip title="Logout">
+                  <IconButton aria-label="delete" className="chat-icon">
                     <LogoutRoundedIcon
                       sx={{ color: "black", fontSize: "25px" }}
                     />
-                </IconButton>
-              </Tooltip>
-            </li>
-            }
+                  </IconButton>
+                </Tooltip>
+              </li>
+            )}
 
             <li>
-            <Link to={'/chat'}>
-              <Tooltip title="Message">
-                <IconButton aria-label="delete" className="chat-icon">
-                  <Badge badgeContent={4} color="primary">
-                    <ChatBubbleOutlineRoundedIcon
-                      sx={{ color: "black", fontSize: "25px" }}
-                    />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-            </Link>
+              <Link to={"/chat"}>
+                <Tooltip title="Message">
+                  <IconButton aria-label="delete" className="chat-icon">
+                    <Badge badgeContent={4} color="primary">
+                      <ChatBubbleOutlineRoundedIcon
+                        sx={{ color: "black", fontSize: "25px" }}
+                      />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            </li>
+
+            <li>
+              <Link to={"/notifications"}>
+                <Tooltip title="notification">
+                  <IconButton aria-label="delete" className="chat-icon">
+                    <Badge badgeContent={notificationBadge} color="primary">
+                      <NotificationsNoneRoundedIcon
+                        sx={{ color: "black", fontSize: "25px" }}
+                      />
+                      
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Link>
             </li>
 
           </ul>
@@ -279,6 +313,19 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      {showModal && (
+        <Modal
+          Icon={LogoutRoundedIcon}
+          heading={"Do you want to Logout ?"}
+          subheading={"Keep the Credentials safe"}
+          leftButton={true}
+          cancel={()=>setShowModal(false)}
+          confirm={()=>{
+            localStorage.clear()
+            window.location.reload();
+          }}
+        ></Modal>
+      )}
     </>
   );
 };

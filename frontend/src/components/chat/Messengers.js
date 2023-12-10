@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./messenger.css";
-import { Avatar, Skeleton, Snackbar } from "@mui/material";
+import { Avatar, Skeleton, Snackbar,Button } from "@mui/material";
 import profilepic from "./../../static/profile.jpeg";
 import sonu from "./../../static/profile.jpeg";
 import { styled } from "@mui/material/styles";
@@ -9,7 +9,8 @@ import Paper from "@mui/material/Paper";
 import Chat from "./Chat";
 import axios from "axios";
 import path from "../../path";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import image from "./../../static/userill.jpg";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -41,8 +42,58 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const Messenger = () => {
+const ChatThumbNailSkeleton = () => {
+  return (
+    <div className="chatThumbnailSkeleton">
+      <Skeleton
+        width={50}
+        height={50}
+        variant="circular"
+        animation={"wave"}
+      ></Skeleton>
+      <div style={{ flex: 1 }}>
+        <Skeleton height={30}></Skeleton>
+        <Skeleton height={20} width={50}></Skeleton>
+      </div>
+    </div>
+  );
+};
 
+const ChatSkeleton = () => {
+  return (
+    <div className="chatSkeleton chat">
+      <div className="chat-top">
+        <div>
+          <Skeleton variant="circular" width={40} height={40}></Skeleton>
+          <Skeleton height={40} width={100}></Skeleton>
+        </div>
+      </div>
+      <div className="chat-body">
+        <div className="message">
+          <Skeleton width={70} height={50}></Skeleton>
+        </div>
+        <div className="message">
+          <Skeleton width={120} height={50}></Skeleton>
+        </div>
+        <div className="message right-message">
+          <Skeleton width={150} height={50} className="right-message"></Skeleton>
+        </div>
+        <div className="message right-message">
+          <Skeleton width={60} height={50} className="right-message"></Skeleton>
+        </div>
+        <div className="message">
+          <Skeleton width={70} height={50}></Skeleton>
+        </div>
+      </div>
+      <div className="chat-bottom-skelton">
+        <Skeleton variant="circular" width={30} height={30}></Skeleton>
+        <Skeleton height={40} style={{ flex: 1 }}></Skeleton>
+      </div>
+    </div>
+  );
+};
+
+const Messenger = () => {
   const [ActiveChat, setActiveChat] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [SearchParams] = useSearchParams();
@@ -51,13 +102,12 @@ const Messenger = () => {
   const reciverUser = SearchParams.get("user");
   const [chats, setChats] = useState([]);
   const chatid = SearchParams.get("id");
-
-  const [conversationLoad,setConversationsLoad] = useState(false);
-  const [chatLoad,setChatLoad] = useState(false);
+  const [loadChatAgain, setLoadChatAgain] = useState(false);
+  const [conversationLoad, setConversationsLoad] = useState(false);
+  const [chatLoad, setChatLoad] = useState(false);
 
   const getUserConv = async () => {
     if (reciverUser) {
-      
       const response = await axios.post(path + "getchat", {
         username: reciverUser,
         userid: UserDB._id,
@@ -94,7 +144,7 @@ const Messenger = () => {
     if (chatid) {
       getChat();
     }
-  }, [chatid]);
+  }, [chatid, loadChatAgain]);
 
   useEffect(() => {
     if (window.screen.width < 500) {
@@ -104,30 +154,26 @@ const Messenger = () => {
     }
   }, []);
 
-  const getConversations = async ()=>{
+  const getConversations = async () => {
     setConversationsLoad(true);
-    try{
-        const res = await axios.get(path+'conversation',{
-          headers:{
-            id:UserDB._id
-          }
-        });
-      
-        if(res.data.success){
-          setChats(res.data.conversations);
-          setConversationsLoad(false);
-        }
+    try {
+      const res = await axios.get(path + "conversation", {
+        headers: {
+          id: UserDB._id,
+        },
+      });
 
-    }catch(err){
-
-    }
+      if (res.data.success) {
+        setChats(res.data.conversations);
+        setConversationsLoad(false);
+      }
+    } catch (err) {}
     setConversationsLoad(false);
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     getConversations();
-  },[]);
-
+  }, []);
 
   return (
     <div className="messenger">
@@ -152,103 +198,143 @@ const Messenger = () => {
       </div>
 
       {mobile ? (
-        <div className="chats Mobile-Chats">
-          
-          {
-            chats?.length==0 && <div>No Chats Here</div>
-          }
-          {chats.map((ele) => {
-            const userDisplay = ele.users[0]?.username == UserDB.username ? ele.users[1]  : ele.users[0];
-            return (
-              <Paper onClick={() => setActiveChat(ele)}>
-                <div
-                  className={
-                    ele == ActiveChat
-                      ? "chat-thumbnail Active-chat-thumbnail"
-                      : "chat-thumbnail"
-                  }
-                >
-                  <Avatar src={userDisplay?.profilePicture}></Avatar>
-                </div>
-              </Paper>
-            );
-          })}
-        </div>
-      ) : (
-        
-        <div className="chats">
-
-          {
-            chats?.length==0 && <div>No Chats Here</div>
-          }
-
-          {
-            conversationLoad && <div>
-
-              <div style={{
-                display:"flex",
-                alignItems:"center",
-                padding:"5px"
-              }}>
-                <Skeleton height={50} width={50} variant="circular" animation="wave"></Skeleton>
-                <Skeleton height={80} style={{flex:1}} animation="wave"></Skeleton>
-              </div>
-              <div style={{
-                display:"flex",
-                alignItems:"center",
-                padding:"5px"
-              }}>
-                <Skeleton height={50} width={50} variant="circular"></Skeleton>
-                <Skeleton height={80} style={{flex:1}}></Skeleton>
-              </div>              <div style={{
-                display:"flex",
-                alignItems:"center",
-                padding:"5px"
-              }}>
-                <Skeleton height={50} width={50} variant="circular"></Skeleton>
-                <Skeleton height={80} style={{flex:1}}></Skeleton>
-              </div>              <div style={{
-                display:"flex",
-                alignItems:"center",
-                padding:"5px"
-              }}>
-                <Skeleton height={50} width={50} variant="circular"></Skeleton>
-                <Skeleton height={80} style={{flex:1}}></Skeleton>
-              </div>
-               
-            </div>
-          }
-
-          {chats.map((ele) => {
-
-            const userDisplay = ele.users[0]?.username == UserDB.username ? ele.users[1]  : ele.users[0];
-
-            return (
-              <Paper onClick={() => navigate("/chat?id="+ele._id) }>
-                <div
-                  className={
-                    ele == ActiveChat
-                      ? "chat-thumbnail Active-chat-thumbnail"
-                      : "chat-thumbnail"
-                  }
-                >
-                  <Avatar src={userDisplay?.profilePicture}></Avatar>
+        <>
+          {" "}
+          {!ActiveChat ? (
+            <>
+              <div className="chats">
+                {chats?.length == 0 && <div>No Chats Here</div>}
+                {conversationLoad && (
                   <div>
-                    <p>{userDisplay?.firstname + " " + userDisplay?.lastname}</p>
-                    <span></span>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                    <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                  </div>
+                )}
+
+                {chats.map((ele) => {
+                  const userDisplay =
+                    ele.users[0]?.username == UserDB.username
+                      ? ele.users[1]
+                      : ele.users[0];
+                  return (
+                    <Paper
+                      onClick={() => {
+                        navigate("/chat?id=" + ele._id);
+                        setLoadChatAgain(!loadChatAgain);
+                      }}
+                    >
+                      <div
+                        className={
+                          ele == ActiveChat
+                            ? "chat-thumbnail Active-chat-thumbnail"
+                            : "chat-thumbnail"
+                        }
+                      >
+                        <Avatar src={userDisplay?.profilePicture}></Avatar>
+                        <div>
+                          <p>
+                            {userDisplay?.firstname +
+                              " " +
+                              userDisplay?.lastname}
+                          </p>
+                          <span></span>
+                        </div>
+                      </div>
+                    </Paper>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <>
+            {
+              chatLoad ? <ChatSkeleton></ChatSkeleton> :
+              <Chat data={ActiveChat} cancel={setActiveChat}></Chat>
+            }
+            </>
+          )}
+        </>
+      ) : (
+        // PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC
+        <>
+          <div className="chats">
+            {chats?.length == 0 && <>
+            <div className="centerAll">No Chats Here</div>
+            <Link to="/search" className="centerAll">
+              <Button variant="outlined">Start Search</Button>
+            </Link>
+            </>
+            }
+            {conversationLoad && (
+              <div>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+                <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
+              </div>
+            )}
+            {chats.map((ele) => {
+              const userDisplay =
+                ele.users[0]?.username == UserDB.username
+                  ? ele.users[1]
+                  : ele.users[0];
+              return (
+                <Paper onClick={() => navigate("/chat?id=" + ele._id)}>
+                  <div
+                    className={
+                      ele._id == ActiveChat?._id
+                        ? "chat-thumbnail Active-chat-thumbnail"
+                        : "chat-thumbnail"
+                    }
+                  >
+                    <Avatar src={userDisplay?.profilePicture}></Avatar>
+                    <div>
+                      <p>
+                        {userDisplay?.firstname + " " + userDisplay?.lastname}
+                      </p>
+                      <span>
+                        {!(ele._id == ActiveChat?._id) && (
+                          <> {ele?.lastMessage?.msg} </>
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </Paper>
+              );
+            })}
+          </div>
+
+          {chatLoad ? (
+            <ChatSkeleton></ChatSkeleton>
+          ) : (
+            <div className="chat">
+              {" "}
+              {ActiveChat ? (
+                <Chat data={ActiveChat}></Chat>
+              ) : (
+                <div className="centerAllChat">
+                  <div>
+                    <img src={image}></img>
+                    <p>Start A Conversation</p>
                   </div>
                 </div>
-              </Paper>
-            );
-          })}
-        </div>
+              )}{" "}
+            </div>
+          )}
+        </>
       )}
-      {
-        chatLoad ? <div className="chat">
-            <Skeleton height={100}></Skeleton>
-        </div> : 
-        <div className="chat"> {ActiveChat ? <Chat data={ActiveChat}></Chat> : <></>} </div>
-      }
     </div>
   );
 };

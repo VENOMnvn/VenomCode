@@ -13,7 +13,7 @@ const userLogin = async (req, res) => {
         console.log(req.body);
 
         if (email && password) {
-            let user = await User.findOne({ email: email })
+            let user = await User.findOne({ email: email }).populate('posts');
             if (user != null) {
                 const isMatch = await bcrypt.compare(password, user.password)
                 if (user.email === email && isMatch) {

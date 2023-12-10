@@ -1,11 +1,12 @@
 const { userRegisteration,userSignin,getUserName,addExperience,profileComplete} = require("../Controllers/userRegisteration");
 const {userLogin,resetPassword, resetLogin,googlesignin} = require("../Controllers/userLogin");
 const filterFunction = require("../Controllers/filter");
-const {editprofile,getUserDetails,getUserQuery, addFollower,getFollower} = require("./../Controllers/profile");
+const {editprofile,getUserDetails,getUserQuery, addFollower,removeFollower,getFollower} = require("./../Controllers/profile");
 const {sharePost,getPosts,addLike,postFilter,setComment,getPost, savePost}  = require("./../Controllers/post");
 const {sendMessage,getConversations,getChat,deleteMessage}= require('../Controllers/Chat');
 
 const express = require("express");
+const { getNotification,checknotification, seenNotification} = require("../Controllers/Notification");
 const router = express.Router();
 
 
@@ -40,6 +41,7 @@ router.post('/editprofile',editprofile);
 router.post('/getuserdetails',getUserDetails);
 router.get('/getUser',getUserQuery);
 router.post('/addfollower',addFollower)
+router.post('/removefollower',removeFollower);
 router.post('/getfollowers',getFollower);
 
 //Chat
@@ -47,5 +49,9 @@ router.post('/getchat',getChat);
 router.get('/conversation',getConversations);
 router.post('/message',sendMessage);
 
+//notification 
+router.post('/notifications',getNotification);
+router.get('/seennotification',seenNotification);
+router.get('/checknotification',checknotification);
 
 module.exports = router;

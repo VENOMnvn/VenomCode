@@ -77,12 +77,18 @@ body::-webkit-scrollbar{
     justify-content: center;
     flex-wrap:wrap;
     gap: 15px;
-
+}
+@media (width<600px){
+    .postPage{
+        width: 100%;
+    }
+    .home-feed{
+        padding: 0px;
+    }
 }
 .postPageContainer{
     display: flex;
     justify-content: center;
-
 }
 .post-head{
     width: 100%;
@@ -91,7 +97,21 @@ body::-webkit-scrollbar{
     gap: 12px;
     font-size: 14px;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 4px;
     box-sizing: border-box;
+}
+.post-head a{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 2px;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+.post-head a:hover{
+    background-color: #e4e4e4;
 }
 .post-head-details{
     display: flex;
@@ -164,7 +184,7 @@ body::-webkit-scrollbar{
     flex-direction: column;
     gap: 12px;
     font-size: 14px;
-    padding-bottom: 8px;
+    padding-bottom: 16px;
     border: 1px soldid #004E64;
 }
 .create-post h1{
@@ -302,6 +322,8 @@ body::-webkit-scrollbar{
         display: none;
     }
     .center-homepage{
+
+
         width: 90%;
     }
     .filter-container{
@@ -320,7 +342,12 @@ body::-webkit-scrollbar{
     display: none !important;
     border: 10px solid red;
 }
-
+.filter-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 3px;
+}
 @media (width<480px){
     .filter-container{
         width: 100%;

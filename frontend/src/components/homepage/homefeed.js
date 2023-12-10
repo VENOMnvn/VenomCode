@@ -6,7 +6,7 @@ import path from '../../path';
 import { Button, Skeleton } from '@mui/material';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import logo from './../../static/logocircle.png';
+
 
 const PostSkeleton = ()=>{
     return <>

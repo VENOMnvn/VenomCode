@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
     "@codemirror/lang-cpp": "^6.0.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -21,7 +22,10 @@
     "@uiw/codemirror-theme-xcode": "^4.21.21",
     "@uiw/react-codemirror": "^4.21.21",
     "axios": "^1.6.2",
+    "date-diff": "^1.0.2",
+    "framer-motion": "^10.16.15",
     "jwt-decode": "^4.0.0",
+    "keep-react": "^1.0.2",
     "react": "^18.2.0",
     "react-ace-editor": "^0.0.3",
     "react-dom": "^18.2.0",

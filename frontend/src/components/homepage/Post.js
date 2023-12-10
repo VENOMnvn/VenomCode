@@ -1,29 +1,17 @@
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import * as React from "react";
-import Stack from "@mui/material/Stack";
-import CommentIcon from "@mui/icons-material/Comment";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Button from "@mui/material/Button";
-import Badge from "@mui/material/Badge";
-import profile from "./../../static/profile.jpeg";
 import axios from "axios";
 import path from "../../path";
+import { useEffect } from "react";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import ShareIcon from "@mui/icons-material/Share";
 import CodeMirror from "@uiw/react-codemirror";
 import { basicDark } from "@uiw/codemirror-theme-basic";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { EditorView } from "@uiw/react-codemirror";
-import { MenuItem, Menu } from "@mui/material";
-import {
-  Avatar,
-  ListItem,
-  TextField,
-  Tooltip,
-  typographyClasses,
-} from "@mui/material";
-
+import { MenuItem, Menu, Avatar, Tooltip, IconButton } from "@mui/material";
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -38,8 +26,6 @@ import {
   ListItemText,
   List,
 } from "@mui/material";
-
-// import { Popup } from '@mui/base/Unstable_Popup/Popup';
 import Popup from "../common/popup";
 
 const CommentComponent = ({ data }) => {
@@ -71,6 +57,7 @@ const CommentComponent = ({ data }) => {
 };
 
 const Post = (props) => {
+
   const [data, setData] = useState(props.data);
   const [time, setTime] = React.useState("");
   const user = useSelector((s) => s.user.user);
@@ -81,15 +68,21 @@ const Post = (props) => {
   const [commnentPopup, setCommentPopup] = useState(false);
   const [commentInputshow, setCommentInput] = React.useState(false);
   const [BOOK, setBOOK] = useState(false);
-
+  const [liked, setLiked] = useState(false);
   const [showMenu, setshowMenu] = useState(false);
   const [showlabel, setshowlabel] = useState(false);
-  const labelArray = data.label;
-
   const menuRef = React.useRef();
   const labelButtonRef = React.useRef();
 
   // const code = data ? data.postCode?.split(/\n/g) : "";
+  useEffect(() => {
+    if (data) {
+      if (data?.likes?.includes(user._id)) {
+        setLiked(true);
+      }
+    }
+    console.log(data);
+  }, [data]);
 
   React.useEffect(() => {
     console.log(data.label);
@@ -120,6 +113,7 @@ const Post = (props) => {
       toast.info("Please Sigin First ");
       return;
     }
+
     try {
       const res = axios.post(`${path}comment`, {
         postid: data._id,
@@ -128,12 +122,17 @@ const Post = (props) => {
           profilePicture: user.profilePicture,
           firstname: user.firstname,
           lastname: user.lastname,
+          userId: user._id,
         },
         commentText,
       });
 
       setCommentText("");
-      toast.info("Comment posted");
+      toast.promise(res, {
+        success: "Comment Posted",
+        pending: "posting Comment ...",
+        error: "Comment can't posted ! Please Try again",
+      });
       getPost();
     } catch (err) {}
   };
@@ -193,8 +192,10 @@ const Post = (props) => {
     setSavePostLoad(false);
   };
 
+
   React.useEffect(() => {
     getCreatorPost();
+    
     UserDB?.savedpost?.forEach((ele) => {
       if (ele?._id == data?._id) {
         setBOOK(true);
@@ -217,17 +218,19 @@ const Post = (props) => {
 
       <ToastContainer></ToastContainer>
       <div className="post-head">
-        <Avatar src={postCreator?.profilePicture}></Avatar>
-        <div className="post-head-details">
-          <p>{data?.user?.firstname + " " + data?.user?.lastname}</p>
-          <span>
-            {" @" +
-              postCreator?.username +
-              " ||         " +
-              postCreator?.designation}
-          </span>
-          <span>{time}</span>
-        </div>
+        <Link to={"/user/" + postCreator?.username}>
+          <Avatar src={postCreator?.profilePicture}></Avatar>
+          <div className="post-head-details">
+            <p>{data?.user?.firstname + " " + data?.user?.lastname}</p>
+            <span>
+              {" @" +
+                postCreator?.username +
+                " ||         " +
+                postCreator?.designation}
+            </span>
+            <span>{time}</span>
+          </div>
+        </Link>
         <Menu
           open={showMenu}
           anchorEl={menuRef.current}
@@ -261,13 +264,15 @@ const Post = (props) => {
             vertical: "top",
             horizontal: "right",
           }}
-        > {
-          data.label?.map((ele)=>{
-            return <MenuItem>
-              <ListItemText>{ele}</ListItemText>
-            </MenuItem>
-          })
-          }
+        >
+          {" "}
+          {data.label?.map((ele) => {
+            return (
+              <MenuItem>
+                <ListItemText>{ele}</ListItemText>
+              </MenuItem>
+            );
+          })}
         </Menu>
 
         <div
@@ -311,28 +316,56 @@ const Post = (props) => {
         </div>
         <div className="post-lower-group">
           <div>
-            <Button
-              variant="text"
-              startIcon={
-                <KeyboardDoubleArrowUpIcon></KeyboardDoubleArrowUpIcon>
-              }
-              onClick={addLike}
-              sx={{ color: "gray" }}
-            >
-              {window.outerWidth > 600 && "Vote"}
-            </Button>
+            {liked ? (
+              <>
+                <Button>
+                  <IconButton
+                    style={{
+                      backgroundColor: "#004E64",
+                    }}
+                  >
+                    <KeyboardDoubleArrowUpIcon
+                      style={{
+                        color: "white",
+                      }}
+                    ></KeyboardDoubleArrowUpIcon>
+                  </IconButton>
+                  {window.outerWidth > 600 && "Voted"}
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="text"
+                disabled={liked}
+                onClick={addLike}
+                sx={{ color: "gray" }}
+              >
+                <IconButton
+                  style={{
+                    backgroundColor: "#e4e6eb",
+                  }}
+                >
+                  <KeyboardDoubleArrowUpIcon></KeyboardDoubleArrowUpIcon>
+                </IconButton>
+                {window.outerWidth > 600 && "Vote"}
+              </Button>
+            )}
           </div>
+
           <div
             onClick={() => {
               setCommentInput((prev) => !prev);
             }}
           >
             <Tooltip title="add comment">
-              <Button
-                variant="text"
-                startIcon={<AddCommentIcon></AddCommentIcon>}
-                sx={{ color: "gray" }}
-              >
+              <Button variant="text" sx={{ color: "gray" }}>
+                <IconButton
+                  style={{
+                    backgroundColor: "#e4e6eb",
+                  }}
+                >
+                  <AddCommentIcon></AddCommentIcon>
+                </IconButton>
                 {window.outerWidth > 600 && "Comments"}
               </Button>
             </Tooltip>
@@ -343,13 +376,19 @@ const Post = (props) => {
               <>
                 <Button
                   variant="text"
-                  startIcon={
-                    <BookmarkAddedRoundedIcon></BookmarkAddedRoundedIcon>
-                  }
                   style={{
                     color: "green",
                   }}
                 >
+                  <IconButton
+                    style={{
+                      backgroundColor: "green",
+                    }}
+                  >
+                    <BookmarkAddedRoundedIcon
+                      style={{ color: "white" }}
+                    ></BookmarkAddedRoundedIcon>
+                  </IconButton>
                   {window.outerWidth > 600 && "Saved"}
                 </Button>
               </>
@@ -361,9 +400,15 @@ const Post = (props) => {
                 }}
                 variant="text"
                 disabled={savePostLoad}
-                startIcon={<BookmarkBorderIcon></BookmarkBorderIcon>}
                 sx={{ color: "gray" }}
               >
+                <IconButton
+                  style={{
+                    backgroundColor: "#e4e6eb",
+                  }}
+                >
+                  <BookmarkBorderIcon></BookmarkBorderIcon>
+                </IconButton>
                 {window.outerWidth > 600 && "Save"}
               </Button>
             )}
@@ -371,11 +416,14 @@ const Post = (props) => {
 
           <div>
             <Link to={`/post/${data._id}`}>
-              <Button
-                variant="text"
-                startIcon={<ShareIcon></ShareIcon>}
-                sx={{ color: "gray" }}
-              >
+              <Button variant="text" sx={{ color: "gray" }}>
+                <IconButton
+                  style={{
+                    backgroundColor: "#e4e6eb",
+                  }}
+                >
+                  <ShareIcon></ShareIcon>
+                </IconButton>
                 {window.outerWidth > 600 && "Share"}
               </Button>
             </Link>

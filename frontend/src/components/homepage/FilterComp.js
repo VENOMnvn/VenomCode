@@ -1,8 +1,9 @@
 import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
-import { Tooltip } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import { addFilter,removeFilter } from '../../utils/slices/utilitySlice';
 const Filter = () => {
   
@@ -29,8 +30,15 @@ const Filter = () => {
 
   return (
     <div className="filter-container">
-      <div className="filter-top">
+      <div className="filter-top"> 
+        <p>
         Filter problems by category
+        </p>
+        <IconButton style={{
+            backgroundColor:"#e4e6eb"
+            }} >
+            <TuneRoundedIcon></TuneRoundedIcon>
+        </IconButton>
       </div>
       <TextField label="Labels" color="primary" focused className='filter-input' onKeyDown={handlesubmit} onFilled={handlesubmit} placeholder='i.e. LeetCode'/>
       <div className="filter-bottom">

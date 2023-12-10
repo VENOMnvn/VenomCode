@@ -1,7 +1,9 @@
 import './popup.css';
 import cancelIcon from './../ICONS/cancel.png';
+import { Icon } from '@mui/material';
 
 const PopUp = (properties)=>{
+    const { IconCancel } = properties;
     console.log(properties);
     return <div className='popup-container'>
     <div className={properties.isFull ? "popup full-width-popup":"popup"}
@@ -13,7 +15,10 @@ const PopUp = (properties)=>{
            </div>
            <div>
                 <div onClick={properties.cancel}>
-                <img src={cancelIcon}></img>
+                {
+                    IconCancel ? <IconCancel sx={{width:"24px",height:"24px"}}></IconCancel>:
+                    <img src={cancelIcon}></img>
+                }
                 </div>
            </div>
         </div>

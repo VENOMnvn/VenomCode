@@ -10,10 +10,9 @@ const CONVERSATION = new Schema({
         type:[{type:mongoose.SchemaTypes.ObjectId,ref:"Message"}]
     },
     lastMessage:{
-        type:mongoose.SchemaTypes.ObjectId,
-        ref:"Message"
+        type:Object,
+        ref:"Message",
     }
-    
 });
 const Conversation = new model("Conversation",CONVERSATION);
 module.exports = Conversation;

@@ -57,7 +57,7 @@ const SearchElement = () => {
   },[]);
   return (
     <div className="search-tab">
-      <h1>Search a user or post</h1>
+      <h1>Search a User</h1>
       <div className="UserSearch-search" component="form">
         <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
           <SearchIcon color="info" />
