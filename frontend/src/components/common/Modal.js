@@ -1,7 +1,7 @@
 import { Button, IconButton } from "@mui/material";
 import "./Modal.css";
 
-const Modal = ({ Icon, cancel, heading, subheading, confirm, leftButton }) => {
+const Modal = ({ Icon, cancel, heading, subheading, confirm, leftButton, Element }) => {
   return (
     <>
       <div className="modalContainer">
@@ -47,8 +47,10 @@ const Modal = ({ Icon, cancel, heading, subheading, confirm, leftButton }) => {
               </svg>
             </IconButton>
           </div>
-
-          <div className="modal-body">
+          {
+           Element ?<Element></Element> :
+            <>
+            <div className="modal-body">
             <p>{heading}</p>
             <span>{subheading}</span>
           </div>
@@ -65,7 +67,9 @@ const Modal = ({ Icon, cancel, heading, subheading, confirm, leftButton }) => {
             <Button variant="contained" onClick={confirm}>
               Confirm
             </Button>
-          </div>
+          </div></>
+          }
+          
         </div>
       </div>
     </>

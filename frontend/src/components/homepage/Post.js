@@ -19,6 +19,7 @@ import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp
 import SendIcon from "@mui/icons-material/Send";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { ChatTeardropDots} from "phosphor-react";
 import "react-toastify/dist/ReactToastify.css";
 import {
   ListItemButton,
@@ -364,7 +365,8 @@ const Post = (props) => {
                     backgroundColor: "#e4e6eb",
                   }}
                 >
-                  <AddCommentIcon></AddCommentIcon>
+                  <ChatTeardropDots size={26} />
+                  {/* <AddCommentIcon></AddCommentIcon> */}
                 </IconButton>
                 {window.outerWidth > 600 && "Comments"}
               </Button>
@@ -416,7 +418,10 @@ const Post = (props) => {
 
           <div>
             <Link to={`/post/${data._id}`}>
-              <Button variant="text" sx={{ color: "gray" }}>
+              <Button variant="text" sx={{ color: "gray" }} onClick={()=>{
+                navigator?.clipboard?.writeText(window.location.host+'/post/'+data._id);
+                toast.info("Copied to Clipboard");
+                }}>
                 <IconButton
                   style={{
                     backgroundColor: "#e4e6eb",

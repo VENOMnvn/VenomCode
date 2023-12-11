@@ -153,7 +153,6 @@ const addFollower = async (req, res) => {
 };
 
 
-
 const removeFollower = async (req,res)=>{
   try{
     

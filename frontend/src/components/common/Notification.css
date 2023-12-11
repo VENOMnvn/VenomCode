@@ -63,7 +63,7 @@
 
 @media (width<450px) {
     .table-row>*{
-        font-size: 10px;
+        font-size: 12px;
     }
     .table-row button{
         transform: scale(0.6);   
@@ -71,7 +71,11 @@
     .table-row a{
         margin: 0px;
     }
+    .table-row .time{
+        font-size: 10px;
+    }
 }
+
 .new-indicator{
     background-color: teal;
     width: 4px;
