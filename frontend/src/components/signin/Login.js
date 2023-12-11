@@ -14,6 +14,7 @@ import {
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import logo from "./google.png";
+import ForgetPassword from "./ForgetPassword.js";
 
 const Login = () => {
   const emailref = useRef();
@@ -22,6 +23,7 @@ const Login = () => {
   const [disabled, setdisabled] = useState(true);
   const [error, setError] = useState("");
   const [load, setload] = useState(false);
+  const [showModal,setShowModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -120,6 +122,7 @@ const Login = () => {
             <input type="password" ref={passwordref} onBlur={validate}></input>
           </div>
           <div className="login-box-error">{error}</div>
+          <div className="forget-password" onClick={()=>setShowModal(1)}>Forget Password ? </div>
           <Button
             fullwidth
             variant="contained"
@@ -188,6 +191,9 @@ const Login = () => {
             Are you a Developer ? <Link onClick={guestLogin}>Guest Login</Link>
           </div>
         </div>
+        {
+          showModal && <ForgetPassword cancel={()=>{setShowModal(false)}}></ForgetPassword>
+        }
         <div className="login-side-display"></div>
       </div>
     </>

@@ -115,6 +115,7 @@ const Post = (props) => {
       return;
     }
 
+
     try {
       const res = axios.post(`${path}comment`, {
         postid: data._id,
@@ -154,7 +155,7 @@ const Post = (props) => {
 
   const addLike = async () => {
     if (!user) {
-      toast.info("Please Sigin First to Login");
+      toast.info("Please Sigin/Login First to Vote UP");
       return;
     }
     const response = await axios.post(`${path}addlike`, {

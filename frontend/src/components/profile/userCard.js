@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 const UserCard = ({username}) => {
 
   console.log(username);
+
     const [load ,setload] = useState(true);
     const [data,setData] = useState(false);
     

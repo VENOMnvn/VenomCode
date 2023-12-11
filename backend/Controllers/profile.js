@@ -128,7 +128,13 @@ const getUserQuery = async (req, res) => {
 
 const addFollower = async (req, res) => {
   try {
+    
     const { followingId, followerId } = req.body;
+    
+    if(followingId == followerId){
+      res.send("You cant follow yourself");
+    }
+
     const responseByUser = await User.findOneAndUpdate(
       { username: followingId },
       { $push: { followers: followerId } }

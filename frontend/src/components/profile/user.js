@@ -34,9 +34,14 @@ const UserProfilepage = () => {
   const [tabPanel, settabPanel] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
+
   const navigate = useNavigate();
 
-  const getUser = async (req, res) => {
+  const getUser = async () => {
+    if(id == userDB.username){
+      navigate("/profile");
+    }
+    
     try {
 
       const response = await axios.post(`${path}getuserdetails`, {

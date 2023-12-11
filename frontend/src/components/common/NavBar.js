@@ -5,14 +5,23 @@ import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineR
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { Button, Avatar, Icon } from "@mui/material";
 import { Sidebar } from "keep-react";
-import { Chat, SignIn, Note, UserPlus, Users, Sliders , SignOut,Bell} from "phosphor-react";
+import {
+  Chat,
+  SignIn,
+  Note,
+  UserPlus,
+  Users,
+  Sliders,
+  SignOut,
+  Bell,
+} from "phosphor-react";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Navbar.css";
 import Tooltip from "@mui/material/Tooltip";
 import Badge from "@mui/material/Badge";
@@ -21,6 +30,7 @@ import { Drawer, Divider } from "@mui/material";
 import path, { version } from "../../path";
 import axios from "axios";
 import Filter from "../homepage/FilterComp";
+import { addUser } from "../../utils/slices/userSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -28,8 +38,10 @@ const Navbar = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [notificationBadge, setNotificationBadge] = useState(0);
-  const [showFilterModal,setshowFilterModal] = useState(false);
-
+  const [showFilterModal, setshowFilterModal] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [load,setload] = useState(true);
+  const dispatch = useDispatch();
 
   const checknotification = async () => {
     try {
@@ -48,6 +60,22 @@ const Navbar = () => {
     checknotification();
   }, []);
 
+  const guestLogin = async () => {
+    setload(true);
+    const response = await axios.post(`${path}login`, {
+      password: "@Admin1234",
+      email: "naveen@venom.navi",
+    });
+    console.log(response);
+    if (response.data.success) {
+      dispatch(addUser(response.data.user));
+      setload(false);
+      setLoginError(false);
+      navigate("/");
+    }
+    setload(false);
+  };
+  
   return (
     <>
       {window.outerWidth < 750 ? (
@@ -85,7 +113,9 @@ const Navbar = () => {
                     Code
                   </span>
 
-                  <Sidebar.ItemGroup  onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                  <Sidebar.ItemGroup
+                    onClick={() => setDrawerOpen(!isDrawerOpen)}
+                  >
                     <Link to={"/sharepost"}>
                       <Sidebar.Item icon={<Note size={24} />}>
                         Share Post
@@ -113,14 +143,22 @@ const Navbar = () => {
                       </Sidebar.Item>
                     </Link>
                     <Link to="/notifications">
-                      <Sidebar.Item 
-                      icon={<Badge badgeContent={notificationBadge}><Bell size={24} /></Badge>}>
-                       Notifications
+                      <Sidebar.Item
+                        icon={
+                          <Badge badgeContent={notificationBadge}>
+                            <Bell size={24} />
+                          </Badge>
+                        }
+                      >
+                        Notifications
                       </Sidebar.Item>
                     </Link>
 
                     <Link>
-                      <Sidebar.Item icon={<Sliders size={24}/>} onClick={()=>setshowFilterModal(true)}>
+                      <Sidebar.Item
+                        icon={<Sliders size={24} />}
+                        onClick={() => setshowFilterModal(true)}
+                      >
                         Filters
                       </Sidebar.Item>
                     </Link>
@@ -129,17 +167,20 @@ const Navbar = () => {
                       <Sidebar.Item
                         onClick={() => {
                           setShowModal(!showModal);
-                          setDrawerOpen(!isDrawerOpen)
+                          setDrawerOpen(!isDrawerOpen);
                         }}
                         icon={<SignOut size={24} />}
                       >
                         Logout
                       </Sidebar.Item>
                     ) : (
-                      <Link to='/register'> 
-                      <Sidebar.Item onClick={() => setDrawerOpen(!isDrawerOpen)} icon={<UserPlus size={24} />}>
-                        Login
-                      </Sidebar.Item>
+                      <Link to="/register">
+                        <Sidebar.Item
+                          onClick={() => setDrawerOpen(!isDrawerOpen)}
+                          icon={<UserPlus size={24} />}
+                        >
+                          Login
+                        </Sidebar.Item>
                       </Link>
                     )}
                   </Sidebar.ItemGroup>
@@ -251,7 +292,12 @@ const Navbar = () => {
             <li>
               <Link to={"/chat"}>
                 <Tooltip title="Message">
-                  <IconButton aria-label="delete" className="chat-icon">
+                  <IconButton aria-label="delete" className="chat-icon"  onClick={()=>{
+                    if(!user.user){
+                      setLoginError(true);
+                    
+                    }
+                  }}>
                     <Badge badgeContent={4} color="primary">
                       <ChatBubbleOutlineRoundedIcon
                         sx={{ color: "black", fontSize: "25px" }}
@@ -265,7 +311,14 @@ const Navbar = () => {
             <li>
               <Link to={"/notifications"}>
                 <Tooltip title="notification">
-                  <IconButton aria-label="delete" className="chat-icon">
+                  <IconButton aria-label="delete" className="chat-icon" 
+                  onClick={()=>{
+                    if(!user.user){
+                      setLoginError(true);
+                      navigate("/");
+                    }
+                  }}
+                  >
                     <Badge badgeContent={notificationBadge} color="primary">
                       <NotificationsNoneRoundedIcon
                         sx={{ color: "black", fontSize: "25px" }}
@@ -315,12 +368,29 @@ const Navbar = () => {
           }}
         ></Modal>
       )}
-      {
-        showFilterModal && (
-          <Modal Element={Filter} cancel={()=>setshowFilterModal(false)} Icon={Sliders} heading={'Filter'}>
-          </Modal>
-        )
-      }
+      {showFilterModal && (
+        <Modal
+          Element={Filter}
+          cancel={() => setshowFilterModal(false)}
+          Icon={Sliders}
+          heading={"Filter"}
+        ></Modal>
+      )}
+      {loginError && (
+        <Modal
+          cancel={() => setLoginError(false)}
+          Icon={SignOut}
+          heading={"You are Not logged In"}
+          subheading={
+            "Dont want to add an account ? You can Guest Login to access feature and Try Website"
+          }
+          leftButton={true}
+          leftButtonFunction={guestLogin}
+          leftButtonText={"Guest"}
+          confirmButtonText={"Signin"}
+          confirm={()=>navigate('/login')}
+        ></Modal>
+      )}
     </>
   );
 };
