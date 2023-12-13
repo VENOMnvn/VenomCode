@@ -59,6 +59,7 @@ const NotFound = ({ msg }) => {
 
 function App() {
   const PrimaryColor = "#004E64";
+  // const PrimaryColor = "#8a2be2";
   const theme = createTheme({
     palette: {
       primary: {

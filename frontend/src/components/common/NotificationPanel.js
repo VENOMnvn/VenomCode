@@ -52,8 +52,9 @@ const NotificationPanel = () => {
 
         {notifications ? (
           <>
-            {notifications.map((eleme, index) => {
-              let ele = notifications[notifications.length - 1 - index];
+            {notifications.map((ele) => {
+            
+
               const dateNow = new Date();
               const createdAt = new Date(ele.createdAt);
               const time = new DateDiff(dateNow, createdAt);

@@ -41,7 +41,7 @@ const CreatePost = ({cancel}) => {
     const [label,setLabelArray] = useState([]);
     
     const handleSubmitLabel = (e)=>{
-      if(e.code == "Enter"){
+      if(e.keyCode == "13"){
         setLabelArray([...label,e.target.value?.toUpperCase()]);
         e.target.value="";
       }

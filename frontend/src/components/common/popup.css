@@ -13,7 +13,7 @@
 .popup{
     width: 80vw;
     height: 90vh;
-    background-color: white;
+    background-color: var(--light);
     border-radius: 10px;
     box-shadow: 2px 2px 8px rgb(188, 185, 185) inset;
     z-index: 9;

@@ -31,7 +31,7 @@ const getNotification = async (req,res)=>{
             res.send("Invalid UserID");
         }
         else{
-            const notifications = await  Notification.find({user:userId});
+            const notifications = await  Notification.find({user:userId}).sort({createdAt:-1});
             
             res.send({
                 success:true,

@@ -133,7 +133,7 @@ body::-webkit-scrollbar{
     text-overflow: ellipsis;
     padding: 8px;
     background-color: #282a35;
-    color: white;
+    color: var(--light);
     overflow: scroll;
 }
 .post-body::-webkit-scrollbar{
@@ -189,14 +189,14 @@ body::-webkit-scrollbar{
 }
 .create-post h1{
     background-color: #004E64;
-    color: white;
+    color: var(--light);
     padding: 4px 8px;
     text-align: center;
     width: 100%;
     border-radius: 10px 10px 0px 0px;
 }
 .filter-container{
-    background-color: white;
+    background-color: var(--light);
     border-radius:12px;
     width: 22vw;  
     display: flex;
@@ -212,7 +212,7 @@ body::-webkit-scrollbar{
     flex-direction: column;
     width:300px;
     min-width: 250px;
-    background-color: white;
+    background-color: var(--light);
     border-radius: 10px;
     height: max-content;
     min-height: 300px;
@@ -230,13 +230,13 @@ body::-webkit-scrollbar{
 .profile-card-top>div{
     position: relative;
     top: 25px;
-    border: 1px solid white;
+    border: 1px solid var(--light);
     width: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color: white;
+    background-color: var(--light);
     height: 80px;
 }
 .profile-card-top>div>div{
@@ -285,7 +285,7 @@ body::-webkit-scrollbar{
     padding-left: 12px;
     align-items: center;
     gap: 12px;
-    background-color:white;
+    background-color:var(--light);
     flex-wrap: wrap;
     animation-name: drop;
     animation-iteration-count: infinite;

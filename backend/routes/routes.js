@@ -2,7 +2,7 @@ const { userRegisteration,userSignin,getUserName,addExperience,profileComplete} 
 const {userLogin,resetPassword, resetLogin,googlesignin} = require("../Controllers/userLogin");
 const filterFunction = require("../Controllers/filter");
 const {editprofile,getUserDetails,getUserQuery, addFollower,removeFollower,getFollower} = require("./../Controllers/profile");
-const {sharePost,getPosts,addLike,postFilter,setComment,getPost, savePost}  = require("./../Controllers/post");
+const {sharePost,getPosts,addLike,postFilter,setComment,getPost, savePost, unsavepost}  = require("./../Controllers/post");
 const {sendMessage,getConversations,getChat,deleteMessage}= require('../Controllers/Chat');
 
 const express = require("express");
@@ -35,6 +35,7 @@ router.post('/getpost',getPost);
 router.post('/addlike',addLike);
 router.post('/comment',setComment);
 router.post('/savepost',savePost);
+router.post('/unsavepost',unsavepost);
 
 //Profile
 router.post('/editprofile',editprofile);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
@@ -43,6 +43,8 @@ const Navbar = () => {
   const [load,setload] = useState(true);
   const dispatch = useDispatch();
 
+  const location = useRef();
+
   const checknotification = async () => {
     try {
       const response = await axios.get(
@@ -55,6 +57,10 @@ const Navbar = () => {
       console.log(err);
     }
   };
+
+  useEffect(()=>{
+    location.current = window.location;
+  },[]);
 
   useEffect(() => {
     checknotification();
@@ -160,6 +166,15 @@ const Navbar = () => {
                         onClick={() => setshowFilterModal(true)}
                       >
                         Filters
+                      </Sidebar.Item>
+                    </Link>
+
+                    <Link to={'/search'}>
+                      <Sidebar.Item
+                        icon={<SearchIcon/>}
+                       
+                      >
+                        Search
                       </Sidebar.Item>
                     </Link>
 

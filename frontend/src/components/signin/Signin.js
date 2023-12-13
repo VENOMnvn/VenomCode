@@ -44,9 +44,10 @@ const Signin = () => {
 
   let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
-
+   
   const skillselecthandle = (e) => {
-    if (e.key == "Enter") {
+    console.log(e);
+    if (e.keyCode == "13") {
       if (e.target.value.length > 0)
         setskills([...skills, e.target.value.toUpperCase().trim()]);
       e.target.value = "";

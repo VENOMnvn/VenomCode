@@ -2,7 +2,6 @@ const { model, Schema } = require("mongoose");
 const mongoose = require('mongoose');
 
 const token = new Schema({
-
     token:{
         type:String
     },
@@ -12,6 +11,7 @@ const token = new Schema({
     email:{
         type:String
     },
+    password:String,
     isVerified:{
         type:Boolean,
         default:false

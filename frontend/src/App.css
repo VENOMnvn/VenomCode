@@ -1,10 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Poppins:wght@200&display=swap');
 :root {
-    --bg: #121212;
-    --sbg: #1e1e1e;
-    --lvg:#292929;
+  --light : white;
+  --dark : #f4f2ee;
+  --primary : #004E64;
+  --smoke:whitesmoke;
+  --lighttint:#e4e6eb;
 }
+
 
 .smallScreen{
   display: none;
@@ -46,7 +49,7 @@ textarea:focus, input:focus{
     align-items: center;
     left: 0px;
     flex-direction: column;
-    color: white;
+    color: var(--light);
     font-size: 24px;
     font-weight: 600;
     background-color: rgba(0, 0, 0, 0.468);
@@ -68,7 +71,7 @@ textarea:focus, input:focus{
       transform: rotate(360deg);  
     }
   }
- 
+
 .centerAll{
     width: 100%;
     display: flex;

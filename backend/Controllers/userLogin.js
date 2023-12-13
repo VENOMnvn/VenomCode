@@ -46,7 +46,11 @@ const userLogin = async (req, res) => {
 const resetPassword = async (req,res)=>{
       try{
 
-        const {email} = req.body;
+        let {email,password} = req.body;
+        console.log(req.body);
+        
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
 
         var rand = function() {
             return Math.random().toString(36).substr(2); // remove `0.`
@@ -60,12 +64,16 @@ const resetPassword = async (req,res)=>{
         console.log('Generated',token);
         sendToken(token,email);
 
-        const respond = await Token.create({
+        await Token.create({
             token:token,
-            email:email
+            email:email,
+            password:hashPassword
         },{timestamps:true});
 
-        res.send("OK");
+        res.send({
+            success:true
+        });
+
       }catch(err){
         console.log(err);
       } 
@@ -76,9 +84,18 @@ const resetLogin = async (req,res)=>{
     console.log(token);
     try{
         const resp = await Token.findOneAndUpdate({token},{isVerified:true});
+        if(!resp){
+            res.send("Invalid Token");
+        }
+
+        await User.findOneAndUpdate({email:resp.email},{password:resp.password});
+        
         res.send({
-            success:true
-        })
+            success:true,
+            message:"Password Changes Successfully"
+        });
+
+
     }catch(err){
 
     }

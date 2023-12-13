@@ -21,7 +21,7 @@ const Filter = () => {
       if(e.target.value.length==0){
         return;
       }
-      if(e.key=="Enter"){
+      if(e.keyCode =="13"){
         dispatch(addFilter(e.target.value.toUpperCase()));
         e.target.value="";
       }

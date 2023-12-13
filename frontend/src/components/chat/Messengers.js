@@ -194,7 +194,7 @@ const Messenger = () => {
             variant="dot"
           ></Avatar>
         </StyledBadge>
-        <span>Chats</span>
+        <span>Messenger</span>
       </div>
 
       {mobile ? (

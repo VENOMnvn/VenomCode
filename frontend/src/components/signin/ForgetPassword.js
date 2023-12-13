@@ -3,31 +3,27 @@ import "./../common/Modal.css";
 import './signin.css';
 import { Password} from "phosphor-react";
 import { Button ,IconButton} from "@mui/material";
+import axios from "axios";
+import path from "../../path";
 
 const ForgetPassword = ({cancel}) => {
   const [password, setPassword] = useState("");
   const [confirm, setconfirm] = useState("");
   const [error, setError] = useState("");
-  const [disabled,setDisabled] = useState(true);
+  const [disabled,setDisabled] = useState(false);
   const [email,setEmail] = useState("");
+  const [sendToken ,setSendToken] = useState(false);
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
 
   const validate = () => {
-    if(email.length < 3){
-        setError('Enter Email');
-        return false
-    }
+    console.log(password,password.length,password.length>0);
     if (!emailRegex.test(email) && email.length > 0) {
-        setError("Enter a Valid Email");
-        return false;
-      }
-
-    if (password.length < 6) {
-      setError("Password length should more than 5 characters");
+      setError("Enter a Valid Email");
       return false;
     }
-    if (!passwordRegex.test(password) && password.length > 0) {
+    if (!passwordRegex.test(password) && !password.length > 0) {
       console.log(password);
       setError("Enter password with a capital letter,small,Number and symbol");
       return false;
@@ -36,26 +32,39 @@ const ForgetPassword = ({cancel}) => {
       setError("Password didnt match with confirm");
       return false;
     }
+
     setError("");
     return true;
   };
 
+
   useEffect(()=>{
-    if(validate()){
+    console.log("ON ERROR STATE CHANGE value of Validate is = ",validate());
+    if(validate()==true){
         setDisabled(false);
+    }else{
+        setDisabled(true);
     }
   },[error]);
 
-
+  useEffect(()=>{
+    console.log("Disabled = ",disabled);
+  },[disabled]);
   const submitPassword = async ()=>{
     
     try{
-        alert("RUN");
 
+          
+           const response = await axios.post(path+'resetpassword',{
+            email,password
+           });
+           console.log(response);
+           if(response.data.success){
+              setSendToken(true);
+           }
     }catch(err){
         console.log(err);
     }
-
   }
 
 
@@ -106,7 +115,21 @@ const ForgetPassword = ({cancel}) => {
           </svg>
         </IconButton>
       </div>
-
+          {
+            sendToken ? <>
+            <div className="modal-body"> 
+            <p>Verification Email Send</p>
+            <span>
+              A email with Verification link is send to your email {email} click on the link to verify and change password
+            </span>
+            </div>
+            <div className="modal-button">
+              <Button variant="contained" onClick={cancel}>
+                Okay 
+              </Button>
+            </div>
+            </>
+            :<>
           <div className="modal-body">
             <p>Reset Your Password</p>
             <div className="login-box-field">
@@ -125,7 +148,7 @@ const ForgetPassword = ({cancel}) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onBlur={validate}
-              ></input>
+                ></input>
             </div>
             <div className="login-box-field">
               <p>Verify</p>
@@ -145,6 +168,8 @@ const ForgetPassword = ({cancel}) => {
 
             </div>
           </div>
+          </>}
+
         </div>
       </div>
     </>

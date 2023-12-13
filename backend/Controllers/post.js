@@ -3,6 +3,22 @@ const { post } = require('../routes/routes');
 const POSTS = require('./../MongoDB/postSchema');
 const Notification = require("./../MongoDB/NotificationSchema")
 
+const PostNotificationHandler = async (PostCreator,users,post)=>{
+    if(users){
+        users.forEach(async user => {
+            const userDB = await User.findOne({username:user});
+            Notification.create({
+                user : userDB._id,
+                msg:'upload a post ',
+                username:PostCreator.username,
+                profilePicture:PostCreator.profilePicture,
+                link:'/post/'+post._id,
+                extra:post.title
+            });
+        });
+    }   
+}
+
 const sharePost = async (req,res)=>{
     console.log(req.body);
     const {
@@ -12,6 +28,7 @@ const sharePost = async (req,res)=>{
     if(user){
           try{
             console.log("User At Creation Post",user);
+
             const postCreationResponse = await POSTS.create({
                 user,
                 postCode:code,
@@ -19,7 +36,9 @@ const sharePost = async (req,res)=>{
                 label
             });
             
-            await User.findOneAndUpdate({username:user.username},{$push:{posts:postCreationResponse._id}});
+            const userDB = await User.findOneAndUpdate({username:user.username},{$push:{posts:postCreationResponse._id}});
+            PostNotificationHandler(userDB,userDB.followers,postCreationResponse);
+
             res.send({
                 success:true,
                 response:postCreationResponse
@@ -49,7 +68,7 @@ const getPosts = async (req,res)=>{
         const page = req.query.page;
         const limit = req.query.limit;
         console.log(page,limit);
-        const response = await POSTS.find().limit(limit).skip(page*limit);
+        const response = await POSTS.find().limit(limit).skip(page*limit).sort({createdAt:-1});
         res.send(response);
         
     }catch(err){
@@ -163,4 +182,18 @@ const savePost = async (req,res)=>{
     }
 }
 
-module.exports = {sharePost,getPosts,addLike,postFilter,setComment,getPost,savePost};
+const unsavepost = async (req,res)=>{
+    try{
+        const {post,user} = req.body;
+        const response = await User.findByIdAndUpdate(user,{$pull:{savedpost:post}});
+        res.send({
+            success:true
+        });
+    }
+    catch(err){
+        console.log(err);
+        res.send(err);
+    }
+}
+
+module.exports = {sharePost,getPosts,addLike,postFilter,setComment,getPost,savePost,unsavepost};

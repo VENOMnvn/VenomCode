@@ -117,6 +117,7 @@ const htmlToSend = ``;
 const sendToken = async (token,email)=>{
     try{
 
+        console.log("Sending token to "+email);
         var transporter = nodemailer.createTransport({
             // service: 'godaddy',
             host: "smtp.gmail.com",
@@ -188,10 +189,10 @@ const sendToken = async (token,email)=>{
             </html>`
         };
 
-        
         const info = await transporter.sendMail(mailOptions);
-        console.log("Send TOken");
+        console.log("Token Send");
         return info;
+
     }catch(err){
         console.log(err);
     }

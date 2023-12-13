@@ -12,7 +12,7 @@
 }
 .modalBox{
     box-shadow: 0px 0px 4px gray;
-    background-color: white;
+    background-color: var(--light);
     width: 90vw;
     font-family: 'Nunito', sans-serif;
     max-width: 450px;

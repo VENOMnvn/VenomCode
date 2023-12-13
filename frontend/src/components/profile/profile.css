@@ -1,7 +1,7 @@
 .profilepage{
     margin-top: 50px;
     width: 100vw;
-    background-color: white;
+    background-color: var(--light);
 }
 .cover-image{
     background-color: rgb(23, 23, 65);
@@ -11,7 +11,7 @@
     padding-left: 60px;
 }
 .profile-pic{
-    background-color: white;
+    background-color: var(--light);
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -149,7 +149,7 @@
 }
 
 .profile-page-body > .right > :nth-child(2) > span{
-   color: white;
+   color: var(--light);
    background-color: teal;
     border-radius: 6px;
     padding: 2px 6px;
@@ -168,7 +168,7 @@
     font-weight: 600;
     color: rgb(23, 23, 65);
     margin:32px auto;
-    background-color: white;
+    background-color: var(--light);
     color: black;
     display: flex;
     justify-content: space-between;

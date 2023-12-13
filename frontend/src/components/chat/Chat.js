@@ -1,49 +1,78 @@
 import React, { useEffect, useRef, useState } from "react";
 import profile from "./../../static/profile.jpeg";
-import { Avatar, IconButton} from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import { TextField } from "@mui/material";
 import AddReactionIcon from "@mui/icons-material/AddReaction";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import Message from "./Message";
+import { KeyReturn } from "phosphor-react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import path from "../../path";
+import {io} from 'socket.io-client';
 
-const Chat = ({ data,cancel }) => {
+const Chat = ({ data, cancel }) => {
 
   const [msgs, setMsgs] = useState(data.messages);
   const [currentMsg, setcurrentMsg] = useState("");
   const userDB = useSelector((s) => s.user.userDB);
   const chatbodyref = useRef();
+  const [EnterKeySend, setEnterKeySend] = useState(false);
   const [activeUser, setActiveUser] = useState(0);
+  const socket = useRef();
+
+  useEffect(()=>{
+
+    socket.current = io(path);
+    let id = userDB.username;
+    socket.current.emit('setup',id);
+
+    socket.current.on('message-recieved',(msg)=>{
+      setMsgs([...msgs,msg]);
+    })
+
+  },[]);
 
   useEffect(() => {
+
     data?.users?.forEach((user) => {
       if (user.username != userDB.username) {
         setActiveUser(user);
       }
     });
+
   }, [data]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setMsgs(data.messages);
-  },[data]);
+  }, [data]);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     let element = chatbodyref.current;
     element.scrollTop = element.scrollHeight;
-  },[msgs])
+  }, [msgs]);
 
   const MessageSend = async () => {
 
-    if(!currentMsg || currentMsg.length == 0 || currentMsg=="\n"){
+    const username = activeUser.username;
+
+    
+    if (!currentMsg || currentMsg.length == 0 || currentMsg == "\n") {
       return;
     }
     
     try {
+
+      socket.current.emit('message-send',{
+        msg: currentMsg,
+        username:activeUser.username,
+        chatID: data._id,
+        sender: userDB.username,
+        userID: userDB._id,
+      });
+
       const response = await axios.post(path + "message", {
         msg: currentMsg,
         chatID: data._id,
@@ -65,20 +94,23 @@ const Chat = ({ data,cancel }) => {
   const handleChange = (e) => {
     setcurrentMsg(e.target.value);
   };
-  const EnterKeyHandler = (e)=>{
-    if(e.key == 'Enter'){
+  const EnterKeyHandler = (e) => {
+    if(!EnterKeySend){
+      return;
+    }
+    if (e.key == "Enter") {
       MessageSend();
     }
-  }
+  };
 
   return (
     <>
       <div className="chat-top">
-        {
-          cancel &&   <IconButton onClick={()=>cancel(false)}>
-          <ArrowBackIosRoundedIcon></ArrowBackIosRoundedIcon>
-        </IconButton>
-        }
+        {cancel && (
+          <IconButton onClick={() => cancel(false)}>
+            <ArrowBackIosRoundedIcon></ArrowBackIosRoundedIcon>
+          </IconButton>
+        )}
         <div>
           <Avatar src={activeUser?.profilePicture}></Avatar>
           {activeUser?.firstname + " " + activeUser?.lastname}
@@ -96,9 +128,19 @@ const Chat = ({ data,cancel }) => {
       </div>
 
       <div className="chat-bottom">
-        <p>
-          <AddReactionIcon></AddReactionIcon>
-        </p>
+        <IconButton 
+        style={{
+          backgroundColor: "aliceblue",
+        }}
+        >
+          <Tooltip title="Enter key to Send">
+            {EnterKeySend ? (
+              <KeyReturn weight="fill" onClick={()=>setEnterKeySend(false)}></KeyReturn>
+            ) : (
+              <KeyReturn onClick={()=>setEnterKeySend(true)}></KeyReturn>
+            )}
+          </Tooltip>
+        </IconButton>
         <TextField
           multiline
           maxRows={1}
@@ -110,7 +152,6 @@ const Chat = ({ data,cancel }) => {
         <div className="chat-input-send" onClick={MessageSend}>
           <ArrowForwardOutlinedIcon></ArrowForwardOutlinedIcon>
         </div>
-       
       </div>
     </>
   );

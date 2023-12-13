@@ -26,7 +26,6 @@ const Login = () => {
   const [showModal,setShowModal] = useState(false);
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const validate = () => {
@@ -101,7 +100,6 @@ const Login = () => {
       } else {
         alert("Error");
       }
-
       console.log(res);
     },
     useOneTap: true,

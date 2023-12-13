@@ -194,6 +194,20 @@ const Post = (props) => {
     setSavePostLoad(false);
   };
 
+  const unsavepost = async ()=>{
+    setSavePostLoad(true);
+    try {
+      const response = await axios.post(`${path}unsavepost`, {
+        user: user._id,
+        post: data._id,
+      });
+      console.log(response);
+      if(response.data.success){
+        setBOOK(false);
+      }
+    } catch (err) {}
+    setSavePostLoad(false);
+  };
 
   React.useEffect(() => {
     getCreatorPost();
@@ -382,6 +396,7 @@ const Post = (props) => {
                   style={{
                     color: "green",
                   }}
+                  onClick={unsavepost}
                 >
                   <IconButton
                     style={{
