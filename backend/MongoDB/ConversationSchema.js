@@ -13,6 +13,8 @@ const CONVERSATION = new Schema({
         type:Object,
         ref:"Message",
     }
+},{
+    timestamps:true
 });
 const Conversation = new model("Conversation",CONVERSATION);
 module.exports = Conversation;

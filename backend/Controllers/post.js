@@ -16,7 +16,7 @@ const PostNotificationHandler = async (PostCreator,users,post)=>{
                 extra:post.title
             });
         });
-    }   
+    }
 }
 
 const sharePost = async (req,res)=>{
@@ -42,8 +42,7 @@ const sharePost = async (req,res)=>{
             res.send({
                 success:true,
                 response:postCreationResponse
-            })
-            
+            });
 
           }catch(err){
             console.log(err);
@@ -64,19 +63,17 @@ const sharePost = async (req,res)=>{
 
 const getPosts = async (req,res)=>{
     try{
-
         const page = req.query.page;
         const limit = req.query.limit;
-        console.log(page,limit);
         const response = await POSTS.find().limit(limit).skip(page*limit).sort({createdAt:-1});
         res.send(response);
-        
     }catch(err){
 
     }
 };
 
 const getPost = async (req,res)=>{
+
     try{
         const {postid} = req.body;
         console.log(req.body);
@@ -109,7 +106,7 @@ const createAddLikeNotifications = async (username,UserId,post)=>{
 
 
 const addLike = async (req,res)=>{
-    
+
     try{
         const post = await POSTS.findById(req.body.post);
         console.log(post);
@@ -120,6 +117,7 @@ const addLike = async (req,res)=>{
             success:true
         });
     }
+
     catch(err){
         res.send(err);
     }
@@ -196,4 +194,15 @@ const unsavepost = async (req,res)=>{
     }
 }
 
-module.exports = {sharePost,getPosts,addLike,postFilter,setComment,getPost,savePost,unsavepost};
+const PostLength  = async (req,res)=>{
+    try{
+        const data = await POSTS.count();
+        res.send({
+            count:data
+        });
+    }catch(e){
+        console.log(e);
+    }
+}
+
+module.exports = {sharePost,getPosts,addLike,postFilter,setComment,getPost,savePost,unsavepost,PostLength};

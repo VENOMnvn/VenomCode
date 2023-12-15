@@ -10,6 +10,7 @@ import "./signin.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Chip } from "@mui/material";
 import { Badge } from "@mui/base";
+import {DatePicker} from 'keep-react'
 import path from "../../path";
 import axios from "axios";
 import { addUser } from "../../utils/slices/userSlice";
@@ -58,7 +59,7 @@ const Signin = () => {
   const deleteSkill = (e)=>{
     let skillTemp = skills;
     skillTemp = skillTemp.filter((ele)=>{
-      return ele != e.target.innerText;
+      return ele != e;
     })
     console.log(skillTemp);
     setskills(skillTemp);
@@ -199,7 +200,6 @@ const Signin = () => {
       }
   };
 
-
   return (
     <div className="signin">
     {load && <LinearProgress></LinearProgress>}
@@ -328,6 +328,7 @@ const Signin = () => {
 
               <div className="login-box-field">
                 <p>Date of Birth</p>
+           
                 <input
                   type="date"
                   value={dob}
@@ -369,7 +370,7 @@ const Signin = () => {
 
               <div className="skills-array">
                 {skills.map((skill) => (
-                  <Chip label={skill} onClick={deleteSkill}></Chip>
+                  <Chip label={skill}  onDelete={()=>deleteSkill(skill)}></Chip>
                 ))}
               </div>
 

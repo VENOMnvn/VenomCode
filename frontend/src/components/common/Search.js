@@ -24,7 +24,30 @@ import WorkIcon from "@mui/icons-material/Work";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import axios from "axios";
 import path from "../../path";
+import {UsersThree} from 'phosphor-react';
 import { useSelector } from "react-redux";
+
+const UserCardSkeleton = ()=>{
+ return <>
+ <div className="search-user">
+          <div className="search-avatar">
+              <Skeleton width={40} height={40} variant="circular" animation={"wave"}></Skeleton>
+          </div>
+          <div className="search-text">
+            <div className="search-details-skelton" style={{display:"flex",flexDirection:"column"}}>
+              <p>
+                <Skeleton width={120} height={30} animation={"wave"}></Skeleton>
+              </p>
+             <span>
+              <Skeleton width={40} height={
+              10
+              }></Skeleton>
+             </span>
+            </div>
+          </div>
+        </div>
+ </>
+};
 
 const SearchElement = () => {
   const [load,setLoad] = useState(false);
@@ -34,6 +57,8 @@ const SearchElement = () => {
   const userDB = useSelector(s=>s.user.userDB);
 
   const handleSearch = async (event)=>{
+    setLoad(true);
+
     try{
       const response = await axios.get(`${path}getUser?query=${query}`);
       console.log(response);
@@ -41,30 +66,37 @@ const SearchElement = () => {
     }catch(err){
 
     }
+    setLoad(false);
+
   }
 
   const randomSearch = async ()=>{
+    setLoad(true)
     try{
       const response = await axios.get(`${path}getUser?limit=10&skip=0`);
       console.log(response);
       setusers(response.data.users);
     }catch(err){
     }
+    setLoad(false);
   }
 
   useEffect(()=>{
     randomSearch();
   },[]);
+
   return (
     <div className="search-tab">
-      <h1>Search a User</h1>
+      <h1><IconButton>
+          <UsersThree></UsersThree>
+        </IconButton>  Search a User</h1>
       <div className="UserSearch-search" component="form">
         <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-          <SearchIcon color="info" />
+          <SearchIcon/>
         </IconButton>
         <InputBase
           sx={{ ml: 1, flex: 1 ,backgroundColor:'aliceblue'}}
-          placeholder={"Search for User"}
+          placeholder={"Enter Username OR Full name"}
           inputProps={{ "aria-label": "Search for user" }}
           onChange={(e)=>setQuery(e.target.value)}
           onKeyDown={e=>{
@@ -100,23 +132,19 @@ const SearchElement = () => {
           </div>
         </div>
       ))}
+
       {
-        load && <div className="search-user">
-          <div className="search-avatar">
-              <Skeleton width={40} height={40} variant="circular" animation={"wave"}></Skeleton>
-          </div>
-          <div className="search-text">
-            <div className="search-details-skelton">
-              <p>
-                <Skeleton width={120} height={60} animation={"wave"}></Skeleton>
-              </p>
-             
-            </div>
-            <div className="search-button-group">
-            <Skeleton width={100} height={60} animation={"wave"}></Skeleton>
-            </div>
-          </div>
-        </div>
+        load && <>
+        <UserCardSkeleton></UserCardSkeleton>
+        <UserCardSkeleton></UserCardSkeleton>
+        <UserCardSkeleton></UserCardSkeleton>
+        <UserCardSkeleton></UserCardSkeleton>
+        <UserCardSkeleton></UserCardSkeleton>
+        <UserCardSkeleton></UserCardSkeleton>
+        <UserCardSkeleton></UserCardSkeleton>
+        <UserCardSkeleton></UserCardSkeleton>
+        <UserCardSkeleton></UserCardSkeleton>
+        </>
       }
 
     </div>

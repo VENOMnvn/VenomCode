@@ -11,15 +11,17 @@ import CodeMirror from "@uiw/react-codemirror";
 import { basicDark } from "@uiw/codemirror-theme-basic";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { EditorView } from "@uiw/react-codemirror";
-import { MenuItem, Menu, Avatar, Tooltip, IconButton } from "@mui/material";
+import { MenuItem, Menu, Avatar, Tooltip, IconButton, Icon } from "@mui/material";
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { Tag } from "phosphor-react";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import SendIcon from "@mui/icons-material/Send";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { ChatTeardropDots} from "phosphor-react";
+import { Dropdown } from "keep-react";
+import { ChatTeardropDots } from "phosphor-react";
 import "react-toastify/dist/ReactToastify.css";
 import {
   ListItemButton,
@@ -58,7 +60,6 @@ const CommentComponent = ({ data }) => {
 };
 
 const Post = (props) => {
-
   const [data, setData] = useState(props.data);
   const [time, setTime] = React.useState("");
   const user = useSelector((s) => s.user.user);
@@ -73,7 +74,6 @@ const Post = (props) => {
   const [showMenu, setshowMenu] = useState(false);
   const [showlabel, setshowlabel] = useState(false);
   const menuRef = React.useRef();
-  const labelButtonRef = React.useRef();
 
   // const code = data ? data.postCode?.split(/\n/g) : "";
   useEffect(() => {
@@ -82,19 +82,19 @@ const Post = (props) => {
         setLiked(true);
       }
     }
-    console.log(data);
+   
   }, [data]);
 
   React.useEffect(() => {
-    console.log(data.label);
+   
     const date2 = new Date(data.createdAt);
     setTime(date2.toLocaleTimeString() + " " + date2.toLocaleDateString());
 
     // if(diffTime>14400){
     // }
-    // else if(diffTime>3600){
-    //   console.log("1");
-    //    setTime((diffTime/3600).toFixed() + " Hours Ago");
+    // else if(diffTime>31090){
+    //   .log("1");
+    //    setTime((diffTime/31090).toFixed() + " Hours Ago");
     // }
     // else if(diffTime>60){
     //   console.log("2");
@@ -114,7 +114,6 @@ const Post = (props) => {
       toast.info("Please Sigin First ");
       return;
     }
-
 
     try {
       const res = axios.post(`${path}comment`, {
@@ -144,7 +143,7 @@ const Post = (props) => {
       const res = await axios.post(`${path}getpost`, {
         postid: data._id,
       });
-      console.log(res);
+     
       if (res.data.success) {
         setData(res.data.data);
       }
@@ -173,9 +172,11 @@ const Post = (props) => {
       const response = await axios.get(
         `${path}getUser?username=${postCreator.username}`
       );
+      
       if (response.data.success) {
         setPostCreator(response.data.user);
       }
+
     } catch (err) {
       console.log(err);
     }
@@ -194,7 +195,7 @@ const Post = (props) => {
     setSavePostLoad(false);
   };
 
-  const unsavepost = async ()=>{
+  const unsavepost = async () => {
     setSavePostLoad(true);
     try {
       const response = await axios.post(`${path}unsavepost`, {
@@ -202,7 +203,7 @@ const Post = (props) => {
         post: data._id,
       });
       console.log(response);
-      if(response.data.success){
+      if (response.data.success) {
         setBOOK(false);
       }
     } catch (err) {}
@@ -211,7 +212,7 @@ const Post = (props) => {
 
   React.useEffect(() => {
     getCreatorPost();
-    
+
     UserDB?.savedpost?.forEach((ele) => {
       if (ele?._id == data?._id) {
         setBOOK(true);
@@ -247,58 +248,25 @@ const Post = (props) => {
             <span>{time}</span>
           </div>
         </Link>
-        <Menu
-          open={showMenu}
-          anchorEl={menuRef.current}
-          onClose={() => setshowMenu(false)}
-          dense
-          sx={{
-            borderTopLeftRadius: 0,
-          }}
-        >
-          <MenuItem ref={labelButtonRef} onClick={() => setshowlabel(true)}>
-            <ListItemText>Show Labels</ListItemText>
-          </MenuItem>
-
-          <MenuItem>
-            <ListItemText>Delete</ListItemText>
-          </MenuItem>
-          <MenuItem>
-            <ListItemText>Report</ListItemText>
-          </MenuItem>
-        </Menu>
-
-        <Menu
-          open={showlabel}
-          anchorEl={labelButtonRef.current}
-          onClose={() => setshowlabel(false)}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          {" "}
-          {data.label?.map((ele) => {
-            return (
-              <MenuItem>
-                <ListItemText>{ele}</ListItemText>
-              </MenuItem>
-            );
-          })}
-        </Menu>
-
-        <div
+       
+         <div
           className="post-head-tools"
-          ref={menuRef}
-          onClick={() => setshowMenu(true)}
+          onClick={() => setshowMenu(!showMenu)}
         >
-          <MoreHorizIcon></MoreHorizIcon>
-        </div>
+          <IconButton>
+          <Tag size={24} weight="duotone"></Tag>
+          </IconButton>
+        </div> 
       </div>
+      
+      {
+        showMenu && <div
+        className="post-label"
+        >
+         {data?.label?.map((tag)=><span>{tag}</span>)}
+        </div>
+      }
+
       <div className="post-body">
         <span>{data?.title}</span>
 
@@ -346,7 +314,8 @@ const Post = (props) => {
                       }}
                     ></KeyboardDoubleArrowUpIcon>
                   </IconButton>
-                  {window.outerWidth > 600 && "Voted"}
+                  
+                  {window.outerWidth > 1090 && "Voted"}
                 </Button>
               </>
             ) : (
@@ -363,7 +332,7 @@ const Post = (props) => {
                 >
                   <KeyboardDoubleArrowUpIcon></KeyboardDoubleArrowUpIcon>
                 </IconButton>
-                {window.outerWidth > 600 && "Vote"}
+                {window.outerWidth > 1090 && "Vote"}
               </Button>
             )}
           </div>
@@ -383,7 +352,7 @@ const Post = (props) => {
                   <ChatTeardropDots size={26} />
                   {/* <AddCommentIcon></AddCommentIcon> */}
                 </IconButton>
-                {window.outerWidth > 600 && "Comments"}
+                {window.outerWidth > 1090 && "Comments"}
               </Button>
             </Tooltip>
           </div>
@@ -407,7 +376,7 @@ const Post = (props) => {
                       style={{ color: "white" }}
                     ></BookmarkAddedRoundedIcon>
                   </IconButton>
-                  {window.outerWidth > 600 && "Saved"}
+                  {window.outerWidth > 1090 && "Saved"}
                 </Button>
               </>
             ) : (
@@ -427,17 +396,23 @@ const Post = (props) => {
                 >
                   <BookmarkBorderIcon></BookmarkBorderIcon>
                 </IconButton>
-                {window.outerWidth > 600 && "Save"}
+                {window.outerWidth > 1090 && "Save"}
               </Button>
             )}
           </div>
 
           <div>
             <Link to={`/post/${data._id}`}>
-              <Button variant="text" sx={{ color: "gray" }} onClick={()=>{
-                navigator?.clipboard?.writeText(window.location.host+'/post/'+data._id);
-                toast.info("Copied to Clipboard");
-                }}>
+              <Button
+                variant="text"
+                sx={{ color: "gray" }}
+                onClick={() => {
+                  navigator?.clipboard?.writeText(
+                    window.location.host + "/post/" + data._id
+                  );
+                  toast.info("Copied to Clipboard");
+                }}
+              >
                 <IconButton
                   style={{
                     backgroundColor: "#e4e6eb",
@@ -445,7 +420,7 @@ const Post = (props) => {
                 >
                   <ShareIcon></ShareIcon>
                 </IconButton>
-                {window.outerWidth > 600 && "Share"}
+                {window.outerWidth > 1090 && "Share"}
               </Button>
             </Link>
           </div>

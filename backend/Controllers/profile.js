@@ -94,16 +94,21 @@ const getUserDetails = async (req, res) => {
 const getUserQuery = async (req, res) => {
   const { query, username, limit, skip } = req.query;
   try {
+
     if (limit) {
       let users = await User.find()
         .limit(limit)
+        .skip(skip)
         .select(
           "username profilePicture firstname lastname designation city -_id"
         );
-      res.send({ users });
+        
+      
+        res.send({ users });
+      
       return;
+      
     }
-
     if (username) {
       let user = await User.findOne({ username }).select(
         "username profilePicture firstname lastname designation city -_id"
@@ -161,10 +166,11 @@ const addFollower = async (req, res) => {
 
 const removeFollower = async (req,res)=>{
   try{
-    
+
     const {username,userId,FollowUsername} = req.body;
     await User.findByIdAndUpdate(userId,{$pull:{following:username}});
     await User.findOneAndUpdate({username},{$pull:{followers:FollowUsername}});
+    
     res.send({
       success:true
     })

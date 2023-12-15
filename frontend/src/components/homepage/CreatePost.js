@@ -17,7 +17,7 @@ const CreatePost = ()=>{
     return <div className="create-post">
         {showPopUp?<Popup cancel={cancel} element={<CreatePostPopup cancel={cancel}></CreatePostPopup>}></Popup>:""}
         <h1 style={{fontWeight:"600",fontSize:"16px"}}>Want to share something</h1>
-        <h6 style={{color:"gray"}}>Help ro build a community</h6>
+        <h6 style={{color:"gray",margin:"0px 4px"}}>You can share Problem solution of Coding Platform at one place</h6>
         <button variant="contained" onClick={()=>setshowPopUp(true)}>
         <PostAddRoundedIcon></PostAddRoundedIcon>
         Share Code

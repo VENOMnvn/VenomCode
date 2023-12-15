@@ -1,4 +1,4 @@
-import { Avatar, Button, ButtonBase, CircularProgress, Menu } from "@mui/material";
+import { Avatar, Button, ButtonBase, CircularProgress, IconButton, Menu } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import profilepic from "./../../static/profile.jpeg";
 import "./profile.css";
@@ -6,6 +6,8 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HomeFeed from "../homepage/homefeed";
 import Paper from "@mui/material/Paper";
 import ReplayIcon from "@mui/icons-material/Replay";
+import {ChatDots,UserMinus} from 'phosphor-react';
+
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -139,7 +141,11 @@ const UserProfilepage = () => {
               <MenuItem onClick={()=>navigate('/chat?user='+user.username)}>
                 {" "}
                 <ListItemIcon>
-                  <MessageRoundedIcon></MessageRoundedIcon>
+                  <IconButton  style={{
+                      backgroundColor: "#e4e6eb",
+                    }}>
+                  <ChatDots size={24}></ChatDots>
+                  </IconButton>
                 </ListItemIcon>
                 <ListItemText>Message</ListItemText>
                 {/* <Typography variant="body2" color="text.secondary">
@@ -149,7 +155,11 @@ const UserProfilepage = () => {
               <MenuItem onClick={removeFollower}>
                 {" "}
                 <ListItemIcon>
-                  <PersonRemoveRoundedIcon></PersonRemoveRoundedIcon>
+                  <IconButton  style={{
+                      backgroundColor: "#e4e6eb",
+                    }}>
+                  <UserMinus></UserMinus>
+                  </IconButton>
                 </ListItemIcon>
                 <ListItemText>Remove</ListItemText>
                 {/* <Typography variant="body2" color="text.secondary">

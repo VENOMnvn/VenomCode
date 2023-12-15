@@ -1,0 +1,15 @@
+.problemPage{
+    margin-top: 50px;
+}
+.problem-navbar{
+    display: flex;
+    background-color: white;
+    padding: 12px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.problem-navbar p{
+    font-weight: 600;
+    font-size: 18px;
+}

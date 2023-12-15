@@ -96,7 +96,7 @@ const EditProfile = () => {
   const deleteSkill = (e)=>{
     let skillTemp = skills;
     skillTemp = skillTemp.filter((ele)=>{
-      return ele != e.target.innerText;
+      return ele != e;
     })
     console.log(skillTemp);
     setSkills(skillTemp);
@@ -274,7 +274,7 @@ const EditProfile = () => {
 
               <div className="skills-array">
                 {skills.map((skill) => (
-                  <Chip label={skill} onClick={deleteSkill}></Chip>
+                  <Chip label={skill} onDelete={()=>deleteSkill(skill)}></Chip>
                 ))}
               </div>
 

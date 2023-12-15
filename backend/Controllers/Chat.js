@@ -9,7 +9,7 @@ const getConversations = async (req, res) => {
     const conversations = await Conversation.find({ users: id }).populate(
       "users",
       "profilePicture -_id firstname lastname username"
-    );
+    ).sort({updatedAt:-1});
 
     res.send({ success: true, conversations });
   } catch (err) {

@@ -107,7 +107,7 @@
 @media (width<600px){
     .cover-image-coverup{
         height: 150px;
-     
+        justify-content: flex-end;
     }
     .cover-image-coverup > button{
         margin: 0px;
@@ -209,15 +209,20 @@
     margin: 10px;
     justify-content: center;
 }
+
 .usercard{
-    max-width: 280px;
-    width: 280px;
+    /* max-width: 200px; */
     border: 1px solid lightgray;
-    min-width: 250px;
+    min-width: 150px;
+    width: calc(9% + 12px);
     display: flex;
     flex-direction: column;
     border-radius: 10px;
 }
+.usercard button{
+    font-size: 12px;
+}
+
 .usercard-img{
     width: 100%;
     aspect-ratio: 1/1;
@@ -226,19 +231,21 @@
 }
 .usercard-img img{
     width: 100%;
+    aspect-ratio: 1/1;
     border-radius: 10px;
+    object-fit: cover;
     border-radius: 10px 10px 0px 0px;
-    height: 280px;
+    
 }
 .usercard-username{
     text-align: center;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 14px;
 }
 .usercard p{
     text-align: center;
     color: gray;
-    font-family: 14px;
+    font-size: 12px;
 }
 .usercard-container{
     display: flex;

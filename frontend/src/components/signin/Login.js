@@ -15,15 +15,16 @@ import {
 import { jwtDecode } from "jwt-decode";
 import logo from "./google.png";
 import ForgetPassword from "./ForgetPassword.js";
+import SetUsername from "./SetUsername.js";
 
 const Login = () => {
   const emailref = useRef();
   const passwordref = useRef();
-  const googleButtonRef = useRef();
+  const [newGoogle,setNewGoogle] = useState(false);
   const [disabled, setdisabled] = useState(true);
   const [error, setError] = useState("");
   const [load, setload] = useState(false);
-  const [showModal,setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -94,7 +95,11 @@ const Login = () => {
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const res = await axios.post(path + "signingoogle", tokenResponse);
-      if (res.data.success) {
+      if (res.data.success){
+        if(res.data.newGoogle){
+          setNewGoogle(res.data.user);
+          return;
+        }
         dispatch(addUser(res.data.user));
         navigate("/../");
       } else {
@@ -120,7 +125,9 @@ const Login = () => {
             <input type="password" ref={passwordref} onBlur={validate}></input>
           </div>
           <div className="login-box-error">{error}</div>
-          <div className="forget-password" onClick={()=>setShowModal(1)}>Forget Password ? </div>
+          <div className="forget-password" onClick={() => setShowModal(1)}>
+            Forget Password ?{" "}
+          </div>
           <Button
             fullwidth
             variant="contained"
@@ -164,8 +171,7 @@ const Login = () => {
             }}
           />
           </div> */}
-        
-          
+
           {/* 
             <GoogleLogin
               onSuccess={credentialResponse => {
@@ -189,8 +195,16 @@ const Login = () => {
             Are you a Developer ? <Link onClick={guestLogin}>Guest Login</Link>
           </div>
         </div>
+
+        {showModal && (
+          <ForgetPassword
+            cancel={() => {
+              setShowModal(false);
+            }}
+          ></ForgetPassword>
+        )}
         {
-          showModal && <ForgetPassword cancel={()=>{setShowModal(false)}}></ForgetPassword>
+          newGoogle && <SetUsername data={newGoogle}></SetUsername>
         }
         <div className="login-side-display"></div>
       </div>

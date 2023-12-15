@@ -22,7 +22,7 @@ import NavbarSimple from "./components/common/NavBar-simple";
 import Search from "./components/common/Search";
 import { useDispatch, useSelector } from "react-redux";
 import path from "./path";
-import { addUser } from "./utils/slices/userSlice";
+import { addUserDB } from "./utils/slices/userSlice";
 import UserProfilepage from "./components/profile/user";
 import userill from "./static/userill.jpg";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -42,6 +42,8 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import Filter from "./components/homepage/FilterComp";
 import Modal from "./components/common/Modal";
 import NotificationPanel from "./components/common/NotificationPanel";
+import PeopleJS from "./components/People.js/People";
+import ProblemPage from "./components/problemPage/ProblemPage";
 
 const NotFound = ({ msg }) => {
   return (
@@ -69,11 +71,31 @@ function App() {
   });
 
   const [nav, isNav] = useState(true);
-  const [value, setValue] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+
+  const getUserDetails = async () => {
+    if (user) {
+      try {
+        const res = await axios.post(`${path}getuserdetails`, {
+          userid: user?._id,
+        });
+        
+        if (res.data.success) {
+          dispatch(addUserDB(res.data.user));
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+ 
+  useEffect(()=>{
+    getUserDetails();
+  },[]);
+
 
   useEffect(() => {
     if (location.pathname == "/register" || location.pathname == "/login") {
@@ -107,11 +129,13 @@ function App() {
             ></Route>
             {/* <Route path="/chat" element={<PopUp element={<Messenger></Messenger>} cancel={()=>navigate("/")} isFull={true}></PopUp>}></Route> */}
             <Route path="/chat" element={<Messenger></Messenger>}></Route>
+            <Route path="/problems" element={<ProblemPage></ProblemPage>}></Route>
             <Route path="/home" element={<Homepage></Homepage>}></Route>
             <Route path="/" index element={<Homepage></Homepage>}></Route>
             <Route path="/sharepost" element={<SharePost></SharePost>}></Route>
             <Route path="/search" element={<Search></Search>}></Route>
             <Route path="/filter" element={<Filter></Filter>}></Route>
+            <Route path="/people" element={<PeopleJS></PeopleJS>}></Route>
             <Route
               path="/profile"
               element={<Profilepage></Profilepage>}

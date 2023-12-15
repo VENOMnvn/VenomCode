@@ -19,18 +19,17 @@ const Chat = ({ data, cancel }) => {
   const [currentMsg, setcurrentMsg] = useState("");
   const userDB = useSelector((s) => s.user.userDB);
   const chatbodyref = useRef();
-  const [EnterKeySend, setEnterKeySend] = useState(false);
+  const [EnterKeySend, setEnterKeySend] = useState(true);
   const [activeUser, setActiveUser] = useState(0);
   const socket = useRef();
 
   useEffect(()=>{
-
     socket.current = io(path);
     let id = userDB.username;
     socket.current.emit('setup',id);
 
     socket.current.on('message-recieved',(msg)=>{
-      setMsgs([...msgs,msg]);
+      setMsgs((prevState)=>[...prevState,msg]);
     })
 
   },[]);
@@ -106,11 +105,13 @@ const Chat = ({ data, cancel }) => {
   return (
     <>
       <div className="chat-top">
+        
         {cancel && (
           <IconButton onClick={() => cancel(false)}>
             <ArrowBackIosRoundedIcon></ArrowBackIosRoundedIcon>
           </IconButton>
         )}
+
         <div>
           <Avatar src={activeUser?.profilePicture}></Avatar>
           {activeUser?.firstname + " " + activeUser?.lastname}

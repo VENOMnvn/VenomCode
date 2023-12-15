@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import PopUp from "../common/popup";
 import axios from "axios";
 import EditProfile from "./EditProfile";
+
 import path from "../../path";
 import { addUserDB } from "../../utils/slices/userSlice";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -16,30 +17,28 @@ import { Link } from "react-router-dom";
 
 const Profilepage = () => {
   const user = useSelector((state) => state.user.user);
-
   const [SearchParams] = useSearchParams();
-
-  const [show, setshow] = useState(SearchParams.get('edit'));
-  const [saved,setSaved] = useState(SearchParams.get("saved"));
+  const [show, setshow] = useState(SearchParams.get("edit"));
+  const [saved, setSaved] = useState(SearchParams.get("saved"));
   const savedRef = useRef();
   const userDB = useSelector((state) => state.user.userDB);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [tabPanel, settabPanel] = useState(0);
-  
-  useEffect(()=>{
-      if(saved){
-        settabPanel(1);
-        savedRef.current?.scrollIntoView();
-      }
-  },[saved]);
+
+  useEffect(() => {
+    if (saved) {
+      settabPanel(1);
+      savedRef.current?.scrollIntoView();
+    }
+  }, [saved]);
 
   useEffect(() => {
     if (!user) {
       navigate("../pleaselogin", { replace: true });
     }
   }, []);
-  
+
   const editPop = () => {
     setshow(true);
   };
@@ -47,15 +46,9 @@ const Profilepage = () => {
   const getUserDetails = async () => {
     if (user) {
       try {
-
         const res = await axios.post(`${path}getuserdetails`, {
           userid: user?._id,
         });
-        
-        const ress = await axios.post(path+'notifications',{
-          userId:userDB._id
-        })
-        console.log(ress);
 
         if (res.data.success) {
           dispatch(addUserDB(res.data.user));
@@ -66,19 +59,19 @@ const Profilepage = () => {
     }
   };
 
-
   const TabPanelChangeHandler = (event, newValue) => {
     settabPanel(newValue);
   };
 
-
   const getFollower = async () => {
     try {
       console.log("==");
-      const resp = await axios.post(`${path}getfollowers`,{
-        userid:user?._id
-     });
-     console.log(resp);
+
+      const resp = await axios.post(`${path}getfollowers`, {
+        userid: user?._id,
+      });
+
+      console.log(resp);
     } catch (err) {
       console.log(err);
     }
@@ -137,7 +130,7 @@ const Profilepage = () => {
             <div className="background-row">
               <div className="background-left">Experience</div>
               <div className="background-right">
-                <p>{userDB?.exp +" years"}</p>
+                <p>{userDB?.exp + " years"}</p>
               </div>
             </div>
 
@@ -151,7 +144,7 @@ const Profilepage = () => {
             <div className="background-row">
               <div className="background-left">Followers</div>
               <div className="background-right">
-                <p>{userDB?.followers?.length+" Follower"}</p>
+                <p>{userDB?.followers?.length + " Follower"}</p>
               </div>
             </div>
 
@@ -192,7 +185,7 @@ const Profilepage = () => {
           scrollButtons
           ref={savedRef}
           allowScrollButtonsMobile
-          selectionFollowsFocus 
+          selectionFollowsFocus
         >
           <Tab label={"Posts"}></Tab>
           <Tab label={"Saved"}></Tab>
@@ -204,11 +197,12 @@ const Profilepage = () => {
       <hr style={{ marginTop: "12px" }}></hr>
       {tabPanel == 0 && (
         <div
-
           className="profile-page-post"
           style={{ backgroundColor: "aliceblue" }}
         >
-          {userDB?.posts?.map((ele) => ( <Post data={ele}></Post> ))}
+          {userDB?.posts?.map((ele) => (
+            <Post data={ele}></Post>
+          ))}
         </div>
       )}
 
@@ -220,37 +214,32 @@ const Profilepage = () => {
           {userDB?.savedpost?.map((ele) => (
             <Post data={ele}></Post>
           ))}
-         
         </div>
       )}
 
       {tabPanel == 3 && (
-        <div
-           className="usercard-container"
-        >
+        <div className="usercard-container">
           {userDB?.following?.map((ele) => (
-            <div> <UserCard username={ele}></UserCard></div>
+            <UserCard username={ele}></UserCard>
           ))}
 
-          {
-            userDB?.following?.length == 0 && <div className="fullwidth centerAll"> You dont Follow any one <Link to='/search'>Find here</Link></div> 
-          }
-
+          {userDB?.following?.length == 0 && (
+            <div className="fullwidth centerAll">
+              {" "}
+              You dont Follow any one <Link to="/search">Find here</Link>
+            </div>
+          )}
         </div>
       )}
 
       {tabPanel == 2 && (
-        <div
-          className="usercard-container"
-        >  
-          {userDB?.followers.map((ele) => <div>
-              <UserCard username={ele}></UserCard>
-            </div>
+        <div className="usercard-container">
+          {userDB?.followers.map((ele) => (
+            <UserCard username={ele}></UserCard>
+          ))}
+          {userDB?.followers?.length == 0 && (
+            <div className="usercard-empty"> No one Follows you </div>
           )}
-          {
-            userDB?.followers?.length == 0 && <div className="usercard-empty"> No one Follows you </div> 
-          }
-
         </div>
       )}
     </div>

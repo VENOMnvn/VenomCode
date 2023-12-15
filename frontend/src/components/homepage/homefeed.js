@@ -3,9 +3,10 @@ import { useState } from 'react';
 import Post from './Post';
 import axios from 'axios';
 import path from '../../path';
-import { Button, Skeleton } from '@mui/material';
+import { Button, Skeleton,Pagination } from '@mui/material';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
 
 
 const PostSkeleton = ()=>{
@@ -27,12 +28,12 @@ const PostSkeleton = ()=>{
 
 
 const HomeFeed = ()=>{
-    const arr = [1,2,3,45,6,7,8,9,10,342,523];
-    const filters = useSelector(state=>state.utility.filter);
 
+    const filters = useSelector(state=>state.utility.filter);
+    const [maxPage,setmaxPage] = useState(1);
     const [posts,setPosts] = useState([]);
     const [limit,setLimit] = useState(12);
-    const [page,setPage] = useState(0);
+    const [page,setPage] = useState(1);
     const [load,setLoad] = useState(false);
 
     const fetchPost = async ()=>{
@@ -40,23 +41,45 @@ const HomeFeed = ()=>{
         setLoad(true);
         try{
             var postData;
-
             if(filters.length>0){
-                 postData = await axios.post(`${path}postfilter?page=${page}&limit=${limit}`,{
+                 
+                postData = await axios.post(`${path}postfilter?page=${page-1}&limit=${limit}`,{
                     filter:filters
                 });
+
             }else{
-                 postData = await axios.get(`${path}posts?page=${page}&limit=${limit}`);
+                 postData = await axios.get(`${path}posts?page=${page-1}&limit=${limit}`);
             }
+
             setPosts(postData.data);
+
         }catch(err){
             console.log(err);
         }
         setLoad(false);
     };
 
+    const PageLength = async ()=>{
+        try{
+
+            const response = await axios.get(path+'postlength');
+            if(response.data.count){
+
+                const maxPageTemp = Math.ceil(response.data.count/limit);
+                setmaxPage(maxPageTemp);
+            }
+
+        }catch(e){
+            console.log(e);
+        }
+    }
+
     useEffect(()=>{
-        console.log("yahanh dikt");
+        PageLength();
+    },[]);
+
+    useEffect(()=>{
+        console.log(page);
         fetchPost();
     },[page,filters]);
 
@@ -73,11 +96,14 @@ const HomeFeed = ()=>{
         {posts.map((ele)=>{
             return (<Post data={ele}></Post>);
         })}
-        <div className='centerAll'>
-        <Button sx={{margin:"auto"}} fullWidth onClick={()=>setPage((p)=>p+1)}>Load More</Button>
+        
+        {/* {pagination is in app.css} */}
+        <div className='pagination'>
+        <Pagination count={maxPage} page={page} onChange={(e,v)=>setPage(v)} />
         </div>
+       
         </>:(<>
-            <p>No Post to Show</p>
+            <p className='centerAll'>No Post to Show</p>
         </>)
         )
         }

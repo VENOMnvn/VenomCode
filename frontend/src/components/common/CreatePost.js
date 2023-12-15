@@ -20,7 +20,6 @@ const CreatePost = ({cancel}) => {
   const [title,setTitle] = useState(false);
   const user = useSelector(s=>s.user.user);
   const userDB = useSelector(s=>s.user.userDB);
-
   const [code,setCode] = useState("");
   const navigate = useNavigate();
   const [load,setload] = useState(false);
@@ -33,8 +32,8 @@ const CreatePost = ({cancel}) => {
   },[]);
 
   const handleDelete=(e)=>{
-    console.log(e);
-    const result = label.filter((ele)=>ele != e.target.innerHTML);
+   
+    const result = label.filter((ele)=>ele != e);
     setLabelArray(result);
 }
 
@@ -68,14 +67,7 @@ const CreatePost = ({cancel}) => {
         console.log(response);
         
         if(response.data.success){
-          console.log("Navigating now")
-          navigate("/home");
-          // setSuccess(true);
-          // setTimeout(()=>{
-          //   setSuccess(false);
-          //   cancel();
-          // },1000);
-          
+          cancel();
         }else{
           alert("Some Error Occured Please Try Again later");
         }
@@ -91,11 +83,9 @@ const CreatePost = ({cancel}) => {
       success ? <div className="success">Success</div>
       :
       <>
-
       <div className="create-header">
         <div className="create-header-left">
           <Avatar sx={{ width: "50px", height: "50px", bgcolor: "teal" }} src={userDB?.profilePicture}>
-       
           </Avatar>
           <div>
             <p>{userDB?.firstname + " " + userDB?.lastname}</p>
@@ -148,7 +138,7 @@ const CreatePost = ({cancel}) => {
         onKeyDown={handleSubmitLabel}
       />
       <div className="labels-form-create-post-left">
-      {!label?"":label.map((ele)=><Chip label={ele} variant="outlined" onClick={handleDelete}/>)}
+      {!label?"":label.map((ele)=><Chip label={ele} variant="outlined" onDelete={()=>handleDelete(ele)}/>)}
       </div>
       </div>
 

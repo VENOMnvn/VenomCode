@@ -2,22 +2,20 @@
     height: calc(100svh - 50px);
     display: grid;
     grid-template-columns: 2fr 5fr;
-    grid-template-rows: 40px auto;
+    
     box-sizing: border-box;
     margin-top: 50px;
     flex-direction: column;
 }
 .messenger-top{
-    grid-column-start: 1;
-    grid-column-end: 3;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     gap: 16px;
     background-color: var(--light);
-    border-bottom: 1px solid gray;
-    padding:0px  16px 0px 16px;
+    /* border-bottom: 1px solid gray; */
+    padding:16px;
 }
 .messenger-top span{
     font-size: 20px;
@@ -33,14 +31,14 @@
 }
 .chat-thumbnail{
     width: 100%;
-    height: 60px;
+    /* height: 60px; */
     display: flex;
     gap: 8px;
     justify-content: flex-start;
     align-items: center;
     /* border: 1px solid rgb(145, 145, 145); */
-    background-color: var(--light);
-    padding: 0px 12px;
+    /* background-color: aliceblue; */
+    padding: 12px 6px;
    
 }
 .chat-thumbnail:hover{
@@ -65,7 +63,8 @@
     box-sizing: border-box;
     overflow-y: scroll;
     background-color: var(--light);
-    border-right: 2px solid lightgray;
+    /* background-color: whitesmoke; */
+    border-right: 1px solid lightgray;
 }
 .chats::-webkit-scrollbar{
     display: block;
@@ -169,15 +168,27 @@
     padding: 2px 4px;
     font-family: 'Barlow';
 }
+@media (width<750px) {
+    .message-content{
+        max-width: 300px;
+    }
+}
 .right-message{
     justify-content: flex-end;
-
+    
 }
 .message-content{
     background-color: #004e64;
     padding: 4px 6px;
     border-radius: 15px;
+    text-overflow: ellipsis;
     color: var(--light);
+}
+.message-content p{
+    max-width: 500px;
+    word-wrap: break-word;
+    white-space: pre-line;
+    text-wrap: wrap;
 }
 .left-message > .message-content{
     background-color: #f0f0f0;
@@ -188,7 +199,7 @@
     border-top-right-radius: 0px;
 }
 .chat-body{
-    height: calc(100vh - 192px);
+    height: calc(100vh - 150px);
     box-sizing: border-box;
     overflow-y: scroll;
 }
@@ -216,6 +227,7 @@
 .centerAllChat{
     height: calc(100vh - 120px);
     display: flex;
+    margin: auto;
     justify-content: center;
     align-items: center;
 }

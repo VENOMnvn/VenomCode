@@ -111,17 +111,15 @@ const googlesignin = async (req,res)=>{
                    
                     const existingUser = await User.findOne({email:dataFromGoogle.data.email}).select(' -password');
                     console.log(existingUser,"rr");
-                    if(existingUser){
 
+                    if(existingUser){
                         res.send({
                             success:true,
                             user:existingUser
                         });
-
                     }else{
 
                         function generatePassword(length) {
-                            
                                 charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$@%",
                                 retVal = "";
                             for (var i = 0, n = charset.length; i < length; ++i) {
@@ -147,12 +145,12 @@ const googlesignin = async (req,res)=>{
                             googleUser:True
                         }
                         console.log(user);
-
                         let responseFromCreate = await User.create(user);
                         responseFromCreate.password="hidden";
                         console.log('new',responseFromCreate);
                         res.send({
                             success:true,
+                            newGoogle:true,
                             user:responseFromCreate
                         });
                     }

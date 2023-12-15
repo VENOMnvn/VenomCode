@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./messenger.css";
-import { Avatar, Skeleton, Snackbar,Button } from "@mui/material";
+import { Avatar, Skeleton, Snackbar, Button } from "@mui/material";
 import profilepic from "./../../static/profile.jpeg";
 import sonu from "./../../static/profile.jpeg";
 import { styled } from "@mui/material/styles";
@@ -8,10 +8,13 @@ import Badge from "@mui/material/Badge";
 import Paper from "@mui/material/Paper";
 import Chat from "./Chat";
 import axios from "axios";
+import {SignOut} from 'phosphor-react';
 import path from "../../path";
+import Modal from "../common/Modal";
 import image from "./../../static/userill.jpg";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../utils/slices/userSlice";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -76,7 +79,11 @@ const ChatSkeleton = () => {
           <Skeleton width={120} height={50}></Skeleton>
         </div>
         <div className="message right-message">
-          <Skeleton width={150} height={50} className="right-message"></Skeleton>
+          <Skeleton
+            width={150}
+            height={50}
+            className="right-message"
+          ></Skeleton>
         </div>
         <div className="message right-message">
           <Skeleton width={60} height={50} className="right-message"></Skeleton>
@@ -94,6 +101,7 @@ const ChatSkeleton = () => {
 };
 
 const Messenger = () => {
+
   const [ActiveChat, setActiveChat] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [SearchParams] = useSearchParams();
@@ -105,6 +113,10 @@ const Messenger = () => {
   const [loadChatAgain, setLoadChatAgain] = useState(false);
   const [conversationLoad, setConversationsLoad] = useState(false);
   const [chatLoad, setChatLoad] = useState(false);
+  const [loginError,setLoginError] = useState(false);
+  const [load,setload] = useState(false);
+
+  const dispatch = useDispatch()
 
   const getUserConv = async () => {
     if (reciverUser) {
@@ -117,6 +129,22 @@ const Messenger = () => {
         navigate("?id=" + response.data.conversationID);
       }
     }
+  };
+
+  const guestLogin = async () => {
+    setload(true);
+    const response = await axios.post(`${path}login`, {
+      password: "@Admin1234",
+      email: "naveen@venom.navi",
+    });
+    console.log(response);
+    if (response.data.success) {
+      dispatch(addUser(response.data.user));
+      setload(false);
+      setLoginError(false);
+      navigate("/");
+    }
+    setload(false);
   };
 
   const getChat = async () => {
@@ -152,6 +180,9 @@ const Messenger = () => {
     } else {
       setMobile(false);
     }
+    if(!UserDB){
+      setLoginError(true);
+    }
   }, []);
 
   const getConversations = async () => {
@@ -177,32 +208,32 @@ const Messenger = () => {
 
   return (
     <div className="messenger">
-      <div className="messenger-top">
-        <StyledBadge
-          overlap="circular"
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          variant="dot"
-        >
-          <Avatar
-            sx={{
-              bgcolor: "yellow",
-              color: "black",
-              width: "30px",
-              height: "30px",
-            }}
-            src={profilepic}
-            variant="dot"
-          ></Avatar>
-        </StyledBadge>
-        <span>Messenger</span>
-      </div>
-
       {mobile ? (
         <>
           {" "}
           {!ActiveChat ? (
             <>
               <div className="chats">
+                <div className="messenger-top">
+                  <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    variant="dot"
+                  >
+                    <Avatar
+                      sx={{
+                        bgcolor: "yellow",
+                        color: "black",
+                        width: "30px",
+                        height: "30px",
+                      }}
+                      src={profilepic}
+                      variant="dot"
+                    ></Avatar>
+                  </StyledBadge>
+                  <span>Messenger</span>
+                </div>
+
                 {chats?.length == 0 && <div>No Chats Here</div>}
                 {conversationLoad && (
                   <div>
@@ -254,10 +285,11 @@ const Messenger = () => {
             </>
           ) : (
             <>
-            {
-              chatLoad ? <ChatSkeleton></ChatSkeleton> :
-              <Chat data={ActiveChat} cancel={setActiveChat}></Chat>
-            }
+              {chatLoad ? (
+                <ChatSkeleton></ChatSkeleton>
+              ) : (
+                <Chat data={ActiveChat} cancel={setActiveChat}></Chat>
+              )}
             </>
           )}
         </>
@@ -265,13 +297,33 @@ const Messenger = () => {
         // PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC  PC PC PC
         <>
           <div className="chats">
-            {chats?.length == 0 && <>
-            <div className="centerAll">No Chats Here</div>
-            <Link to="/search" className="centerAll">
-              <Button variant="outlined">Start Search</Button>
-            </Link>
-            </>
-            }
+          <div className="messenger-top">
+                  <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    variant="dot"
+                  >
+                    <Avatar
+                      sx={{
+                        bgcolor: "yellow",
+                        color: "black",
+                        width: "30px",
+                        height: "30px",
+                      }}
+                      src={profilepic}
+                      variant="dot"
+                    ></Avatar>
+                  </StyledBadge>
+                  <span>Messenger</span>
+                </div>
+            {chats?.length == 0 && (
+              <>
+                <div className="centerAll">No Chats Here</div>
+                <Link to="/search" className="centerAll">
+                  <Button variant="outlined">Start Search</Button>
+                </Link>
+              </>
+            )}
             {conversationLoad && (
               <div>
                 <ChatThumbNailSkeleton></ChatThumbNailSkeleton>
@@ -335,7 +387,28 @@ const Messenger = () => {
           )}
         </>
       )}
+
+       {loginError && (
+        <Modal
+          cancel={() => {
+            setLoginError(false)
+            navigate('/');
+          }}
+          Icon={SignOut}
+          heading={"You are Not logged In"}
+          subheading={
+            "Dont want to add an account ? You can Guest Login to access feature and Try Website"
+          }
+          leftButton={true}
+          leftButtonFunction={guestLogin}
+          leftButtonText={"Guest"}
+          confirmButtonText={"Signin"}
+          confirm={() => navigate("/login")}
+        ></Modal>
+      )}
+
     </div>
+
   );
 };
 

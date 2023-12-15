@@ -10,16 +10,19 @@ import {
   SignIn,
   Note,
   UserPlus,
-  Users,
+  User,
+  UsersThree,
   Sliders,
   SignOut,
   Bell,
+  YoutubeLogo,
 } from "phosphor-react";
+import { youtubeLogoLink } from "../../path";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import Modal from "./Modal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./Navbar.css";
@@ -40,7 +43,8 @@ const Navbar = () => {
   const [notificationBadge, setNotificationBadge] = useState(0);
   const [showFilterModal, setshowFilterModal] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const [load,setload] = useState(true);
+  const [load, setload] = useState(false);
+  const locationState = useLocation();
   const dispatch = useDispatch();
 
   const location = useRef();
@@ -58,30 +62,16 @@ const Navbar = () => {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     location.current = window.location;
-  },[]);
+  }, []);
 
   useEffect(() => {
     checknotification();
-  }, []);
+  }, [locationState]);
 
-  const guestLogin = async () => {
-    setload(true);
-    const response = await axios.post(`${path}login`, {
-      password: "@Admin1234",
-      email: "naveen@venom.navi",
-    });
-    console.log(response);
-    if (response.data.success) {
-      dispatch(addUser(response.data.user));
-      setload(false);
-      setLoginError(false);
-      navigate("/");
-    }
-    setload(false);
-  };
   
+
   return (
     <>
       {window.outerWidth < 750 ? (
@@ -122,6 +112,12 @@ const Navbar = () => {
                   <Sidebar.ItemGroup
                     onClick={() => setDrawerOpen(!isDrawerOpen)}
                   >
+                    <Link to={youtubeLogoLink}>
+                      <Sidebar.Item icon={<YoutubeLogo size={24} />}>
+                        Tutorial
+                      </Sidebar.Item>
+                    </Link>
+
                     <Link to={"/sharepost"}>
                       <Sidebar.Item icon={<Note size={24} />}>
                         Share Post
@@ -144,7 +140,7 @@ const Navbar = () => {
                     </Link>
 
                     <Link to="/profilecard">
-                      <Sidebar.Item icon={<Users size={24} />}>
+                      <Sidebar.Item icon={<User size={24} />}>
                         Profile-Card
                       </Sidebar.Item>
                     </Link>
@@ -169,12 +165,13 @@ const Navbar = () => {
                       </Sidebar.Item>
                     </Link>
 
-                    <Link to={'/search'}>
-                      <Sidebar.Item
-                        icon={<SearchIcon/>}
-                       
-                      >
-                        Search
+                    <Link to={"/search"}>
+                      <Sidebar.Item icon={<SearchIcon />}>Search</Sidebar.Item>
+                    </Link>
+
+                    <Link to="/people">
+                      <Sidebar.Item icon={<UsersThree size={24} />}>
+                        People
                       </Sidebar.Item>
                     </Link>
 
@@ -252,11 +249,16 @@ const Navbar = () => {
 
           <ul className="nav-button">
             <li className="cursor-pointer" onClick={() => navigate("/home")}>
-              {"Home"}
+              Home
             </li>
-            <Link>
+            <Link to="/people">
               <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
-                Theme
+                People
+              </li>
+            </Link>
+            <Link to="/problems">
+              <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
+                Problem
               </li>
             </Link>
           </ul>
@@ -277,6 +279,21 @@ const Navbar = () => {
           <div style={{ flex: 1 }}></div>
 
           <ul className="nav-icons">
+            <li>
+              <a href={youtubeLogoLink}>
+              <Tooltip title="Tutorial">
+                <IconButton
+                  aria-label="delete"
+                  >
+                  <YoutubeLogo
+                    size={24}
+                    sx={{ color: "black", fontSize: "28px" }}
+                    />
+                </IconButton>
+              </Tooltip>
+                    </a>
+            </li>
+
             <li>
               <Tooltip title="Search">
                 <IconButton
@@ -307,17 +324,18 @@ const Navbar = () => {
             <li>
               <Link to={"/chat"}>
                 <Tooltip title="Message">
-                  <IconButton aria-label="delete" className="chat-icon"  onClick={()=>{
-                    if(!user.user){
-                      setLoginError(true);
-                    
-                    }
-                  }}>
-                    <Badge badgeContent={4} color="primary">
-                      <ChatBubbleOutlineRoundedIcon
-                        sx={{ color: "black", fontSize: "25px" }}
-                      />
-                    </Badge>
+                  <IconButton
+                    aria-label="delete"
+                    className="chat-icon"
+                    onClick={() => {
+                      if(!user.user) {
+                        setLoginError(true);
+                        }
+                    }}
+                  >
+                    <ChatBubbleOutlineRoundedIcon
+                      sx={{ color: "black", fontSize: "25px" }}
+                    />
                   </IconButton>
                 </Tooltip>
               </Link>
@@ -326,13 +344,15 @@ const Navbar = () => {
             <li>
               <Link to={"/notifications"}>
                 <Tooltip title="notification">
-                  <IconButton aria-label="delete" className="chat-icon" 
-                  onClick={()=>{
-                    if(!user.user){
-                      setLoginError(true);
-                      navigate("/");
-                    }
-                  }}
+                  <IconButton
+                    aria-label="delete"
+                    className="chat-icon"
+                    onClick={() => {
+                      if (!user.user) {
+                        setLoginError(true);
+                        navigate("/");
+                      }
+                    }}
                   >
                     <Badge badgeContent={notificationBadge} color="primary">
                       <NotificationsNoneRoundedIcon
@@ -391,21 +411,7 @@ const Navbar = () => {
           heading={"Filter"}
         ></Modal>
       )}
-      {loginError && (
-        <Modal
-          cancel={() => setLoginError(false)}
-          Icon={SignOut}
-          heading={"You are Not logged In"}
-          subheading={
-            "Dont want to add an account ? You can Guest Login to access feature and Try Website"
-          }
-          leftButton={true}
-          leftButtonFunction={guestLogin}
-          leftButtonText={"Guest"}
-          confirmButtonText={"Signin"}
-          confirm={()=>navigate('/login')}
-        ></Modal>
-      )}
+
     </>
   );
 };
