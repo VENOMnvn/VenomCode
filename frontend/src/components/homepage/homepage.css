@@ -359,6 +359,9 @@ body::-webkit-scrollbar{
     .post-lower-group div{
         
     }
+    .center-homepage{
+        min-width: 150px;
+    }
 }
 
 .comment-component{
@@ -515,6 +518,10 @@ button:hover{
     gap: 12px;
     margin-top: 15px;
 }
+.tutorial .tut-line{
+    border-top: 2px solid lightgray;
+    padding-top: 15px;
+}
 .mid-width{
     margin-top: 15px;
     height: calc(100svh - 50px);
@@ -522,6 +529,7 @@ button:hover{
     overflow: scroll;
     min-width: 350px;
     display: none;
+    padding: 6px;
 }
 @media (700px < width < 900px){
     .mid-width{

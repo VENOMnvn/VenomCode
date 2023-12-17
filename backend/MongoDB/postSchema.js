@@ -8,6 +8,9 @@ const postS = new Schema ({
     postCode:{
         type:String
     },
+    question:{
+        type:Object
+    },
     title:{
         type:String
     },

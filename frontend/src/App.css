@@ -38,7 +38,7 @@ body{
     background-color: #f4f2ee;
     /* background-color: rgb(246, 248, 250); */
     /* font-family: 'Montserrat'; */
-    font-family: Barlow;
+    /* font-family: Barlow; */
 }
 
 /* This border is used to show that the element is focused (i.e. you can type in the input or press the button with Enter). You can remove it with outline property, though: */

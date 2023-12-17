@@ -4,9 +4,9 @@ const filterFunction = require("../Controllers/filter");
 const {editprofile,getUserDetails,getUserQuery, addFollower,removeFollower,getFollower} = require("./../Controllers/profile");
 const {sharePost,getPosts,addLike,postFilter,setComment,getPost, savePost, unsavepost, PostLength}  = require("./../Controllers/post");
 const {sendMessage,getConversations,getChat,deleteMessage}= require('../Controllers/Chat');
-
-const express = require("express");
+const {getProblem,getProblems,getUserProblems,CreateProblem, getProblemswithTag, getProblemsCount} = require('../Controllers/problems');
 const { getNotification,checknotification, seenNotification} = require("../Controllers/Notification");
+const express = require("express");
 const router = express.Router();
 
 
@@ -55,5 +55,13 @@ router.post('/message',sendMessage);
 router.post('/notifications',getNotification);
 router.get('/seennotification',seenNotification);
 router.get('/checknotification',checknotification);
+
+//problems
+router.post('/newproblem',CreateProblem);
+router.get('/getproblem',getProblem);
+router.get('/problems',getProblems);
+router.get('/problem/user',getUserProblems);
+router.post('/problems/tag',getProblemswithTag);
+router.get("/problems/count",getProblemsCount);
 
 module.exports = router;

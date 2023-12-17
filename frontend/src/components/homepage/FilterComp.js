@@ -11,15 +11,15 @@ const Filter = () => {
   const dispatch = useDispatch();
 
   const handleDelete = (e) => {
-    console.log(e);
-
     dispatch(removeFilter(e));
   };
 
   const handlesubmit = (e) => {
+    
     if (e.target.value.length == 0) {
       return;
     }
+
     if (e.keyCode == "13") {
       dispatch(addFilter(e.target.value.toUpperCase()));
       e.target.value = "";

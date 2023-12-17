@@ -63,9 +63,11 @@
 .labels-form-create-post-left{
     margin: 15px 2px;
     border: 1px solid rgb(227, 226, 226);
-    box-shadow: inset -2px 0px 8px rgb(162, 162, 162);
+    /* box-shadow: inset -2px 0px 8px rgb(162, 162, 162); */
+    background-color: whitesmoke;
     display: flex;
     padding: 6px;
+    align-items: center;
     border-radius: 10px;
     min-height: 45px;
     flex-wrap: nowrap;

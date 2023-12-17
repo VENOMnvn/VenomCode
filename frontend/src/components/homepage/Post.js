@@ -11,7 +11,14 @@ import CodeMirror from "@uiw/react-codemirror";
 import { basicDark } from "@uiw/codemirror-theme-basic";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { EditorView } from "@uiw/react-codemirror";
-import { MenuItem, Menu, Avatar, Tooltip, IconButton, Icon } from "@mui/material";
+import {
+  MenuItem,
+  Menu,
+  Avatar,
+  Tooltip,
+  IconButton,
+  Icon,
+} from "@mui/material";
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -21,7 +28,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { Dropdown } from "keep-react";
-import { ChatTeardropDots } from "phosphor-react";
+import { ChatTeardropDots, Book } from "phosphor-react";
 import "react-toastify/dist/ReactToastify.css";
 import {
   ListItemButton,
@@ -60,19 +67,20 @@ const CommentComponent = ({ data }) => {
 };
 
 const Post = (props) => {
+  const id = props.id;
   const [data, setData] = useState(props.data);
   const [time, setTime] = React.useState("");
-  const user = useSelector((s) => s.user.user);
-  const UserDB = useSelector((s) => s.user.userDB);
+  const user = useSelector((s) => s.user?.user);
+  const UserDB = useSelector((s) => s.user?.userDB);
   const [savePostLoad, setSavePostLoad] = useState(false);
-  const [postCreator, setPostCreator] = useState(data.user);
+  const [postCreator, setPostCreator] = useState(data?.user);
   const [commentText, setCommentText] = useState("");
   const [commnentPopup, setCommentPopup] = useState(false);
   const [commentInputshow, setCommentInput] = React.useState(false);
   const [BOOK, setBOOK] = useState(false);
   const [liked, setLiked] = useState(false);
   const [showMenu, setshowMenu] = useState(false);
-  const [showlabel, setshowlabel] = useState(false);
+  const [showQuestion, setshowQuestion] = useState(false);
   const menuRef = React.useRef();
 
   // const code = data ? data.postCode?.split(/\n/g) : "";
@@ -82,12 +90,10 @@ const Post = (props) => {
         setLiked(true);
       }
     }
-   
   }, [data]);
 
   React.useEffect(() => {
-   
-    const date2 = new Date(data.createdAt);
+    const date2 = new Date(data?.createdAt);
     setTime(date2.toLocaleTimeString() + " " + date2.toLocaleDateString());
 
     // if(diffTime>14400){
@@ -143,7 +149,7 @@ const Post = (props) => {
       const res = await axios.post(`${path}getpost`, {
         postid: data._id,
       });
-     
+
       if (res.data.success) {
         setData(res.data.data);
       }
@@ -172,11 +178,10 @@ const Post = (props) => {
       const response = await axios.get(
         `${path}getUser?username=${postCreator.username}`
       );
-      
+
       if (response.data.success) {
         setPostCreator(response.data.user);
       }
-
     } catch (err) {
       console.log(err);
     }
@@ -248,24 +253,51 @@ const Post = (props) => {
             <span>{time}</span>
           </div>
         </Link>
-       
-         <div
-          className="post-head-tools"
-          onClick={() => setshowMenu(!showMenu)}
-        >
-          <IconButton>
-          <Tag size={24} weight="duotone"></Tag>
-          </IconButton>
-        </div> 
-      </div>
-      
-      {
-        showMenu && <div
-        className="post-label"
-        >
-         {data?.label?.map((tag)=><span>{tag}</span>)}
+
+        <div>
+          <div
+            className="post-head-tools"
+            onClick={() => setshowMenu(!showMenu)}
+          >
+            <IconButton>
+              <Tag size={24} weight="duotone"></Tag>
+            </IconButton>
+          </div>
+          {data?.question && (
+            <div
+              className="post-head-tools mx-2"
+              onClick={() => setshowQuestion(!showQuestion)}
+            >
+              <IconButton>
+                <Book size={24} weight="duotone"></Book>
+              </IconButton>
+            </div>
+          )}
         </div>
-      }
+      </div>
+      {showQuestion && (
+        <div className="post-label">
+          <p>
+            Question :{" "}
+            <Link
+              to={"/problems?question=" + data?.question.questionID}
+              
+            >
+              <span>
+              {data?.question?.title}
+              </span>
+            </Link>
+          </p>
+        </div>
+      )}
+      {showMenu && (
+        <div className="post-label">
+          {data?.label?.length == 0 && "No Labels"}
+          {data?.label?.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      )}
 
       <div className="post-body">
         <span>{data?.title}</span>
@@ -314,7 +346,7 @@ const Post = (props) => {
                       }}
                     ></KeyboardDoubleArrowUpIcon>
                   </IconButton>
-                  
+
                   {window.outerWidth > 1090 && "Voted"}
                 </Button>
               </>
@@ -402,7 +434,7 @@ const Post = (props) => {
           </div>
 
           <div>
-            <Link to={`/post/${data._id}`}>
+            <Link to={`/post/${data?._id}`}>
               <Button
                 variant="text"
                 sx={{ color: "gray" }}

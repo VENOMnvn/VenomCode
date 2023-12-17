@@ -1,6 +1,7 @@
 const User = require('../MongoDB/UserSchema');
 const { post } = require('../routes/routes');
 const POSTS = require('./../MongoDB/postSchema');
+const Problems = require("./../MongoDB/QuestionSchema");
 const Notification = require("./../MongoDB/NotificationSchema")
 
 const PostNotificationHandler = async (PostCreator,users,post)=>{
@@ -18,11 +19,19 @@ const PostNotificationHandler = async (PostCreator,users,post)=>{
         });
     }
 }
+const addToQuestion = async (question,post)=>{
+    try{
+        await Problems.findByIdAndUpdate(question.questionID,{$push:{solutions:post._id}});
+        return;
+    }catch(err){
+        console.log(err);
+    }
+}
 
 const sharePost = async (req,res)=>{
     console.log(req.body);
     const {
-        user,label,title,code
+        user,label,title,code,question
     } = req.body;
 
     if(user){
@@ -33,9 +42,11 @@ const sharePost = async (req,res)=>{
                 user,
                 postCode:code,
                 title,
-                label
+                label,
+                question
             });
             
+            addToQuestion(question,postCreationResponse);
             const userDB = await User.findOneAndUpdate({username:user.username},{$push:{posts:postCreationResponse._id}});
             PostNotificationHandler(userDB,userDB.followers,postCreationResponse);
 

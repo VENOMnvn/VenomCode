@@ -12,7 +12,8 @@ const Tutorial = ()=>{
         <Link className="centerAll" to={youtubeLogoLink}>
         <Button  startIcon={<YoutubeLogo></YoutubeLogo>}>Watch</Button>
         </Link>
-        <div>
+        
+        <div className="tut-line">
             <h1>About Me</h1>
             <div className="centerAll">
 

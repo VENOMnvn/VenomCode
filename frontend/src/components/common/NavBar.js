@@ -15,6 +15,7 @@ import {
   Sliders,
   SignOut,
   Bell,
+  Book,
   YoutubeLogo,
 } from "phosphor-react";
 import { youtubeLogoLink } from "../../path";
@@ -139,9 +140,9 @@ const Navbar = () => {
                       </Sidebar.Item>
                     </Link>
 
-                    <Link to="/profilecard">
-                      <Sidebar.Item icon={<User size={24} />}>
-                        Profile-Card
+                    <Link to="/problems">
+                      <Sidebar.Item icon={<Book size={24} />}>
+                        Problems
                       </Sidebar.Item>
                     </Link>
                     <Link to="/notifications">
@@ -251,16 +252,17 @@ const Navbar = () => {
             <li className="cursor-pointer" onClick={() => navigate("/home")}>
               Home
             </li>
-            <Link to="/people">
-              <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
-                People
-              </li>
-            </Link>
             <Link to="/problems">
               <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
-                Problem
+                Problems
               </li>
             </Link>
+            <Link to="/people">
+              <li className="cursor-pointer" style={{ minWidth: "4rem" }}>
+              People
+              </li>
+            </Link>
+            
           </ul>
 
           <div style={{ flex: 1 }}></div>
