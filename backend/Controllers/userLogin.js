@@ -142,7 +142,7 @@ const googlesignin = async (req,res)=>{
                             dob,
                             gender:"Not Set",
                             username,
-                            googleUser:True
+                            googleUser:true
                         }
                         console.log(user);
                         let responseFromCreate = await User.create(user);

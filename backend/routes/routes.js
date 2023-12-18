@@ -5,7 +5,7 @@ const {editprofile,getUserDetails,getUserQuery, addFollower,removeFollower,getFo
 const {sharePost,getPosts,addLike,postFilter,setComment,getPost, savePost, unsavepost, PostLength}  = require("./../Controllers/post");
 const {sendMessage,getConversations,getChat,deleteMessage}= require('../Controllers/Chat');
 const {getProblem,getProblems,getUserProblems,CreateProblem, getProblemswithTag, getProblemsCount} = require('../Controllers/problems');
-const { getNotification,checknotification, seenNotification} = require("../Controllers/Notification");
+const { getNotification,checknotification, seenNotification} = require("../Controllers/notification");
 const express = require("express");
 const router = express.Router();
 
