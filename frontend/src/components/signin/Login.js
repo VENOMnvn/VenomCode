@@ -16,6 +16,7 @@ import { jwtDecode } from "jwt-decode";
 import logo from "./google.png";
 import ForgetPassword from "./ForgetPassword.js";
 import SetUsername from "./SetUsername.js";
+import { setToken } from "../../utils/slices/utilitySlice.js";
 
 const Login = () => {
   const emailref = useRef();
@@ -66,6 +67,7 @@ const Login = () => {
       console.log(response);
       if (response.data.success) {
         setError("");
+        dispatch(setToken(response.data.token));
         dispatch(addUser(response.data.user));
         setload(false);
         navigate("/");
@@ -73,22 +75,31 @@ const Login = () => {
         setError(response.data.msg);
       }
     }
+
     setload(false);
+
   };
 
   const guestLogin = async () => {
     setload(true);
+
     const response = await axios.post(`${path}login`, {
       password: "@Admin1234",
       email: "naveen@venom.navi",
     });
+
     console.log(response);
+
     if (response.data.success) {
       setError("");
+      console.log("setting Cookie");
+      document.cookie = 'TokenVenom = ' + response.data.token;
+      dispatch(setToken(response.data.token));
       dispatch(addUser(response.data.user));
       setload(false);
       navigate("/");
     }
+
     setload(false);
   };
 
@@ -97,9 +108,11 @@ const Login = () => {
       const res = await axios.post(path + "signingoogle", tokenResponse);
       if (res.data.success){
         if(res.data.newGoogle){
+
           setNewGoogle(res.data.user);
           return;
         }
+        dispatch(setToken(res.data.token));
         dispatch(addUser(res.data.user));
         navigate("/../");
       } else {

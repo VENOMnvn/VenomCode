@@ -210,9 +210,11 @@ const PeopleJS = () => {
           ) : (
             <>
               {users &&
-                users?.map((user) => (
-                  <UserCard username={user.username}></UserCard>
-                ))}
+                users?.map((user) => {
+                 
+                 return user.username == userDB.username ? "":<UserCard username={user.username}></UserCard>
+                
+                })}
               {(state == 0 && !load) &&(
                   <div className="centerAll">
                     <Button

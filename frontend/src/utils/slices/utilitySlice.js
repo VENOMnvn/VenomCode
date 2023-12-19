@@ -5,6 +5,7 @@ const utilitySlice = createSlice({
     filter:[],
     drawer:false,
     codeRunner:{},
+    token:"",
     questionID:'',
   },
   reducers:{
@@ -31,10 +32,14 @@ const utilitySlice = createSlice({
         removeQuestion:(state,action)=>{
           state.questionID = "";
           return;
+        },
+        setToken:(state,action)=>{
+          state.token = action.payload;
+          return;
         }
   }
 })
 
-export const { addFilter,removeFilter,setDrawer,setCodeRunner,setQuestion,removeQuestion} = utilitySlice.actions;
+export const { addFilter,removeFilter,setDrawer,setCodeRunner,setQuestion,removeQuestion,setToken} = utilitySlice.actions;
 
 export default utilitySlice.reducer;

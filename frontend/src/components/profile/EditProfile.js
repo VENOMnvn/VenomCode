@@ -45,7 +45,7 @@ const EditProfile = () => {
         data.append("file", image);
         data.append("upload_preset", "venomcodetrial");
         const imageResponse = await axios.post(
-          "http://api.cloudinary.com/v1_1/dcnvvzsdh/image/upload",
+          "https://api.cloudinary.com/v1_1/dcnvvzsdh/image/upload",
           data
         );
         console.log(imageResponse);

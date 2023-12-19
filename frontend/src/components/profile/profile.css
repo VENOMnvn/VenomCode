@@ -239,7 +239,15 @@
 }
 .usercard-username{
     text-align: center;
+    width:calc(100%);
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    text-wrap:nowrap;
     font-weight: 600;
+    overflow:hidden;
+    white-space:nowrap;
+    display:inline-block;
+    text-overflow:ellipsis;
     font-size: 14px;
 }
 .usercard p{

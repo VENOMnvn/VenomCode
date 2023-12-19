@@ -2,57 +2,66 @@ import { useEffect, useState } from "react";
 import "./../common/Modal.css";
 import "./signin.css";
 import { Password, Warning, UserCircle } from "phosphor-react";
-import { Button, IconButton } from "@mui/material";
+import { Button, IconButton, LinearProgress } from "@mui/material";
 import axios from "axios";
 import path from "../../path";
+import { addUser, addUserDB } from "../../utils/slices/userSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setToken } from "../../utils/slices/utilitySlice";
 
-const SetUsername = ({ cancel,data }) => {
-    
+const SetUsername = ({ cancel, data }) => {
   const [password, setPassword] = useState("");
-  const [confirm, setconfirm] = useState("");
+
   const [error, setError] = useState("");
   const [disabled, setDisabled] = useState(false);
-  const [email, setEmail] = useState("");
-  const [sendToken, setSendToken] = useState(false);
+  const [load,setLoad] = useState(false);
   const [username, setusername] = useState();
-  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const validate = async () => {
-    try{
-        const response = await axios.get(`${path}getUserName?user=${username}`);
-        console.log(response);
+    try {
+      const response = await axios.get(`${path}getUserName?user=${username}`);
+      console.log(response);
 
-        if(!response.data.isUserUnique){
-            setError("Username is not available Try another !");
-            setDisabled(true);
-            return false;
-        }else{
-            setError("");
-            setDisabled(false);
-            return true
-        }
-    }
-    catch(err){
+      if (!response.data.isUserUnique) {
+        setError("Username is not available Try another !");
+        setDisabled(true);
         return false;
+      } else {
+        setError("");
+        setDisabled(false);
+        return true;
+      }
+    } catch (err) {
+      return false;
     }
   };
 
- 
-
   useEffect(() => {}, [disabled]);
-  const submitPassword = async () => {
+
+  const submitUsername = async () => {
+    setLoad(true);
+    setDisabled(true);
     try {
-      const response = await axios.post(path + "resetpassword", {
-        email,
-        password,
+
+      const response = await axios.post(path + "usergoogle", {
+        user: data,
+        username: username,
       });
-      console.log(response);
+      console.log(response.data);
       if (response.data.success) {
-        setSendToken(true);
+        dispatch(addUser(response.data.user));
+        dispatch(setToken(response.data.token));
+        dispatch(addUserDB(response.data.user));
+        navigate("/home");
       }
     } catch (err) {
       console.log(err);
     }
+    setLoad(false);
+    setDisabled(false);
   };
 
   return (
@@ -60,6 +69,9 @@ const SetUsername = ({ cancel,data }) => {
       {" "}
       <div className="modalContainer">
         <div className="modalBox">
+          {
+            load && <LinearProgress></LinearProgress>
+          }
           <div className="modal-top">
             <IconButton
               style={{
@@ -106,29 +118,29 @@ const SetUsername = ({ cancel,data }) => {
           <div className="modal-body">
             <p>Welcome to VenomCode</p>
             <span>Set a unique username , You cant change it again </span>
-            </div>
+          </div>
 
-            <div className="login-box-field">
-              <IconButton>
-                <UserCircle size={32}></UserCircle>
-              </IconButton>
-              <input
-                value={username}
-                onChange={(e) => setusername(e.target.value.toLowerCase())}
-                onBlur={validate}
-                onKeyDown={validate}
-                placeholder="New Username"
-              ></input>
-            </div>
-            <div className="login-box-error">{error}</div>
-            <div className="modal-button">
-              <Button
-                variant="contained"
-                onClick={submitPassword}
-                disabled={disabled}
-              >
-                Confirm
-              </Button>
+          <div className="login-box-field">
+            <IconButton>
+              <UserCircle size={32}></UserCircle>
+            </IconButton>
+            <input
+              value={username}
+              onChange={(e) => setusername(e.target.value.toLowerCase())}
+              onBlur={validate}
+              onKeyDown={validate}
+              placeholder="New Username"
+            ></input>
+          </div>
+          <div className="login-box-error">{error}</div>
+          <div className="modal-button">
+            <Button
+              variant="contained"
+              onClick={submitUsername}
+              disabled={disabled}
+            >
+              Confirm
+            </Button>
           </div>
         </div>
       </div>

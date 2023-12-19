@@ -7,16 +7,13 @@ const OTP = require('./../MongoDB/OTPschema.js');
 
 const cloudinary = require("cloudinary");
 const { getDataUri } = require("../utils/DataUri.js");
+const { createToken } = require("../middleware/auth.js");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLIENT_NAME,
   api_key: process.env.CLOUDINARY_CLIENT_API,
   api_secret: process.env.CLOUDINARY_CLIENT_SECRET_KEY,
 });
-const maxAge = 3 * 24 * 60 * 60; // 3 days
-
-
-
 
 const userRegisteration = async (req,res)=>{
   console.log(req.body);
@@ -104,8 +101,11 @@ const userSignin = async (req,res)=>{
               organisation,
             });
             user.password = "Hidden";
+            const token = createToken(user._id);
+            res.cookie('tokenVenom',token);
             res.send({
               success:true,
+              token,
               msg:user
             })
         }else{
@@ -350,40 +350,11 @@ const proffesionalData = (req, res) => {
   res.send("OK");
 };
 
-const profileComplete = async (req, res) => {
-  console.log(req.body);
 
-  console.log("RUn");
-
-  const {
-    adharNo,
-    panNo,
-    licenseNo,
-    barCouncilNo,
-    officeAddress,
-    user_id,
-    specilization,
-    experiences,
-  } = req.body;
-
-  const result = await ProfessionModel.findByIdAndUpdate(user_id, {
-    adharNo,
-    panNo,
-    licenseNo,
-    barCouncilNo,
-    officeAddress,
-    specilization,
-    Experience: experiences,
-  });
-
-  console.log(result);
-  res.send("OK");
-};
 
 module.exports = {
   userRegisteration,
   proffesionalData,
-  profileComplete,
   addDetails,
   uploadDocs,
   addExperience,

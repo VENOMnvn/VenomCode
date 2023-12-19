@@ -105,6 +105,7 @@ const getPost = async (req,res)=>{
 const createAddLikeNotifications = async (username,UserId,post)=>{
     const user = await User.findOne({username}).select('_id');
     const user2 = await User.findById(UserId);
+
     Notification.create({
         user:user._id,
         msg:"likes your post",
@@ -112,7 +113,8 @@ const createAddLikeNotifications = async (username,UserId,post)=>{
         profilePicture:user2.profilePicture,
         extra:post.title,
         link:'/post/'+post._id
-    })
+    });
+    
 };
 
 

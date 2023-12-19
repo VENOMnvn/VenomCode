@@ -1,13 +1,13 @@
 const Token = require('../MongoDB/TokenSchema');
 const User = require('../MongoDB/UserSchema');
 const {sendToken} = require('./SendOtp');
-const {jwtDecode} = require("jwt-decode")
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const axios = require('axios');
-const maxAge = 3 * 24 * 60 * 60;
+const { createToken } = require('../middleware/auth');
+
 
 const userLogin = async (req, res) => {
+    
     try {
         const { email, password } = req.body;
         console.log(req.body);
@@ -21,8 +21,13 @@ const userLogin = async (req, res) => {
                     // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
                     // const proData = await ProffesionalModal.findById(user.professionDetails);
                     // res.redirect('/');
+                    
                     user.password = "hidden"
+                
+                    const token = createToken(user._id);
+                    res.cookie('tokenVenom',token,{path:"/",httpOnly:true});
                     res.send({success:true,
+                        token,
                         user
                         });
                 }
@@ -80,8 +85,7 @@ const resetPassword = async (req,res)=>{
 }
 
 const resetLogin = async (req,res)=>{
-    const {token} = req.query;
-    console.log(token);
+   
     try{
         const resp = await Token.findOneAndUpdate({token},{isVerified:true});
         if(!resp){
@@ -101,6 +105,30 @@ const resetLogin = async (req,res)=>{
     }
 }
 
+const googlesigninUsername = async (req,res)=>{
+    try{
+        const {user,username} = req.body;
+        console.log(username,user._id);
+        if(!user._id || !username || !user.googleUser){
+            res.send("you already changed name or invlaid id");
+            return;
+        }
+
+        const responseBy =await User.findByIdAndUpdate(user._id,{username:username,googleUser:false});
+        const responseByDB = await User.findById(user._id).select('-password');
+        const token = createToken(responseByDB._id);
+        res.send({
+            token,
+            success:true,
+            user:responseByDB
+        })
+        return;
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
 const googlesignin = async (req,res)=>{
     try {
         if(req.body){
@@ -111,10 +139,13 @@ const googlesignin = async (req,res)=>{
                    
                     const existingUser = await User.findOne({email:dataFromGoogle.data.email}).select(' -password');
                     console.log(existingUser,"rr");
-
+                    
                     if(existingUser){
+                        const token = createToken(existingUser._id);
+                        res.cookie('tokenVenom',token,{path:"/"});
                         res.send({
                             success:true,
+                            token,
                             user:existingUser
                         });
                     }else{
@@ -148,8 +179,12 @@ const googlesignin = async (req,res)=>{
                         let responseFromCreate = await User.create(user);
                         responseFromCreate.password="hidden";
                         console.log('new',responseFromCreate);
+                        const token = createToken(responseFromCreate._id);
+                        
+                        res.cookie('tokenVenom',token,{path:"/"});
                         res.send({
                             success:true,
+                            token,
                             newGoogle:true,
                             user:responseFromCreate
                         });
@@ -169,4 +204,4 @@ const googlesignin = async (req,res)=>{
     }
 }
 
-module.exports = {userLogin,resetPassword,resetLogin,googlesignin};
+module.exports = {userLogin,resetPassword,resetLogin,googlesignin,googlesigninUsername};

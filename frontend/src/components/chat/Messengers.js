@@ -15,6 +15,7 @@ import image from "./../../static/userill.jpg";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../utils/slices/userSlice";
+import { setToken } from "../../utils/slices/utilitySlice";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -133,12 +134,15 @@ const Messenger = () => {
 
   const guestLogin = async () => {
     setload(true);
+
     const response = await axios.post(`${path}login`, {
       password: "@Admin1234",
       email: "naveen@venom.navi",
     });
+
     console.log(response);
     if (response.data.success) {
+      dispatch(setToken(response.data.token));
       dispatch(addUser(response.data.user));
       setload(false);
       setLoginError(false);

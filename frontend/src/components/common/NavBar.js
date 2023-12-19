@@ -402,9 +402,11 @@ const Navbar = () => {
           confirm={() => {
             localStorage.clear();
             window.location.reload();
+           
           }}
         ></Modal>
       )}
+
       {showFilterModal && (
         <Modal
           Element={Filter}

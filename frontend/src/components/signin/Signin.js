@@ -18,6 +18,7 @@ import {useDispatch} from 'react-redux';
 import LinearProgress from '@mui/material/LinearProgress';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setToken } from "../../utils/slices/utilitySlice";
 
 
 const Signin = () => {
@@ -142,6 +143,7 @@ const Signin = () => {
         console.log(response);
 
         if(response.data.success){
+            dispatch(setToken(response.data.token));
             dispatch(addUser(response.data.msg));
             navigate('../');
             setError("");
