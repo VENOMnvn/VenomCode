@@ -1,4 +1,10 @@
-import { Button, LinearProgress, Tooltip,Chip, CircularProgress } from "@mui/material";
+import {
+  Button,
+  LinearProgress,
+  Tooltip,
+  Chip,
+  CircularProgress,
+} from "@mui/material";
 import React, { useRef, useState } from "react";
 import axios from "axios";
 
@@ -6,14 +12,11 @@ import path from "../../path";
 import { useSelector } from "react-redux";
 import Edit from "@mui/icons-material/Edit";
 
-
-
 const EditProfile = () => {
   const user = useSelector((s) => s.user.userDB);
   const imageRef = useRef();
   const [imageState, setimageState] = useState("");
   const [image, setImage] = useState("");
-
   const [exp, setExp] = useState(user.exp);
   const [editExp, seteditExp] = useState(false);
   const [about, setabout] = useState(user.bio);
@@ -25,15 +28,19 @@ const EditProfile = () => {
   const [location, setLocation] = useState(user.city);
   const [editLoc, setEditLoc] = useState(false);
 
-  const [college,setCollege] = useState(user.organisation);
-  const [editCollege,setEditCollege] = useState(0);
+  const [college, setCollege] = useState(user.organisation);
+  const [editCollege, setEditCollege] = useState(0);
 
-  const [skills,setSkills] = useState(user.skills);
-  const [aSkill,setASkill] = useState("");
-
+  const [skills, setSkills] = useState(user.skills);
+  const [aSkill, setASkill] = useState("");
 
   const submitHandler = async () => {
-    if ((editAbout && !about) || (editdesig && !desig) || (editExp && !exp) || (editCollege && !college)) {
+    if (
+      (editAbout && !about) ||
+      (editdesig && !desig) ||
+      (editExp && !exp) ||
+      (editCollege && !college)
+    ) {
       seterr("Empty Field");
       return;
     }
@@ -44,12 +51,33 @@ const EditProfile = () => {
         const data = new FormData();
         data.append("file", image);
         data.append("upload_preset", "venomcodetrial");
-        const imageResponse = await axios.post(
+
+        // const imageResponse = await fetch("https://api.cloudinary.com/v1_1/dcnvvzsdh/image/upload", {
+        //   method: "POST",
+        //   mode: "cors",
+        //   cache: "no-cache",
+        //   credentials: "same-origin",
+        //   headers: {
+        //     // "Content-Type": "application/json",
+        //   },
+        //   redirect: "follow",
+        //   referrerPolicy: "no-referrer",
+        //   body:data,
+        // });
+
+        var instance = axios.create();
+        delete instance.defaults.headers.common["authorization"];
+
+        
+
+        const imageResponse = await instance.post(
           "https://api.cloudinary.com/v1_1/dcnvvzsdh/image/upload",
           data
         );
+
         console.log(imageResponse);
-        if (imageResponse.data.url) {
+
+        if (imageResponse.data?.url) {
           const res = await axios.post(`${path}editprofile`, {
             profileURL: imageResponse.data.url,
             user: user?._id,
@@ -57,7 +85,7 @@ const EditProfile = () => {
             designation: desig,
             bio: about,
             city: location,
-            organisation:college
+            organisation: college,
           });
           console.log(res);
           window.location.reload();
@@ -69,10 +97,9 @@ const EditProfile = () => {
           designation: desig,
           bio: about,
           city: location,
-          organisation:college,
-          skills
+          organisation: college,
+          skills,
         });
-
 
         console.log(res);
         window.location.reload();
@@ -83,7 +110,6 @@ const EditProfile = () => {
     setload(false);
   };
 
-
   const skillselecthandle = (e) => {
     if (e.key == "Enter") {
       if (e.target.value.length > 0)
@@ -93,16 +119,15 @@ const EditProfile = () => {
     }
   };
 
-  const deleteSkill = (e)=>{
+  const deleteSkill = (e) => {
     let skillTemp = skills;
-    skillTemp = skillTemp.filter((ele)=>{
+    skillTemp = skillTemp.filter((ele) => {
       return ele != e;
-    })
+    });
     console.log(skillTemp);
     setSkills(skillTemp);
     return;
-  }
-
+  };
 
   const imageChangeHandler = (e) => {
     setimageState(URL.createObjectURL(e.target.files[0]));
@@ -140,8 +165,6 @@ const EditProfile = () => {
           ""
         )}
 
-      
-      
         <div className="login-box-field">
           <p>Experience</p>
           {editExp ? (
@@ -262,21 +285,21 @@ const EditProfile = () => {
           )}
         </div>
 
-         <div className="login-box-field">
-                <p>Skills</p>
-                <input
-                  onKeyDown={skillselecthandle}
-                  placeholder="Type skills and hit Enter"
-                  value={aSkill}
-                  onChange={(e)=>setASkill(e.target.value)}
-                ></input>
-              </div>
+        <div className="login-box-field">
+          <p>Skills</p>
+          <input
+            onKeyDown={skillselecthandle}
+            placeholder="Type skills and hit Enter"
+            value={aSkill}
+            onChange={(e) => setASkill(e.target.value)}
+          ></input>
+        </div>
 
-              <div className="skills-array">
-                {skills.map((skill) => (
-                  <Chip label={skill} onDelete={()=>deleteSkill(skill)}></Chip>
-                ))}
-              </div>
+        <div className="skills-array">
+          {skills.map((skill) => (
+            <Chip label={skill} onDelete={() => deleteSkill(skill)}></Chip>
+          ))}
+        </div>
 
         <div className="login-box-error">{err}</div>
         <div
@@ -284,9 +307,7 @@ const EditProfile = () => {
           style={{ justifyContent: "center", paddingBottom: "20px" }}
         >
           <Button variant="outlined" onClick={submitHandler} disabled={load}>
-            {
-              load ? <CircularProgress></CircularProgress> :"Upload"
-            }
+            {load ? <CircularProgress></CircularProgress> : "Upload"}
           </Button>
         </div>
       </div>

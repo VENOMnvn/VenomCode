@@ -25,6 +25,7 @@ router.get('/resetlogin',resetLogin);
 router.post("/signingoogle",googlesignin);
 router.post('/usergoogle',googlesigninUsername);
 
+
 //Filter
 router.post("/filter", filterFunction);
 
@@ -44,6 +45,7 @@ router.post('/unsavepost',unsavepost);
 router.post('/editprofile',auth,editprofile);
 router.post('/getuserdetails',getUserDetails);
 router.get('/getUser',getUserQuery);
+router.post('/addfollower',addFollower);
 router.post('/editprofile',auth,editprofile);
 router.post('/removefollower',auth,removeFollower);
 router.post('/getfollowers',getFollower);

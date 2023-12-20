@@ -76,6 +76,7 @@ function App() {
   const dispatch = useDispatch();
   const token  = useSelector(state=>state.utility.token);
   const user = useSelector((state) => state.user.user);
+  
   axios.defaults.headers.common['authorization'] = `Bearer ${token}`;
 
   const getUserDetails = async () => {
