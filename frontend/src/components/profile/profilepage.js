@@ -16,6 +16,7 @@ import UserCard from "./userCard";
 import { Link } from "react-router-dom";
 
 const Profilepage = () => {
+  
   const user = useSelector((state) => state.user.user);
   const [SearchParams] = useSearchParams();
   const [show, setshow] = useState(SearchParams.get("edit"));
@@ -49,7 +50,6 @@ const Profilepage = () => {
         const res = await axios.post(`${path}getuserdetails`, {
           userid: user?._id,
         });
-
         if (res.data.success) {
           dispatch(addUserDB(res.data.user));
         }
@@ -66,11 +66,9 @@ const Profilepage = () => {
   const getFollower = async () => {
     try {
       console.log("==");
-
       const resp = await axios.post(`${path}getfollowers`, {
         userid: user?._id,
       });
-
       console.log(resp);
     } catch (err) {
       console.log(err);
@@ -97,7 +95,7 @@ const Profilepage = () => {
       </div>
       <div className="cover-image-coverup">
         <div>
-          <div>{user?.firstname + " " + user?.lastname}</div>
+          <div>{userDB?.firstname + " " + userDB?.lastname}</div>
           <Tooltip title={"username"}>
             <p>{user?.username}</p>
           </Tooltip>

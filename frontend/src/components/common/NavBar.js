@@ -5,6 +5,7 @@ import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineR
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { Button, Avatar, Icon } from "@mui/material";
 import { Sidebar } from "keep-react";
+
 import {
   Chat,
   SignIn,
@@ -18,6 +19,7 @@ import {
   Book,
   YoutubeLogo,
 } from "phosphor-react";
+
 import { youtubeLogoLink } from "../../path";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
@@ -133,6 +135,8 @@ const Navbar = () => {
                         Products
                       </Sidebar.Item>
                     </Sidebar.Collapse> */}
+
+                    
 
                     <Link to="/chat">
                       <Sidebar.Item icon={<Chat size={24} />}>

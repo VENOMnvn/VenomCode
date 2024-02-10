@@ -73,7 +73,7 @@ const USER = new Schema ({
     },
     bio:{
         type:String,
-        default:"I am a Web Developer and I know HTML CSS JS react and many other front end framework"
+        default:"Hiii !! I am Venom Code User."
     },
     exp:{
         type:Number,

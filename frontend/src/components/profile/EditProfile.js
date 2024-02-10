@@ -10,6 +10,7 @@ import axios from "axios";
 
 import path from "../../path";
 import { useSelector } from "react-redux";
+import {useNavigate} from 'react-router-dom';
 import Edit from "@mui/icons-material/Edit";
 
 const EditProfile = () => {
@@ -30,7 +31,7 @@ const EditProfile = () => {
 
   const [college, setCollege] = useState(user.organisation);
   const [editCollege, setEditCollege] = useState(0);
-
+  const navigate = useNavigate();
   const [skills, setSkills] = useState(user.skills);
   const [aSkill, setASkill] = useState("");
 
@@ -86,11 +87,12 @@ const EditProfile = () => {
             bio: about,
             city: location,
             organisation: college,
+            skills
           });
-          console.log(res);
-          window.location.reload();
+          console.log(res); 
         }
       } else {
+
         const res = await axios.post(`${path}editprofile`, {
           user: user?._id,
           exp,
@@ -100,8 +102,7 @@ const EditProfile = () => {
           organisation: college,
           skills,
         });
-
-        console.log(res);
+        navigate("/profile");
         window.location.reload();
       }
     } catch (Err) {

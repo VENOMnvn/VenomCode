@@ -63,6 +63,27 @@ const checknotification = async (req,res)=>{
         console.log(error);
     }
 }
+const createAddLikeNotifications = async (username,UserId,post)=>{
+    const user = await User.findOne({username}).select('_id');
+    const user2 = await User.findById(UserId);
 
+    Notification.create({
+        user:user._id,
+        msg:"likes your post",
+        username:user2.username,
+        profilePicture:user2.profilePicture,
+        extra:post.title,
+        link:'/post/'+post._id
+    });
+    
+};
+const directNotification = async (req,res)=>{
+    try{   
+                
+    }
+    catch(err){
+
+    }
+}
 
 module.exports = {seenNotification,getNotification,checknotification};

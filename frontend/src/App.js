@@ -45,6 +45,7 @@ import NotificationPanel from "./components/common/NotificationPanel";
 import PeopleJS from "./components/People.js/People";
 import ProblemPage from "./components/problemPage/ProblemPage";
 
+
 const NotFound = ({ msg }) => {
   return (
     <>
@@ -176,3 +177,25 @@ function App() {
 
 export default App;
 export { NotFound };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

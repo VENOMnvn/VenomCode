@@ -3,25 +3,22 @@ import HomeFeed from "./homefeed";
 import CreatePost from "./CreatePost";
 import Filter from "./FilterComp";
 import ProfileCard from "./ProfileCard";
-import DeveloperCard from "./DeveloperCard";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import { Box, Divider, Drawer, Typography } from "@mui/material";
-import { useState } from "react";
-import { Button } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { setDrawer } from "../../utils/slices/utilitySlice";
 import Tutorial from "./Tutorial";
+import { useEffect, useRef } from "react";
 
 const HomePage = () => {
+  const homepageref = useRef();
+  const centerpageref = useRef();
+  function scrollcenter(){
+    console.log("123");
+  }
   return (
     <>
-      <div className="Homepage" style={{ marginTop: "50px" }}>
+      <div className="Homepage" style={{ marginTop: "50px" }} ref={homepageref} >
         <div className="mid-width">
-          <CreatePost></CreatePost>
-          <Filter></Filter>
           <ProfileCard></ProfileCard>
+          <Filter></Filter>
+          <CreatePost></CreatePost>
           <Tutorial></Tutorial>
         </div>
         <div className="left-homepage">
@@ -29,7 +26,7 @@ const HomePage = () => {
           <Tutorial></Tutorial>
           {/* <DeveloperCard></DeveloperCard> */}
         </div>
-        <div className="center-homepage">
+        <div className="center-homepage" ref={centerpageref} onScroll={scrollcenter}>
           <HomeFeed></HomeFeed>
         </div>
         <div className="right-homepage">

@@ -78,6 +78,7 @@ const Post = (props) => {
   const [commnentPopup, setCommentPopup] = useState(false);
   const [commentInputshow, setCommentInput] = React.useState(false);
   const [BOOK, setBOOK] = useState(false);
+  const [likeLoading,setLikeLoading] = useState(false);
   const [liked, setLiked] = useState(false);
   const [showMenu, setshowMenu] = useState(false);
   const [showQuestion, setshowQuestion] = useState(false);
@@ -159,6 +160,7 @@ const Post = (props) => {
   };
 
   const addLike = async () => {
+    setLikeLoading(true);
     if (!user) {
       toast.info("Please Sigin/Login First to Vote UP");
       return;
@@ -353,7 +355,7 @@ const Post = (props) => {
             ) : (
               <Button
                 variant="text"
-                disabled={liked}
+                disabled={likeLoading}
                 onClick={addLike}
                 sx={{ color: "gray" }}
               >

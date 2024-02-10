@@ -6,7 +6,9 @@ import path from '../../path';
 import { Button, Skeleton,Pagination } from '@mui/material';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
+import SharePostDialouge from './SharePostHomefeed';
+import Popup from './../common/popup';
+import CreatePostPopup from "../common/CreatePost";
 
 
 const PostSkeleton = ()=>{
@@ -35,6 +37,11 @@ const HomeFeed = ()=>{
     const [limit,setLimit] = useState(12);
     const [page,setPage] = useState(1);
     const [load,setLoad] = useState(false);
+    const [showPopUp,setshowPopUp] = useState(false);
+    
+    const cancel = ()=>{
+        setshowPopUp(false);
+    }
 
     const fetchPost = async ()=>{
         console.log("nahi");
@@ -85,6 +92,8 @@ const HomeFeed = ()=>{
 
 
     return <div className="home-feed">
+       
+        <SharePostDialouge ></SharePostDialouge>
         {load ? <>
         <div className='centerAll' style={{flexDirection:"column"}}>
            <PostSkeleton></PostSkeleton>
@@ -101,9 +110,9 @@ const HomeFeed = ()=>{
         <div className='pagination'>
         <Pagination count={maxPage} page={page} onChange={(e,v)=>setPage(v)} />
         </div>
-       
+
         </>:(<>
-            <p className='centerAll'>No Post to Show</p>
+            <p className='centerAll nopost'><strong className='mx-2'>No Posts</strong> Try to clear filters or reload </p>
         </>)
         )
         }

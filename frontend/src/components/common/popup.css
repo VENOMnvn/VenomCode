@@ -4,7 +4,7 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    z-index: 10;
+    z-index: 100;
     background-color: rgba(0, 0, 0, 0.636);
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@
     background-color: var(--light);
     border-radius: 10px;
     box-shadow: 2px 2px 8px rgb(188, 185, 185) inset;
-    z-index: 9;
+    z-index: 90;
     border: 1px solid rgba(203, 203, 203, 0.734);
     animation-name: popUp;
     animation-duration: 0.5s;
