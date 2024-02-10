@@ -5,7 +5,7 @@ const {editprofile,getUserDetails,getUserQuery, addFollower,removeFollower,getFo
 const {sharePost,getPosts,addLike,postFilter,setComment,getPost, savePost, unsavepost, PostLength}  = require("./../Controllers/post");
 const {sendMessage,getConversations,getChat,deleteMessage}= require('../Controllers/Chat');
 const {getProblem,getProblems,getUserProblems,CreateProblem, getProblemswithTag, getProblemsCount} = require('../Controllers/problems');
-const { getNotification,checknotification, seenNotification} = require("../Controllers/notification");
+const { getNotification,checknotification, seenNotification, directNotification, findDirects} = require("../Controllers/notification");
 const express = require("express");
 const { auth } = require("../middleware/auth");
 const router = express.Router();
@@ -31,7 +31,6 @@ router.post("/filter", filterFunction);
 
 //Post
 router.post('/postfilter',postFilter);
-
 router.post("/sharepost",sharePost);
 router.get('/postlength',PostLength);
 router.get('/posts',getPosts);
@@ -59,6 +58,8 @@ router.post('/message',auth,sendMessage);
 router.post('/notifications',auth,getNotification);
 router.get('/seennotification',auth,seenNotification);
 router.get('/checknotification',auth,checknotification);
+router.post('/direct',auth,directNotification);
+router.post('/mydirects',auth,findDirects);
 
 //problems
 router.post('/newproblem',auth,CreateProblem);

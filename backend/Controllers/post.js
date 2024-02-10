@@ -79,7 +79,7 @@ const getPosts = async (req,res)=>{
         const response = await POSTS.find().limit(limit).skip(page*limit).sort({createdAt:-1});
         res.send(response);
     }catch(err){
-
+        
     }
 };
 

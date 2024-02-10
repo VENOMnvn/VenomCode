@@ -23,9 +23,14 @@ const SharePostDialouge = ()=>{
     }
 
     const submitHandler = async ()=>{
+        if(!message) return;
         try{
+            const res = await axios.post(`${path}direct`,{
+                user:user.username,
+                msg:message
+            });
+            console.log(res);
             setMessage("");
-            
         }catch(err){
             console.log(err);
         }
@@ -51,10 +56,10 @@ const SharePostDialouge = ()=>{
 
     <div className="top">
         <Avatar src={user?.profilePicture}></Avatar>
-        <Tooltip title="Send Message as Notification">
+        <Tooltip title="Send Message as Broadcast">
         <div className="input-container">
             <input
-            placeholder="What you want tell to your Followers"
+            placeholder="Send Directs to your followers"
             className="input-box"
             value={message}
             onChange={e=>setMessage(e.target.value)}

@@ -7,16 +7,21 @@ const Tutorial = ()=>{
 
     return <>
     <div className="tutorial">
-        <h1>Are you New ? </h1>
-        <h2>You can watch a Video tutorial </h2>
-        <Link className="centerAll pb-2" to={youtubeLogoLink}>
+        <div className="tutorial-top">
+            Are You New ?
+        </div>
+        <h2 className="font">You can watch a Video tutorial </h2>
+        <div className="centerAll">
+        <Link className="pb-2 m-auto" to={youtubeLogoLink}>
         <Button variant="outlined"  startIcon={<YoutubeLogo></YoutubeLogo>}>Watch</Button>
         </Link>
-        
-        <div className="tut-line">
-            <h1>About Me</h1>
+        </div>
+        <div className="">
+            <div className="font">
+                About Me ! My Social handels
+            </div>
             <div className="centerAll">
-
+           
             <ButtonGroup>
                 <Link to={"https://venomscode.netlify.app/user/naveenchaudhary1402/"}>
                 <Button startIcon={<UserFocus></UserFocus>}></Button>

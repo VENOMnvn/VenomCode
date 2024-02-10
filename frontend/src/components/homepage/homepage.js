@@ -5,6 +5,7 @@ import Filter from "./FilterComp";
 import ProfileCard from "./ProfileCard";
 import Tutorial from "./Tutorial";
 import { useEffect, useRef } from "react";
+import MyDirects from "./MyDirects";
 
 const HomePage = () => {
   const homepageref = useRef();
@@ -32,6 +33,7 @@ const HomePage = () => {
         <div className="right-homepage">
           <CreatePost></CreatePost>
           <Filter></Filter>
+          <MyDirects></MyDirects>
         </div>
       </div>
     </>

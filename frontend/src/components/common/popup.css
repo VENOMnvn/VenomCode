@@ -10,6 +10,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .popup{
     width: 80vw;
     height: 90vh;
@@ -25,6 +26,8 @@
     box-sizing: border-box;
     overflow: scroll;
     animation-iteration-count: 1;
+    position: relative;
+    top: 30px;
 }
 
 @media (width < 750px){
