@@ -705,6 +705,14 @@ button:hover{
     .direct-full .direct-right{
         display: none;
     }
+    .direct-page{
+       margin-top: 50px;
+       border: 1px solid lightgray;
+    }
+    .direct-full{
+        background-color: white;
+
+    }
     .direct-full *{
         height: auto;
     }

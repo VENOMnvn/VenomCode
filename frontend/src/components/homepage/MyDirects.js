@@ -35,7 +35,7 @@ const DirectsContainer = ()=>{
         getDirects();
     },[]);
 
-    return <div className="divide-y w-full"> {
+    return <div className="divide-y w-full direct-page"> {
         directs?.map((ele)=> <div className="direct direct-full">
         <div className="direct-left">
             
