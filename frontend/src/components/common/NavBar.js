@@ -10,6 +10,7 @@ import {
   Chat,
   SignIn,
   Note,
+  Lightning,
   UserPlus,
   User,
   UsersThree,
@@ -143,7 +144,11 @@ const Navbar = () => {
                         Inbox
                       </Sidebar.Item>
                     </Link>
-
+                    <Link to="/mydirects">
+                      <Sidebar.Item icon={<Lightning size={24} />}>
+                        Directs
+                      </Sidebar.Item>
+                    </Link>
                     <Link to="/problems">
                       <Sidebar.Item icon={<Book size={24} />}>
                         Problems
@@ -406,7 +411,6 @@ const Navbar = () => {
           confirm={() => {
             localStorage.clear();
             window.location.reload();
-           
           }}
         ></Modal>
       )}

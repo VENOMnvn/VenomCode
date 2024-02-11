@@ -127,3 +127,4 @@ const MyDirects = ()=>{
     </>;
 }
 export default MyDirects;
+export {DirectsContainer};

@@ -701,3 +701,11 @@ button:hover{
     text-decoration: underline;
     color: darkblue;
 }
+@media (width < 400px) {
+    .direct-full .direct-right{
+        display: none;
+    }
+    .direct-full *{
+        height: auto;
+    }
+}
