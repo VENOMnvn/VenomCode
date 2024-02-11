@@ -288,7 +288,7 @@ const UserProfilepage = () => {
         <div
            className="usercard-container"
         >
-          {user?.following?.map((ele) => (<div> <UserCard username={ele}></UserCard></div>
+          {user?.following?.map((ele) => (<UserCard username={ele}></UserCard>
           ))}
           {
             user?.following?.length == 0 && <div className="fullwidth centerAll"> You dont Follow any one <Link to='/search'>Find here</Link></div> 
@@ -301,9 +301,8 @@ const UserProfilepage = () => {
         <div
           className="usercard-container"
         >
-          {user?.followers?.map((ele) => {return <div>
-              <UserCard username={ele}></UserCard>
-            </div>
+          {user?.followers?.map((ele) => {
+            return <UserCard username={ele}></UserCard>
           })}
           {
             user?.followers?.length == 0 && <div className="usercard-empty"> No one Follows you </div> 

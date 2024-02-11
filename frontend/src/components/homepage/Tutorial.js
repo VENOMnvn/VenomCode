@@ -16,9 +16,12 @@ const Tutorial = ()=>{
         <Button variant="outlined"  startIcon={<YoutubeLogo></YoutubeLogo>}>Watch</Button>
         </Link>
         </div>
+        <div className="tutorial-top">
+            About me
+        </div>
         <div className="">
             <div className="font">
-                About Me ! My Social handels
+             My Social handels to connect with me
             </div>
             <div className="centerAll">
            

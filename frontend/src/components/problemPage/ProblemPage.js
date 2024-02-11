@@ -202,6 +202,9 @@ const ProblemPage = () => {
         }
 
         <div className="Question-Container">
+          {
+            !questions ? <div>No Questions to show</div>:""
+          }
           {questions?.map((problem) => (
             <Question key={problem.createdAt} data={problem}></Question>
           ))}

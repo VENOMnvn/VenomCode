@@ -54,16 +54,12 @@ const Chat = ({ data, cancel }) => {
   }, [msgs]);
 
   const MessageSend = async () => {
-
     const username = activeUser.username;
-
-    
     if (!currentMsg || currentMsg.length == 0 || currentMsg == "\n") {
       return;
     }
-    
     try {
-      
+
       const currentMsgTemp = currentMsg;
       setcurrentMsg("");
       socket.current.emit('message-send',{
@@ -73,20 +69,17 @@ const Chat = ({ data, cancel }) => {
         sender: userDB.username,
         userID: userDB._id,
       });
-      
       const response = await axios.post(path + "message", {
         msg: currentMsgTemp,
         chatID: data._id,
         sender: userDB.username,
         userID: userDB._id,
       });
-
-      
       let msg22 = response.data.message;
       if (response.data.success) {
         setMsgs((prev) => [...prev, msg22]);
-       
       }
+      setcurrentMsg("");
     } catch (err) {
       console.log(err);
     }
