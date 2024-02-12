@@ -18,6 +18,7 @@ const HomePage = () => {
       <div className="Homepage" style={{ marginTop: "50px" }} ref={homepageref} >
         <div className="mid-width">
           <ProfileCard></ProfileCard>
+          <MyDirects></MyDirects>
           <Filter></Filter>
           <CreatePost></CreatePost>
           <Tutorial></Tutorial>

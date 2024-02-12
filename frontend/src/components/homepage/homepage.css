@@ -554,7 +554,6 @@ button:hover{
     border-radius: 10px;
 }
 .mid-width{
-    margin-top: 15px;
     height: calc(100svh - 50px);
     box-sizing: border-box;
     overflow: scroll;
@@ -565,7 +564,9 @@ button:hover{
     display: none;
     padding: 6px;
 }
-
+.mid-width > .profile-card{
+    margin-top:5px;
+}
 .share-post-dialoge{
     background-color: white;
     width: 100%;

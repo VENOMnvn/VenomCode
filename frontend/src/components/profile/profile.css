@@ -2,6 +2,9 @@
     margin-top: 50px;
     width: 100vw;
     background-color: var(--light);
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .cover-image{
     background-color: rgb(23, 23, 65);
@@ -96,18 +99,21 @@
 .background-right{
     color: black;
     padding-left: 8px;
+    max-width: calc( 60% );
 }
 .background-right p{
     background-color: rgb(199, 176, 222);
     padding: 2px 8px;
     font-weight: 300;
     width: max-content;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
     border-radius: 8px;
 }
 @media (width<600px){
     .cover-image-coverup{
         height: 150px;
-        justify-content: flex-end;
     }
     .cover-image-coverup > button{
         margin: 0px;
@@ -120,9 +126,16 @@
     .profile-page-body .background{
         width: 95vw;
         min-width: 100px;
-    }
-    
+    } 
+}
 
+@media (width < 414px) {
+    .cover-image-coverup{
+        justify-content: flex-start;
+    }
+    .addFreind{
+        margin: 5px 0px;
+    }
 }
 .profile-page-body>.right{
     border: 2px solid rgba(211, 211, 211, 0.750);
