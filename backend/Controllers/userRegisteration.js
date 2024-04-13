@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {generateOtp,sendByEmail} = require('./SendOtp.js');
 const OTP = require('./../MongoDB/OTPschema.js');
-
 const cloudinary = require("cloudinary");
 const { getDataUri } = require("../utils/DataUri.js");
 const { createToken } = require("../middleware/auth.js");

@@ -2,9 +2,6 @@ const nodemailer = require('nodemailer');
 const { profileComplete } = require('./userRegisteration');
 // method for generating otp and sending it
 // through email or phone number
-const htmlToSend = ``;
-
-
 
     async function generateOtp() {
         //   const otp=`${Math.floor(100000+Math.random() * 99999)}`;
@@ -12,15 +9,6 @@ const htmlToSend = ``;
         console.log(otp, "Generate");
         return otp;
     }
-    // sending through phone using twilio
-    async function sendBySms(phone, otp) {
-        return await twilio.messages.create({
-            to: `+91${phone}`,
-            from: SMS_FROM_NUMBER,
-            body: `Your BlaccSckull register OTP is ${otp}`,
-        });
-    }
-
     //sending by email using node mailer
     async function sendByEmail(email, otp) {
         console.log("Email", email,otp);
@@ -90,16 +78,14 @@ const htmlToSend = ``;
                         <div class="otp">${otp}</div>
                         <span>Do not Share your OTP</span>
                         <br>
-                        <span>regards : Naveen Chaudahary</span>
-                    </div>
-                    
+                        <span>Regards : Coding Squad</span>
+                    </div>    
             </body>
             </html>`
         };
         
         try {
             const info = await transporter.sendMail(mailOptions);
-            //   console.log(info);
         } catch (error) {
             console.log(error);
             console.log(error.message, "While send email");
