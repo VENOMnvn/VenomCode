@@ -3,7 +3,7 @@
 // const path = "http://192.168.43.16:5000/";
 // const path = "https://venomcodebackend.cyclic.app/";
 const path = "https://code-fusion-venomnvns-projects.vercel.app/api/";
-const version = "v.2.2";
+const version = "v.2.3";
 const youtubeLogoLink = 'https://youtu.be/6v0UNrEnmPA?si=jbHqTY65NCQVYbTP';
 
 
