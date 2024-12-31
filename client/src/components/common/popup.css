@@ -1,0 +1,95 @@
+.popup-container{
+    width: 100vw;
+    height: 100svh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.636);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup{
+    width: 80vw;
+    height: 90vh;
+    background-color: var(--light);
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgb(188, 185, 185) inset;
+    z-index: 90;
+    border: 1px solid rgba(203, 203, 203, 0.734);
+    animation-name: popUp;
+    animation-duration: 0.5s;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: scroll;
+    animation-iteration-count: 1;
+    position: relative;
+    top: 30px;
+}
+
+@media (width < 750px){
+    .popup{
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+.popup-header{
+ width: 100%;
+ top: 0px;
+ padding: 4px 8px;
+ display: flex;
+ justify-content:flex-end;
+}
+.popup-header>div{
+    width: 50%;
+    display: flex;
+    font-weight: 600;
+    font-size: 1.2rem;
+    justify-content: flex-end;
+}
+.popup-header>div>div{
+    background-color: rgb(215, 213, 213);
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.popup-header>div>div:hover{
+    background-color: rgb(200, 199, 199);
+    padding: 8px;
+    border-radius: 50%;
+}
+.popup-header img{
+    height:15px;
+}
+@keyframes popUp{
+    0%{
+        transform: scale(0.1);
+    }
+    100%{
+        transform: scale(1)
+    }   
+}
+.cancel{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.cancel:hover{
+    transform: scale(1.4);
+}
+.popup-body{
+    width: 100%;
+    flex: 1 1 auto;
+}
+.full-width-popup{
+    width: 100vw;
+    height: 100vh;
+}

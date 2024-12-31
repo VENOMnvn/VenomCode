@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Poppins:wght@200&display=swap');
+:root {
+  --light : white;
+  --dark : #f4f2ee;
+  --primary : #004E64;
+  --smoke:whitesmoke;
+  --lighttint:#e4e6eb;
+  
+}
+
+
+.smallScreen{
+  display: none;
+}
+
+@media (width<450px){
+  .largeScreen{
+    display: none;
+  }
+  .smallScreen{
+    display: block;
+  }
+}
+
+.pagination{
+  background-color: white;
+  border-radius: 10px;
+  padding: 8px 4px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+body ::-webkit-scrollbar{
+    display: none;
+}
+body{
+    background-color: #f4f2ee;
+    background-color: #eceded;
+    /* background-color: #f8f8f8; */
+    /* background-color: rgb(246, 248, 250); */
+    /* font-family: 'Montserrat'; */
+    /* font-family: Barlow; */
+}
+
+/* This border is used to show that the element is focused (i.e. you can type in the input or press the button with Enter). You can remove it with outline property, though: */
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.loader {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0px;
+    flex-direction: column;
+    color: var(--light);
+    font-size: 24px;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.468);
+  }
+
+.loader img{
+      width: 100px;
+      height: 100px;
+      animation-name: animloader;
+      animation-iteration-count: infinite;
+      animation-duration: 2s;
+}
+
+  @keyframes animloader {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);  
+    }
+  }
+
+.centerAll{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}:root{
+  --toastify-color-light: #fff;
+  --toastify-color-dark: #121212;
+  --toastify-color-info: #3498db;
+  --toastify-color-success: #07bc0c;
+  --toastify-color-warning: #f1c40f;
+  --toastify-color-error: #e31700 !important;
+  --toastify-color-transparent: rgba(255, 255, 255, 0.7);
+
+  --toastify-icon-color-info: var(--toastify-color-info);
+  --toastify-icon-color-success: var(--toastify-color-success);
+  --toastify-icon-color-warning: var(--toastify-color-warning);
+  --toastify-icon-color-error: var(--toastify-color-error);
+
+  --toastify-toast-width: 320px;
+  --toastify-toast-background: #fff;
+  --toastify-toast-min-height: 64px;
+  --toastify-toast-max-height: 800px;
+  --toastify-font-family: "Poppins" !important;
+  --toastify-z-index: 9999;
+
+  --toastify-text-color-light: black !important;
+  --toastify-text-color-dark: #fff;
+
+  
+  --toastify-text-color-info: #fff;
+  --toastify-text-color-success: #fff;
+  --toastify-text-color-warning: #fff;
+  --toastify-text-color-error: #fff;
+
+  --toastify-spinner-color: #616161;
+  --toastify-spinner-color-empty-area: #e0e0e0;
+
+  
+  --toastify-color-progress-light: linear-gradient(
+    to right,
+    #4cd964,
+    #5ac8fa,
+    #007aff,
+    #34aadc,
+    #5856d6,
+    #ff2d55
+  );
+
+  --toastify-color-progress-dark: #bb86fc;
+  --toastify-color-progress-info: var(--toastify-color-info);
+  --toastify-color-progress-success: var(--toastify-color-success);
+  --toastify-color-progress-warning: var(--toastify-color-warning);
+  --toastify-color-progress-error: var(--toastify-color-error);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.MuiBottomNavigation-root{
+  font-size: 36px !important;
+}

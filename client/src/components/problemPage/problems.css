@@ -1,0 +1,167 @@
+.problemPage{
+    margin-top: 50px;
+}
+.problem-navbar{
+    display: flex;
+    position: fixed;
+    top: 50px;
+    z-index: 1;
+    width: 100vw;
+    background-color: white;
+    padding: 12px 6px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid rgb(234, 232, 232);
+    justify-content: space-between;
+}
+.problem-navbar p{
+    font-weight: 600;
+    font-size: 18px;
+}
+.active-tags{
+    background-color: white;
+    width: 98%;
+    margin: auto;
+    border-radius: 10px;
+    margin: 12px 0px;
+    padding: 12px;
+    margin-top: 72px;
+}
+.question{
+    width: 98vw;
+    padding: 12px 10px;
+    margin:15px 1vw;
+    background-color: white;
+    border-radius: 10px;
+}
+.question h1 span {
+    color: gray;
+}
+.solution-length{
+    background-color: aliceblue;
+    border: 8px;
+    padding: 4px 8px;
+    margin-left: 10px;
+}
+.question h1 {
+    margin-bottom: 12px;
+    border-bottom: 2px solid lightgray;
+}
+.question h1 p {
+    font-weight: 600;
+    font-size: 24px;
+}
+.Question-Container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+}
+.question-details{
+    white-space: wrap;
+}
+.question-base{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 12px;
+    padding-bottom: 0px;
+}
+.question-base .right{
+    display: flex;  
+}
+.question-tags{
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.question-tags-chip{
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.rotate45{
+    transition: all;
+    transform: rotate(45deg);
+    animation-name: rotate;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+.addtagefield{
+
+    background-color: whitesmoke;
+    padding: 2px 4px;
+    width: 450px;
+    min-width:200px;
+    margin: 5px 0px;
+    border-radius:8px;
+    animation-name: str;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+@media (width<480px) {
+    .addtagefield{
+        width: 100%;
+    }
+}
+@keyframes str {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 450px;
+    }
+}
+@keyframe rotate {
+    0%{
+        transform:rotate(0deg);
+    }   
+    100%{
+        transform:rotate(45deg);
+    }
+}
+
+@media (width<450px){
+    .problem-navbar .right{
+        display: flex;
+        width: 100%;
+        flex-direction: row-reverse;
+    }
+    .problem-navbar .left{
+        width: 100%;
+    }
+    .active-tags{
+        margin-top: 80px;
+    }
+    .problem-navbar{
+        flex-wrap:wrap;
+        justify-content: left;
+        flex-direction: column;
+    }
+    .problem-navbar .css-edsu1d-MuiButtonGroup-root {
+        width: 150px;
+        font-size: 12px;
+        justify-self: right;
+    }
+    .problem-navbar button{
+        font-size: 12px;
+    }
+    .question-base{
+        gap:10px;
+        flex-wrap: wrap;
+        justify-content: right;
+    }
+}
+.solutions{
+    padding: 4px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 12px;
+    background-color: aliceblue;
+}
+.problemPage .pagination{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
